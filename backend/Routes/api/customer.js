@@ -1,0 +1,61 @@
+const express    = require("express");
+const router     = express.Router();
+const bcrypt     = require("bcryptjs");
+const bodyparser = require("body-parser");
+const decode     = require("jwt-decode");
+const { Customer , validateCustomer, validateLogin } = require('../../Model/Customer/Customer');
+const { setToken } = require("../../Auth/auth");
+
+router.use(bodyparser.json());
+router.use(bodyparser.urlencoded());
+// Customer sign-up fr-
+router.post("/signup", async (req,res) => {
+
+    console.log(
+        "signUp Backend ",
+        req.body.firstname,
+        req.body.lastname,
+        req.body.email,
+        req.body.password
+      );
+  // Validate Schema
+  const { error } = validateCustomer(req.body);
+  if (error) {
+    console.log("validation Error", error);
+    return res.status(400).send(error.details[0].message);
+  }
+
+  // Check if this Customer already exisits
+  let user = await Customer.findOne({ email: req.body.email });
+  if (user) {
+    console.log("Customer already exists");
+    return res.status(400).send("Customer already exists!");
+  } 
+  // Insert the new Customer if they do not exist yet
+  else {
+    try {
+      user = new Customer({
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        password: req.body.password
+      });
+    } catch (ex) {
+      console.log("Error in creating Customer", ex);
+    }
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(user.password, salt);
+
+    await user.save();
+
+    const token = setToken(user._id, user.isApproved, user.email, user.isAdmin);
+    console.log("token", token);
+    res
+      .header("x-auth-token", token)
+      .header("access-control-expose-headers", "x-auth-token")
+      .send(token);
+  }
+
+ });
+ router.update;
+ module.exports = router;
