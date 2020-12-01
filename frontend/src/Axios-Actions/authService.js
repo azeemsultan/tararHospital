@@ -6,6 +6,10 @@ const tokenKey = "token";
 
 http.setJwt(getJwt());
 
+export async function CustomerLogin(email, password) {
+  return await http.post(apiEndpoint + "/customer/login", { email, password });
+} 
+
 export async function CustomerSignUp(
   firstname,
   lastname,
@@ -54,4 +58,3 @@ export function getCurrentUser() {
 export function getJwt() {
   return localStorage.getItem(tokenKey);
 }
-

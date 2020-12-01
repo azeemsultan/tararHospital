@@ -13,7 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
-
+import { Backdrop, Fade, Modal, TextField } from '@material-ui/core';
+import img from '../../assets/img/doc.png'
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -57,18 +58,144 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
   },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  }
 }));
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 export default function Doctor() {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+  const [view, setView] = React.useState(false);
+  const handleView = () => {
+    setView(true);
+  };
 
+  const handleViewClose = () => {
+    setView(false);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <React.Fragment>
+             <div>
+
+<Modal 
+  aria-labelledby="transition-modal-title"
+  aria-describedby="transition-modal-description"
+  className={classes.modal}
+  open={view}
+  onClose={handleViewClose}
+  closeAfterTransition
+  BackdropComponent={Backdrop}
+  BackdropProps={{
+    timeout: 500, 
+  }}
+>
+  <Fade in={view}>
+    <div className={classes.paper}>
+      <Typography variant="h4" style={{textAlign:'center',marginBottom:'10px'}}>
+        Doctor Name
+      </Typography>
+
+     <div style={{display:'inline-flex',marginTop:'10px'}}>
+     <div>
+       <img src={img}/>
+
+     </div>
+     <div>
+     <Typography variant="h6" style={{marginLeft:'30px'}}>
+       Description: I am Cardiologist and Pro
+     </Typography> <br/>
+     <div>
+     <Typography variant="subtitle1" style={{marginLeft:'30px'}}>
+       Description: I am Cardiologist and Pro
+     </Typography>
+     </div> <br/>
+     <div>
+     <Typography variant="subtitle1" style={{marginLeft:'30px'}}>
+       5 Stars (420 reviews)
+     </Typography>
+     </div>
+     </div>
+  
+     </div>
+   
+     
+      <center style={{marginTop:'20px'}}>
+     
+        <Button variant="outlined" style={{marginLeft:'10px'}}
+        onClick={handleViewClose}
+        >Close</Button>
+        </center>
+    </div>
+  </Fade>
+</Modal>
+</div>
+
+       <div>
+
+<Modal 
+  aria-labelledby="transition-modal-title"
+  aria-describedby="transition-modal-description"
+  className={classes.modal}
+  open={open}
+  onClose={handleClose}
+  closeAfterTransition
+  BackdropComponent={Backdrop}
+  BackdropProps={{
+    timeout: 500, 
+  }}
+>
+  <Fade in={open}>
+    <div className={classes.paper}>
+      <Typography variant="h4">
+        Get your Appointment
+      </Typography>
+     <div>
+     <Typography variant="h6" style={{marginTop:'20px'}}>
+        Select your date
+      </Typography>
+     <TextField style={{marginLeft:'5px'}}
+     label="Enter the date"
+     />
+     <TextField style={{marginLeft:'5px'}}
+     label="Enter Week"
+     />
+       <TextField style={{marginLeft:'5px'}}
+     label="Enter Month"
+     />
+     </div>
+     
+      <center style={{marginTop:'20px'}}>
+        <Button variant="outlined">Submit</Button>
+        <Button variant="outlined" style={{marginLeft:'10px'}}
+        onClick={handleClose}
+        >Cancel</Button>
+        </center>
+    </div>
+  </Fade>
+</Modal>
+</div>
+
       <CssBaseline />
       <AppBar position="relative">
-        <Toolbar>
+        <Toolbar style={{backgroundColor:'#336bd4'}}>
           <CameraIcon className={classes.icon} />
           <Typography variant="h6" color="inherit" noWrap>
            Doctor Online
@@ -90,7 +217,8 @@ export default function Doctor() {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
-                  <Button variant="contained" color="primary">
+                  <Button variant="contained" style={{backgroundColor:'#336bd4',color:'white'}}
+>
                     Main call to action
                   </Button>
                 </Grid>
@@ -123,11 +251,12 @@ export default function Doctor() {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" color="primary">
+                    <Button size="small" color="primary"
+                    onClick={handleView}>
                       View
                     </Button>
-                    <Button size="small" color="primary">
-                      Edit
+                    <Button size="small" color="primary" onClick={handleOpen}>
+                     Consult Now
                     </Button>
                   </CardActions>
                 </Card>

@@ -3,6 +3,8 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 import './App.css';
 import Homepage from './components/Common/Homepage';
+import AcceptApp from './components/Doctors.js/acceptAppointment';
+import acceptAppointment from './components/Doctors.js/acceptAppointment';
 import Doctor from './components/Doctors.js/doctor';
 import Login from './components/Login/Login';
 import SignUp from './components/Login/Signup';
@@ -15,6 +17,7 @@ function App() {
         <BrowserRouter>
             
             <Route path="/login" component={Login}/> 
+            <Route path="/acceptappointment" component={AcceptApp}/> 
             <Route path="/signup" component={SignUp}/> 
             <Route path="/signupdoctor" component={SignUpDoctor}/> 
             <Route path="/doctors" component={Doctor}/> 

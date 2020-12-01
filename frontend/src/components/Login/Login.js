@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,7 +13,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { FormControl, FormLabel, RadioGroup } from '@material-ui/core';
- 
+import * as authService from '../../Axios-Actions/authService'
+
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -59,7 +61,30 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Login() {
-  const classes = useStyles();
+  const classes = useStyles(); 
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+
+  const SignIn = () => {
+ 
+    authService
+    .CustomerLogin(email,password)
+    .then((result) => {
+      localStorage.setItem("token", result);
+
+      console.log("Successfully logged in!");
+      setTimeout(function () {
+        window.location = "/";
+      }, 2000);
+      
+    })
+    .catch((err) => {
+      setPassword({ invalid: true });
+      console.log(err)
+    });
+    
+  }
+
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -74,7 +99,8 @@ export default function Login() {
             Sign in
           </Typography>
           <form className={classes.form} noValidate>
-            <TextField
+            <TextField  onChange={(e)=>{setEmail(e.target.value)}
+              }
               variant="outlined"
               margin="normal"
               required
@@ -85,7 +111,8 @@ export default function Login() {
               autoComplete="email"
               autoFocus
             />
-            <TextField
+            <TextField  onChange={(e)=>{setPassword(e.target.value)}
+              }
               variant="outlined"
               margin="normal"
               required
@@ -98,12 +125,12 @@ export default function Login() {
             />
 
 
-            <Button
+            <Button onClick={SignIn}
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
-              className={classes.submit}
+           
             >
               Sign In
             </Button>
