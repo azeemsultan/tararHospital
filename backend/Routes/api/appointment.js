@@ -10,21 +10,11 @@ router.use(bodyparser.json());
 router.use(bodyparser.urlencoded());
 
 router.post('/post', async ( req , res ) =>{
-  const jwt = decode(req.header("x-auth-token"));
-    try{
-    console.log("hello"+jwt.id);
-    }catch(err){
-        console.log("i am error"+err);
 
-    }
+    const jwt = decode(req.header("x-auth-token"));
+    
     let cus= await Customer.findOne({_id:jwt.id});
-    // Validate Schema
-    const { error } = validateAppointment(req.body);
-    if (error) {
-      console.log("validation Error", error);
-      return res.status(400).send(error.details[0].message);
-    }
-
+   console.log(cus);
     let appointment = await Appointment.findOne({ customer: jwt.id,doctor:req.body.doctor});
     if (appointment) {
       console.log("Appointment already exists");
@@ -50,6 +40,12 @@ router.post('/post', async ( req , res ) =>{
       
       res.send(appointment);
     }
+  });
+  router.get('/view',async ( req , res )=>{
+    const jwt = decode(req.header("x-auth-token"));
+    const Ap = await Appointment.find({doctor:jwt.id});
+    if(!Ap)res.status(400);
+    res.send(Ap);
   });
 router.update;
 module.exports = router;

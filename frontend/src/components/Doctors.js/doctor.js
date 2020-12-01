@@ -106,19 +106,6 @@ export default function Doctor() {
   };
   const handleApp = () =>{
 
-const jwtToken = localStorage.getItem("jwtToken");
-if (jwtToken !== "undefined") {
-  // Set auth token header auth
-  console.log("not here");
-  // Decode token and get user info and exp
-
-}
-else
-{
-  console.log(localStorage.getItem)
-}
-
-    
     let da= ''+date+'/'+month+'/'+year+'' 
     doctorService.PostAppointment(da,description,di,de)
     .then(() => {

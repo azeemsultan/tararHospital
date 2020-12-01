@@ -75,6 +75,7 @@ router.post("/signup", async (req,res) => {
       }    
       try{
       const token = setToken(user._id, user.email, user.isAdmin, user.isApproved);
+      console.log(token);
       res
         .header("x-auth-token", token)
         .header("access-control-expose-headers", "x-auth-token")

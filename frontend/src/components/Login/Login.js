@@ -72,7 +72,7 @@ export default function Login() {
     authService
     .CustomerLogin(email,password)
     .then((result) => {
-      localStorage.setItem("token", result);
+       localStorage.setItem("token", result.data);
       console.log("Successfully logged in!");
       setTimeout(function () {
         window.location = "/";
@@ -87,6 +87,7 @@ export default function Login() {
     authService
     .DoctorLogin(email,password)
     .then((result) => {
+      localStorage.setItem("token", result.data);
       console.log("Successfully logged in!");
       setTimeout(function () {
         window.location = "/";

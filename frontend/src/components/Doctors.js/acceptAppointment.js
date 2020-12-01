@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React , {useEffect}from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -12,7 +12,7 @@ import img from '../../assets/img/ubaid.jpg'
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-
+import * as doctorService from '../../Axios-Actions/doctorService';
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: 'flex',
@@ -31,7 +31,11 @@ const AcceptApp=()=> {
 
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-  
+    const [cards, setCard] = React.useState([]);
+  useEffect(() => {
+    doctorService.GetAppointment()
+    .then((result) => {setCard(result.data)});
+},[]);
     const handleOpen = () => {
       setOpen(true);
     };
@@ -96,6 +100,8 @@ const AcceptApp=()=> {
           </Grid>
 
           <Grid item md={8} style={{marginTop:'30px'}}>
+          {cards.map((card) => (
+              <Grid item key={card} xs={12} sm={6} md={4}>
           <Card style={{maxWidth:'345px'}}>
       <CardActionArea>
         <CardMedia
@@ -106,14 +112,14 @@ const AcceptApp=()=> {
           title="Contemplative Reptile"
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            Ubaid Umer
+          <Typography gutterBottom variant="h6" component="h6">
+          {card.customeremail}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            Requested date:01-01-01 
+          Date:{card.date}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            Requested time 00:00 PM
+          Description:{card.description}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -133,6 +139,8 @@ const AcceptApp=()=> {
      
       </CardActions>
     </Card>
+    </Grid>
+            ))}
               </Grid>
 
               <Grid item md={2}>
