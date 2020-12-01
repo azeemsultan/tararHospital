@@ -10,9 +10,8 @@ router.use(bodyparser.json());
 router.use(bodyparser.urlencoded());
 
 router.post('/post', async ( req , res ) =>{
-
+  const jwt = decode(req.header("x-auth-token"));
     try{
-    const jwt = decode(req.header("x-auth-token"));
     console.log("hello"+jwt.id);
     }catch(err){
         console.log("i am error"+err);

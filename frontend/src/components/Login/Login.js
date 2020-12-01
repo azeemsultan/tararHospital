@@ -72,6 +72,7 @@ export default function Login() {
     authService
     .CustomerLogin(email,password)
     .then((result) => {
+      localStorage.setItem("token", result);
       console.log("Successfully logged in!");
       setTimeout(function () {
         window.location = "/";

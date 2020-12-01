@@ -113,11 +113,15 @@ if (jwtToken !== "undefined") {
   // Decode token and get user info and exp
 
 }
+else
+{
+  console.log(localStorage.getItem)
+}
 
     
     let da= ''+date+'/'+month+'/'+year+'' 
     doctorService.PostAppointment(da,description,di,de)
-    .then((result) => {
+    .then(() => {
       console.log("Successfully Sent Appointment!");
       setTimeout(function () {
         window.location = "/";
@@ -340,12 +344,12 @@ if (jwtToken !== "undefined") {
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {cards.map((card) => (
+            {cards.map((card,key) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
                 <Card className={classes.card}>
                   <CardMedia
                     className={classes.cardMedia}
-                    image="https://source.unsplash.com/doctors"
+                    
                     title="Image title"
                   />
                   <CardContent className={classes.cardContent}>
