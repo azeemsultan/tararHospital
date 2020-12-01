@@ -65,9 +65,15 @@ const register = () =>{
       password
   
 
-  ).then((response)=>{
-  console.log(response)
+  ).then((result)=>{
+    console.log("Signup Successful");
+    setTimeout(function(){
+      window.location = "/login";
+    },2000);
   })
+  .catch((err)=>{
+    console.log("Server Error");
+  });
 }
 
   return (
@@ -80,7 +86,6 @@ const register = () =>{
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField onChange={(e)=>{setFname(e.target.value)}
@@ -115,7 +120,7 @@ const register = () =>{
                 fullWidth
                 id="PMDC"
                 label="Enter PMDC NO"
-                name="email"
+                name="pmdc"
            
               />
             </Grid>
@@ -169,7 +174,7 @@ const register = () =>{
               </Link>
             </Grid>
           </Grid>
-        </form>
+        
       </div>
       <Box mt={5}>
         <Copyright />

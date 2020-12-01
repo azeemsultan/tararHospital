@@ -17,16 +17,6 @@ import logo from '../../assets/img/Logo.png'
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 
-
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
-
-
-
-
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: 'flex',

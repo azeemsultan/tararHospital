@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{ useEffect } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import CameraIcon from '@material-ui/icons/PhotoCamera';
@@ -14,7 +14,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import { Backdrop, Fade, Modal, TextField } from '@material-ui/core';
-import img from '../../assets/img/doc.png'
+import img from '../../assets/img/doc.png';
+import * as doctorService from '../../Axios-Actions/doctorService';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -70,13 +71,22 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 4, 3),
   }
 }));
-
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+let di,de;
 
 export default function Doctor() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [view, setView] = React.useState(false);
+  const [date, setDate] = React.useState('');
+  const [month, setMonth] = React.useState('');
+  const [year, setYear] = React.useState('');
+  const [description, setDescription] = React.useState('');
+  const [cards, setCard] = React.useState([]);
+  useEffect(() => {
+    doctorService.DoctorView()
+    .then((result) => {setCard(result.data)});
+},[]);
+
   const handleView = () => {
     setView(true);
   };
@@ -84,15 +94,44 @@ export default function Doctor() {
   const handleViewClose = () => {
     setView(false);
   };
-  const handleOpen = () => {
+  const handleOpen = (doci,doce) => {
+
+    di=doci;
+    de=doce;
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
   };
+  const handleApp = () =>{
+
+const jwtToken = localStorage.getItem("jwtToken");
+if (jwtToken !== "undefined") {
+  // Set auth token header auth
+  console.log("not here");
+  // Decode token and get user info and exp
+
+}
+
+    
+    let da= ''+date+'/'+month+'/'+year+'' 
+    doctorService.PostAppointment(da,description,di,de)
+    .then((result) => {
+      console.log("Successfully Sent Appointment!");
+      setTimeout(function () {
+        window.location = "/";
+      }, 2000);
+      
+    })
+    .catch((err) => {
+      console.log(err)
+    });
+
+
+  };
   return (
-    <React.Fragment>
+    <div>
              <div>
 
 <Modal 
@@ -171,19 +210,86 @@ export default function Doctor() {
      <Typography variant="h6" style={{marginTop:'20px'}}>
         Select your date
       </Typography>
-     <TextField style={{marginLeft:'5px'}}
-     label="Enter the date"
-     />
-     <TextField style={{marginLeft:'5px'}}
-     label="Enter Week"
-     />
-       <TextField style={{marginLeft:'5px'}}
-     label="Enter Month"
+      
+      <label style={{fontWeight:'bold',color:'blueviolet'}}>Date </label> <span>   
+        <select id="date"onChange={(e)=>{setDate(e.target.value)}} style={{marginTop:'10px',width:'150px',height:'30px',marginLeft:'20px',border:'0px solid #fff'}}>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
+                                <option value="31">31</option>
+                                
+                                </select> </span>
+      
+      
+      <label style={{fontWeight:'bold',color:'blueviolet'}}>Month </label> <span>   
+        <select id="month"onChange={(e)=>{setMonth(e.target.value)}} style={{marginTop:'10px',width:'150px',height:'30px',marginLeft:'20px',border:'0px solid #fff'}}>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                
+                                </select> </span>
+        <label style={{fontWeight:'bold',color:'blueviolet'}}>Year </label> <span>   
+        <select id="Year"onChange={(e)=>{setYear(e.target.value)}} style={{marginTop:'10px',width:'150px',height:'30px',marginLeft:'20px',border:'0px solid #fff'}}>
+                                <option value="2020">2020</option>
+                                <option value="2021">2021</option>
+                                <option value="2022">2022</option>
+                                <option value="2023">2023</option>
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                                <option value="2026">2026</option>
+                                <option value="2027">2027</option>
+                                <option value="2028">2028</option>
+                                <option value="2029">2029</option>
+                                <option value="2030">2030</option>
+                                <option value="2031">2031</option>
+                        
+                                </select> </span>
+     </div>
+     <div>
+     <TextField style={{marginLeft:'5px',width:"100%"}}
+     label="Enter Description"
+     onChange={(e)=>{setDescription(e.target.value)}}
      />
      </div>
      
       <center style={{marginTop:'20px'}}>
-        <Button variant="outlined">Submit</Button>
+        <Button variant="outlined" onClick={handleApp}>Submit</Button>
         <Button variant="outlined" style={{marginLeft:'10px'}}
         onClick={handleClose}
         >Cancel</Button>
@@ -244,10 +350,16 @@ export default function Doctor() {
                   />
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Heading
+                      Doctor
                     </Typography>
                     <Typography>
-                      This is a media card. You can use this section to describe the content.
+                     FirstName: {card.firstname}
+                    </Typography>
+                    <Typography>
+                     LastName: {card.lastname}
+                    </Typography>
+                    <Typography>
+                     Email: {card.email}
                     </Typography>
                   </CardContent>
                   <CardActions>
@@ -255,7 +367,7 @@ export default function Doctor() {
                     onClick={handleView}>
                       View
                     </Button>
-                    <Button size="small" color="primary" onClick={handleOpen}>
+                    <Button  size="small" color="primary" onClick={()=>handleOpen(card._id,card.email)}>
                      Consult Now
                     </Button>
                   </CardActions>
@@ -276,6 +388,6 @@ export default function Doctor() {
         <Copyright />
       </footer>
       {/* End footer */}
-    </React.Fragment>
+    </div>
   );
 }

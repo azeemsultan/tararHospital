@@ -57,5 +57,34 @@ router.post("/signup", async (req,res) => {
   }
 
  });
+
+
+ router.post("/login", async (req, res) => {
+    const { error } = validateLogin(req.body);
+  
+    if (error) {
+      return res.status(400).send(error.details[0].message);
+    }
+  
+    let user = await Customer.findOne({ email: req.body.email });
+    if (user) {
+      const validatePassword = await bcrypt.compare(req.body.password,user.password);
+      if (!validatePassword)
+      {
+           res.status(400)
+      }    
+      try{
+      const token = setToken(user._id, user.email, user.isAdmin, user.isApproved);
+      res
+        .header("x-auth-token", token)
+        .header("access-control-expose-headers", "x-auth-token")
+        .send(token)
+        .status(200)
+      }
+      catch(ex){
+         console.log("Setting token Exception" , ex)
+      }
+    } else res.status(400).send("No Registered Customer exists");
+  });
  router.update;
  module.exports = router;

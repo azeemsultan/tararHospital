@@ -9,6 +9,9 @@ http.setJwt(getJwt());
 export async function CustomerLogin(email, password) {
   return await http.post(apiEndpoint + "/customer/login", { email, password });
 } 
+export async function DoctorLogin(email, password) {
+    return await http.post(apiEndpoint + "/doctor/login", { email, password });
+  } 
 
 export async function CustomerSignUp(
   firstname,
