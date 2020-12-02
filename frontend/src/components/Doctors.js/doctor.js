@@ -12,8 +12,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone'
 import Link from '@material-ui/core/Link';
-import { Backdrop, Fade, Modal, TextField } from '@material-ui/core';
+import { Backdrop, Badge, Fade, Modal, TextField } from '@material-ui/core';
 import img from '../../assets/img/doc.png';
 import * as doctorService from '../../Axios-Actions/doctorService';
 function Copyright() {
@@ -35,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
   heroContent: {
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6),
+    padding: theme.spacing(4, 0, 6),
   },
   heroButtons: {
     marginTop: theme.spacing(4),
@@ -76,6 +77,7 @@ let di,de;
 export default function Doctor() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [openNotif, setOpenNotif] = React.useState(false);
   const [view, setView] = React.useState(false);
   const [date, setDate] = React.useState('');
   const [month, setMonth] = React.useState('');
@@ -93,6 +95,13 @@ export default function Doctor() {
 
   const handleViewClose = () => {
     setView(false);
+  };
+  const handleNotif = () => {
+    setOpenNotif(true);
+  };
+
+  const handleCloseNotif = () => {
+    setOpenNotif(false);
   };
   const handleOpen = (doci,doce) => {
 
@@ -124,6 +133,31 @@ export default function Doctor() {
   return (
     <div>
              <div>
+             <Modal 
+  aria-labelledby="transition-modal-title"
+  aria-describedby="transition-modal-description"
+  className={classes.modal}
+  open={openNotif}
+  onClose={handleCloseNotif}
+  closeAfterTransition
+  BackdropComponent={Backdrop}
+  BackdropProps={{
+    timeout: 500, 
+  }}
+>
+  <Fade in={openNotif}>
+    <div className={classes.paper}>
+     <Container maxWidth="md">
+      <Typography variant="h6">Doctor set appointment time</Typography>
+      <Typography variant="subtitle1">Date: 1-12-2020</Typography>
+      <Typography variant="subtitle1">Time: 10:10PM </Typography>
+      <Button>Accept</Button>
+      <Button>Reject</Button>
+     </Container>
+    </div>
+  </Fade>
+</Modal>
+
 
 <Modal 
   aria-labelledby="transition-modal-title"
@@ -302,10 +336,64 @@ export default function Doctor() {
       <main>
         {/* Hero unit */}
         <div className={classes.heroContent}>
-          <Container maxWidth="sm">
-            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-              Our Doctors
-            </Typography>
+          <Container maxWidth="md">
+          <div style={{marginBottom:'20px'}}>
+            <Typography variant="h6">Notifications</Typography> 
+            <Button onClick={handleNotif}>
+            <Badge badgeContent={1} color="secondary">
+            <NotificationsNoneIcon style={{fontSize:'50px'}}/>
+            </Badge>
+            </Button>
+          </div>
+            <Typography variant="h4" style={{marginBottom:'20px'}}>Your appointments</Typography>
+            <ul style={{listStyle:'none',display:'inline-flex',border:'1px solid black',width:'100%',flexWrap:"wrap"}}>
+       
+            <li style={{width:'15%'}}>
+              <div> <Typography variant="h5">ID</Typography>
+                     <Typography variant="h5" color="textSecondary" >235</Typography>
+              </div>
+              </li >
+              <li style={{width:'25%',marginLeft:'10px'}}>
+              <div>   <Typography variant="h5">Name</Typography>
+              <Typography variant="h5" color="textSecondary" >Azeem</Typography>
+              </div>
+              
+              </li>
+              <li style={{width:'20%',marginLeft:'10px'}}>
+              <div>   <Typography variant="h5">Time</Typography>
+              <Typography variant="h5" color="textSecondary" >10:10PM</Typography>
+              </div>
+              </li>
+              <li style={{width:'35%'}}>
+              <div>    <Typography variant="h5">Date</Typography>
+              <Typography variant="h5" color="textSecondary" >20-20-20</Typography>
+              </div>
+              </li>
+            </ul>
+            <ul style={{listStyle:'none',display:'inline-flex',border:'1px solid black',width:'100%',flexWrap:"wrap"}}>
+       
+       <li style={{width:'15%'}}>
+         <div> <Typography variant="h5">ID</Typography>
+                <Typography variant="h5" color="textSecondary" >235</Typography>
+         </div>
+         </li >
+         <li style={{width:'25%',marginLeft:'10px'}}>
+         <div>   <Typography variant="h5">Name</Typography>
+         <Typography variant="h5" color="textSecondary" >Azeem</Typography>
+         </div>
+         
+         </li>
+         <li style={{width:'20%',marginLeft:'10px'}}>
+         <div>   <Typography variant="h5">Time</Typography>
+         <Typography variant="h5" color="textSecondary" >10:10PM</Typography>
+         </div>
+         </li>
+         <li style={{width:'35%'}}>
+         <div>    <Typography variant="h5">Date</Typography>
+         <Typography variant="h5" color="textSecondary" >20-20-20</Typography>
+         </div>
+         </li>
+       </ul>
             <Typography variant="h5" align="center" color="textSecondary" paragraph>
               Something short and leading about the collection below—its contents, the creator, etc.
               Make it short and sweet, but not too short so folks don&apos;t simply skip over it

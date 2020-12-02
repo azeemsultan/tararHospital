@@ -16,6 +16,7 @@ function App() {
         <BrowserRouter>
             
             <Route path="/login" component={Login}/> 
+            <Route path="/location" component={Location}/> 
             <Route path="/acceptappointment" component={AcceptApp}/> 
             <Route path="/signup" component={SignUp}/> 
             <Route path="/signupdoctor" component={SignUpDoctor}/> 
