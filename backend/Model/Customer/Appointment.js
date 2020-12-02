@@ -14,6 +14,9 @@ const appointment = mongoose.model("Appointment",mongoose.Schema({
     date:{
         type:String,
         required:true
+    },time:{
+      type:String,
+      required:true
     },
     description:{
         type:String,
@@ -41,6 +44,7 @@ function validateAppointment(appointment) {
   const Schema = Joi.object({
     customeremail: Joi.string().max(255).required().email(),
     date: Joi.string().max(255).required(),
+    time: Joi.string().max(255).required(),
     description: Joi.string().max(255).required(),
     status: Joi.string().max(255).required(),
     doctoremail: Joi.string().max(255).required().email(),

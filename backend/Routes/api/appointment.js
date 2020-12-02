@@ -27,6 +27,7 @@ router.post('/post', async ( req , res ) =>{
             customer: jwt.id,
             customeremail:cus.email,
             date:req.body.date,
+            time:req.body.time,
             status: "pending",
             description:req.body.description,
             doctor:req.body.doctor,
@@ -47,5 +48,72 @@ router.post('/post', async ( req , res ) =>{
     if(!Ap)res.status(400);
     res.send(Ap);
   });
+  router.get('/viewall',async ( req , res )=>{
+    const jwt = decode(req.header("x-auth-token"));
+    const Ap = await Appointment.find({customer:jwt.id});
+    if(!Ap)res.status(400);
+    res.send(Ap);
+  });
+
+
+router.post('/accept', async (req,res)=>{
+  await Appointment.update(
+    {_id:req.body.id},
+    {
+      $set: {
+        status:'accepted'
+      },
+    },
+    { new: true }
+  );
+
+res.send(200);
+});
+router.post('/reject', async (req,res)=>{
+  await Appointment.update(
+    {_id:req.body.id},
+    {
+      $set: {
+        status:'rejected'
+      },
+    },
+    { new: true }
+  );
+
+res.send(200);
+});
+router.post('/edit', async (req,res)=>{
+  await Appointment.update(
+    {_id:req.body.id},
+    {
+      $set: {
+        status:'edited',
+        date:req.body.date,
+        time:req.body.time
+      },
+    },
+    { new: true }
+  );
+
+res.send(200);
+});
+router.post('/cusaccept', async (req,res)=>{
+  await Appointment.update(
+    {_id:req.body.id},
+    {
+      $set: {
+        status:'pending'
+      },
+    },
+    { new: true }
+  );
+
+res.send(200);
+});
+router.post('/cusreject', async (req,res)=>{
+  let table = await Appointment.findOne({_id:req.body.id});
+  table.deleteOne({_id:req.body.id});
+res.send(200);
+});
 router.update;
 module.exports = router;

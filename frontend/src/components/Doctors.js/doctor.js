@@ -79,14 +79,18 @@ export default function Doctor() {
   const [open, setOpen] = React.useState(false);
   const [openNotif, setOpenNotif] = React.useState(false);
   const [view, setView] = React.useState(false);
+  const [time, setTime] = React.useState('');
   const [date, setDate] = React.useState('');
   const [month, setMonth] = React.useState('');
   const [year, setYear] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [cards, setCard] = React.useState([]);
+  const [a,setA]=React.useState([]);
   useEffect(() => {
     doctorService.DoctorView()
     .then((result) => {setCard(result.data)});
+    doctorService.GetAllAppointment()
+    .then((result) => {setA(result.data)});
 },[]);
 
   const handleView = () => {
@@ -115,8 +119,9 @@ export default function Doctor() {
   };
   const handleApp = () =>{
 
-    let da= ''+date+'/'+month+'/'+year+'' 
-    doctorService.PostAppointment(da,description,di,de)
+    let t=''+time+'';
+    let da= ''+date+'/'+month+'/'+year+'';
+    doctorService.PostAppointment(da,t,description,di,de)
     .then(() => {
       console.log("Successfully Sent Appointment!");
       setTimeout(function () {
@@ -129,6 +134,32 @@ export default function Doctor() {
     });
 
 
+  };
+  const settoA=(id)=>{
+    doctorService.CusAccept(id)
+    .then(() => {
+      console.log("Successfully Accepted by Customer Appointment!");
+      setTimeout(function () {
+        window.location = "/";
+      }, 2000);
+      
+    })
+    .catch((err) => {
+      console.log(err)
+    });
+  };
+  const settoR=(id)=>{
+    doctorService.CusReject(id)
+    .then(() => {
+      console.log("Successfully Rejected by Customer Appointment!");
+      setTimeout(function () {
+        window.location = "/";
+      }, 2000);
+      
+    })
+    .catch((err) => {
+      console.log(err)
+    });
   };
   return (
     <div>
@@ -148,11 +179,43 @@ export default function Doctor() {
   <Fade in={openNotif}>
     <div className={classes.paper}>
      <Container maxWidth="md">
-      <Typography variant="h6">Doctor set appointment time</Typography>
-      <Typography variant="subtitle1">Date: 1-12-2020</Typography>
-      <Typography variant="subtitle1">Time: 10:10PM </Typography>
-      <Button>Accept</Button>
-      <Button>Reject</Button>
+     <Grid >
+          {a.map((Appoint) => (( (Appoint.status==="edited"))?(
+              <Grid item key={Appoint}>
+            <ul style={{listStyle:'none',display:'inline-flex',border:'1px solid black',width:'100%',flexWrap:"wrap"}}>
+       
+       <li style={{width:'15%'}}>
+         <div> <Typography variant="h5">Appointment ID</Typography>
+          <Typography variant="h6" color="textSecondary" >{Appoint._id}</Typography>
+         </div>
+         </li >
+         <li style={{width:'25%',marginLeft:'10px'}}>
+         <div>   <Typography variant="h5">Doctor Email</Typography>
+          <Typography variant="h6" color="textSecondary" >{Appoint.doctoremail}</Typography>
+         </div>
+         
+         </li>
+         <li style={{width:'20%',marginLeft:'10px'}}>
+         <div>   <Typography variant="h5">Time</Typography>
+          <Typography variant="h6" color="textSecondary" >{Appoint.time}</Typography>
+         </div>
+         </li>
+         <li style={{width:'35%'}}>
+         <div>    <Typography variant="h5">Date</Typography>
+          <Typography variant="h6" color="textSecondary" >{Appoint.date}</Typography>
+         </div>
+         </li>
+         <li style={{width:'35%'}}>
+         <div>    <Typography variant="h5">Status</Typography>
+          <Typography variant="h6" color="textSecondary" >{Appoint.status}</Typography>
+         </div>
+         <Button onClick={(e)=>settoA(Appoint._id)}>Accept</Button>
+         <Button onClick={(e)=>settoR(Appoint._id)}>Reject</Button>
+         </li>
+       </ul>
+       </Grid>):null
+            ))}
+              </Grid>
      </Container>
     </div>
   </Fade>
@@ -307,10 +370,11 @@ export default function Doctor() {
                                 </select> </span>
      </div>
      <div>
-     <TextField style={{marginLeft:'5px',width:"100%"}}
+     <TextField style={{marginLeft:'5px',width:"70%"}}
      label="Enter Description"
      onChange={(e)=>{setDescription(e.target.value)}}
      />
+   <input type='time' onChange={(e)=>{setTime(e.target.value)}} style={{ marginLeft:'5px',width:"20%"}} ></input>
      </div>
      
       <center style={{marginTop:'20px'}}>
@@ -346,54 +410,41 @@ export default function Doctor() {
             </Button>
           </div>
             <Typography variant="h4" style={{marginBottom:'20px'}}>Your appointments</Typography>
-            <ul style={{listStyle:'none',display:'inline-flex',border:'1px solid black',width:'100%',flexWrap:"wrap"}}>
-       
-            <li style={{width:'15%'}}>
-              <div> <Typography variant="h5">ID</Typography>
-                     <Typography variant="h5" color="textSecondary" >235</Typography>
-              </div>
-              </li >
-              <li style={{width:'25%',marginLeft:'10px'}}>
-              <div>   <Typography variant="h5">Name</Typography>
-              <Typography variant="h5" color="textSecondary" >Azeem</Typography>
-              </div>
-              
-              </li>
-              <li style={{width:'20%',marginLeft:'10px'}}>
-              <div>   <Typography variant="h5">Time</Typography>
-              <Typography variant="h5" color="textSecondary" >10:10PM</Typography>
-              </div>
-              </li>
-              <li style={{width:'35%'}}>
-              <div>    <Typography variant="h5">Date</Typography>
-              <Typography variant="h5" color="textSecondary" >20-20-20</Typography>
-              </div>
-              </li>
-            </ul>
+            <Grid >
+          {a.map((Appoint) => (( (Appoint.status==="accepted")||(Appoint.status==="rejected"))?(
+              <Grid item key={Appoint}>
             <ul style={{listStyle:'none',display:'inline-flex',border:'1px solid black',width:'100%',flexWrap:"wrap"}}>
        
        <li style={{width:'15%'}}>
-         <div> <Typography variant="h5">ID</Typography>
-                <Typography variant="h5" color="textSecondary" >235</Typography>
+         <div> <Typography variant="h5">Appointment ID</Typography>
+          <Typography variant="h6" color="textSecondary" >{Appoint._id}</Typography>
          </div>
          </li >
          <li style={{width:'25%',marginLeft:'10px'}}>
-         <div>   <Typography variant="h5">Name</Typography>
-         <Typography variant="h5" color="textSecondary" >Azeem</Typography>
+         <div>   <Typography variant="h5">Doctor Email</Typography>
+          <Typography variant="h6" color="textSecondary" >{Appoint.doctoremail}</Typography>
          </div>
          
          </li>
          <li style={{width:'20%',marginLeft:'10px'}}>
          <div>   <Typography variant="h5">Time</Typography>
-         <Typography variant="h5" color="textSecondary" >10:10PM</Typography>
+          <Typography variant="h6" color="textSecondary" >{Appoint.time}</Typography>
          </div>
          </li>
          <li style={{width:'35%'}}>
          <div>    <Typography variant="h5">Date</Typography>
-         <Typography variant="h5" color="textSecondary" >20-20-20</Typography>
+          <Typography variant="h6" color="textSecondary" >{Appoint.date}</Typography>
+         </div>
+         </li>
+         <li style={{width:'35%'}}>
+         <div>    <Typography variant="h5">Status</Typography>
+          <Typography variant="h6" color="textSecondary" >{Appoint.status}</Typography>
          </div>
          </li>
        </ul>
+       </Grid>):null
+            ))}
+              </Grid>
             <Typography variant="h5" align="center" color="textSecondary" paragraph>
               Something short and leading about the collection below—its contents, the creator, etc.
               Make it short and sweet, but not too short so folks don&apos;t simply skip over it
