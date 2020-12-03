@@ -28,6 +28,9 @@ const doctor = mongoose.model("Doctor", mongoose.Schema({
         minlenght: 4,
         maxlenght: 1024,
         required: true
+    },
+    status:{
+        type: String
     }
 }))
 

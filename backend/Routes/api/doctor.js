@@ -40,7 +40,8 @@ router.post("/signup", async (req,res) => {
         lastname: req.body.lastname,
         pmdc:req.body.pmdc,
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        status:"pending"
       });
     } catch (ex) {
       console.log("Error in creating Doctor", ex);
@@ -88,7 +89,7 @@ router.post("/signup", async (req,res) => {
   });
 
   router.get('/view',async ( req , res )=>{
-    const doc = await Doctor.find();
+    const doc = await Doctor.find({status:"accepted"});
     if(!doc)res.status(400);
     res.send(doc);
   });
