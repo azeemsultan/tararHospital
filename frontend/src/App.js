@@ -2,7 +2,9 @@ import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 import './App.css';
+import Dashboard from './components/Admin/Dashboard';
 import Homepage from './components/Common/Homepage';
+import Locate from './components/Common/Location';
 import AcceptApp from './components/Doctors.js/acceptAppointment';
 import Doctor from './components/Doctors.js/doctor';
 import Login from './components/Login/Login';
@@ -16,7 +18,8 @@ function App() {
         <BrowserRouter>
             
             <Route path="/login" component={Login}/> 
-            <Route path="/location" component={Location}/> 
+            <Route path="/dashboard" component={Dashboard}/> 
+            <Route path="/location" component={Locate}/> 
             <Route path="/acceptappointment" component={AcceptApp}/> 
             <Route path="/signup" component={SignUp}/> 
             <Route path="/signupdoctor" component={SignUpDoctor}/> 
