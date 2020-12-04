@@ -1,46 +1,127 @@
-import React from "react";
-import { geolocated } from "react-geolocated";
+'use strict'
  
-class Locate extends React.Component {
-    render() {
-        return !this.props.isGeolocationAvailable ? (
-            <div>Your browser does not support Geolocation</div>
-        ) : !this.props.isGeolocationEnabled ? (
-            <div>Geolocation is not enabled</div>
-        ) : this.props.coords ? (
-            <table>
-                <tbody>
-                    <tr>
-                        <td>latitude</td>
-                        <td>{this.props.coords.latitude}</td>
-                    </tr>
-                    <tr>
-                        <td>longitude</td>
-                        <td>{this.props.coords.longitude}</td>
-                    </tr>
-                    <tr>
-                        <td>altitude</td>
-                        <td>{this.props.coords.altitude}</td>
-                    </tr>
-                    <tr>
-                        <td>heading</td>
-                        <td>{this.props.coords.heading}</td>
-                    </tr>
-                    <tr>
-                        <td>speed</td>
-                        <td>{this.props.coords.speed}</td>
-                    </tr>
-                </tbody>
-            </table>
-        ) : (
-            <div>Getting the location data&hellip; </div>
-        );
+import React from 'react'
+import { TheChat, TheChatStyle } from 'the-chat'
+import { TheImageStyle } from 'the-image'
+import { TheInputStyle } from 'the-input'
+import { TheButtonStyle } from 'the-button'
+import { TheVideoStyle } from 'the-video'
+import { TheSpinStyle } from 'the-spin'
+import { TheFormStyle } from 'the-form'
+import { Container } from '@material-ui/core'
+ 
+const images = [
+  'https://raw.githubusercontent.com/apeman-asset-labo/apeman-asset-images/master/dist/dummy/01.jpg',
+  'https://raw.githubusercontent.com/apeman-asset-labo/apeman-asset-images/master/dist/dummy/02.jpg',
+  'https://raw.githubusercontent.com/apeman-asset-labo/apeman-asset-images/master/dist/dummy/03.jpg'
+]
+ 
+const videos = [
+  './mov_bbb.mp4'
+]
+ 
+class Chat extends React.Component {
+  constructor (props) {
+    super(props)
+    this._timer = null
+    this.state = {
+      form: {},
+      items: [
+       
+        {
+          raw: true,
+          at: new Date('2017/10/08 14:44'),
+          node: <h3>You can send message</h3>,
+        },
+        {
+          at: new Date('2017/10/08 14:38'),
+          image: images[2],
+          align: 'right',
+          who: {
+            name: 'hoge',
+            image: images[0]
+          }
+        },
+      ]
     }
+  }
+ 
+  render () {
+    const { items } = this.state
+    return (
+      <div>
+          <Container maxWidth="sm">
+        <TheVideoStyle/>
+        <TheButtonStyle/>
+        <TheInputStyle/>
+        <TheImageStyle/>
+        <TheSpinStyle/>
+        <TheFormStyle/>
+        <TheChatStyle/>
+        <TheChat>
+          <TheChat.TimeLine style={{
+            height: '300px',
+            border: '4px solid #333'
+          }}
+                            items={items}
+                            onWho={(who) => console.log('who selected', who)}
+                            onScrollReachTop={() => console.log('reached to top')}
+                            onScrollReachBottom={() => console.log('reached to bottom')}
+          />
+          <TheChat.Form onUpdate={(form) => this.setState({ form })}
+                        values={this.state.form}
+                        onSubmit={() => this.setState({
+                          form: {},
+                          items: [...this.state.items, {
+                            at: new Date(),
+                            text: this.state.form.text,
+                            align: 'right',
+                            who: {
+                              name: 'Me',
+                              color: '#33A'
+                            }
+                          }]
+                        })}
+          />
+        </TheChat>
+ 
+        <hr/>
+ 
+        <TheChat>
+          <TheChat.TimeLine alt='Not chat yet'
+                            empty={true}
+          />
+        </TheChat>
+        </Container>
+      </div>
+ 
+    )
+  }
+ 
+  componentDidMount () {
+    this._timer = setInterval(() => {
+      const { items } = this.state
+      if (window.DISABLE_THE_CHAT_PUSH) {
+        return
+      }
+      this.setState({
+        items: [...items, {
+          at: new Date(),
+          text: 'Hello, How can i help you?',
+          align: this.state.items.length % 2 ? 'left' : 'right',
+          who: {
+            name: 'hoge',
+            initial: 'H'
+          }
+        }]
+      })
+      console.log('item added')
+    }, 50000)
+  }
+ 
+  componentWillUnmount () {
+    clearInterval(this._timer)
+  }
 }
  
-export default geolocated({
-    positionOptions: {
-        enableHighAccuracy: false,
-    },
-    userDecisionTimeout: 5000,
-})(Locate);
+export default Chat

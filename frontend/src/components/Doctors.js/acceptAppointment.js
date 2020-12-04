@@ -202,16 +202,7 @@ const AcceptApp=()=> {
         </Fade>
       </Modal>
     </div>
-             <Grid container>
-              <AppBar position="relative">
-        <Toolbar style={{backgroundColor:'#336bd4'}}>
-        
-          <Typography variant="h6" color="inherit" noWrap>
-           Doctor Online
-          </Typography> 
-        </Toolbar>
-      </AppBar>
-      </Grid>
+           
       <Grid container>
           <Grid item md={2}>
 
@@ -220,7 +211,7 @@ const AcceptApp=()=> {
           <Grid item md={8} style={{marginTop:'30px'}}>
           {cards.map((card) => ( (card.status==="pending")?(
               <Grid item key={card} xs={12} sm={6} md={4}>
-          <Card style={{maxWidth:'345px'}}>
+          <Card style={{maxWidth:'350px'}}>
       <CardActionArea>
         <CardMedia
           component="img"
@@ -246,7 +237,7 @@ const AcceptApp=()=> {
       </CardActionArea>
       <CardActions>
       
-        <Button onClick={(e)=>accept(card._id)} size="small" color="primary" style={{marginLeft:'20%'}}>
+        <Button onClick={(e)=>accept(card._id)} size="small" color="primary" style={{marginLeft:'10%'}}>
          Accept
         </Button>
         <Button onClick={(e)=>reject(card._id)} size="small" color="primary" style={{marginLeft:'10px'}}>

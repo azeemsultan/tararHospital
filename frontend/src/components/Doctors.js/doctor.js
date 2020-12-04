@@ -10,13 +10,31 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles,withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone'
 import Link from '@material-ui/core/Link';
-import { Backdrop, Badge, Fade, Modal, TextField } from '@material-ui/core';
+import { Backdrop, Badge, Divider, Fade, Modal, TextField } from '@material-ui/core';
 import img from '../../assets/img/doc.png';
 import * as doctorService from '../../Axios-Actions/doctorService';
+import Chat from '../Common/Location';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
+
+
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -33,6 +51,9 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(2),
+  },
+  table: {
+    minWidth: 700,
   },
   heroContent: {
     backgroundColor: theme.palette.background.paper,
@@ -72,6 +93,37 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 4, 3),
   }
 }));
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    },
+  },
+}))(TableRow);
+
+function createData(name, calories, fat, carbs, protein) {
+  return { name, calories, fat, carbs, protein };
+}
+
+const rows = [
+  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+  createData('Eclair', 262, 16.0, 24, 6.0),
+  createData('Cupcake', 305, 3.7, 67, 4.3),
+  createData('Gingerbread', 356, 16.0, 49, 3.9),
+];
+
+
 let di,de;
 
 export default function Doctor() {
@@ -85,6 +137,7 @@ export default function Doctor() {
   const [year, setYear] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [cards, setCard] = React.useState([]);
+  const [chat, setChat] = React.useState(false);
   const [a,setA]=React.useState([]);
   useEffect(() => {
     doctorService.DoctorView()
@@ -180,44 +233,70 @@ export default function Doctor() {
     <div className={classes.paper}>
      <Container maxWidth="md">
      <Grid >
-          {a.map((Appoint) => (( (Appoint.status==="edited"))?(
+     {a.map((Appoint) => (( (Appoint.status==="edited"))?(
               <Grid item key={Appoint}>
-            <ul style={{listStyle:'none',display:'inline-flex',border:'1px solid black',width:'100%',flexWrap:"wrap"}}>
-       
-       <li style={{width:'15%'}}>
-         <div> <Typography variant="h5">Appointment ID</Typography>
-          <Typography variant="h6" color="textSecondary" >{Appoint._id}</Typography>
+     <Card className={classes.card} style={{maxWidth:'300px'}}>
+                 <center>
+                  <CardContent className={classes.cardContent}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      Doctor Scheduled
+                    </Typography>
+                    <Typography variant="h6" color="textSecondary" >
+                    {Appoint.firstname}      {Appoint.lastname}
+                    </Typography>
+                
+                    <Typography variant="h6" color="textSecondary" >
+        {Appoint.doctoremail}
+                    </Typography>
+                    <Typography variant="h6" color="textSecondary" >
+        {Appoint.date}
+                    </Typography>
+                    <Typography variant="h6" color="textSecondary" >
+        {Appoint.time}
+                    </Typography>
+                    <Typography variant="h6" color="textSecondary" >
+        {Appoint.status}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Divider/>
+                <div style={{marginLeft:'15%'}}>
+                    <Button onClick={(e)=>settoA(Appoint._id)}
+                    style={{backgroundColor:'#61e885',color:'white'}}
+                    >Accept</Button>
+            
+         <Button onClick={(e)=>settoR(Appoint._id)}
+         style={{backgroundColor:'#ed4e4e',marginLeft:'5px',color:'white'}}
+         >Reject</Button>
          </div>
-         </li >
-         <li style={{width:'25%',marginLeft:'10px'}}>
-         <div>   <Typography variant="h5">Doctor Email</Typography>
-          <Typography variant="h6" color="textSecondary" >{Appoint.doctoremail}</Typography>
-         </div>
-         
-         </li>
-         <li style={{width:'20%',marginLeft:'10px'}}>
-         <div>   <Typography variant="h5">Time</Typography>
-          <Typography variant="h6" color="textSecondary" >{Appoint.time}</Typography>
-         </div>
-         </li>
-         <li style={{width:'35%'}}>
-         <div>    <Typography variant="h5">Date</Typography>
-          <Typography variant="h6" color="textSecondary" >{Appoint.date}</Typography>
-         </div>
-         </li>
-         <li style={{width:'35%'}}>
-         <div>    <Typography variant="h5">Status</Typography>
-          <Typography variant="h6" color="textSecondary" >{Appoint.status}</Typography>
-         </div>
-         <Button onClick={(e)=>settoA(Appoint._id)}>Accept</Button>
-         <Button onClick={(e)=>settoR(Appoint._id)}>Reject</Button>
-         </li>
-       </ul>
-       </Grid>):null
+                  </CardActions>
+                  </center>
+                </Card>
+                </Grid>):null
             ))}
+         
+        
               </Grid>
      </Container>
     </div>
+  </Fade>
+</Modal>
+
+
+<Modal 
+  className={classes.modal}
+  open={chat}
+  onClose={handleViewClose}
+  closeAfterTransition
+  BackdropComponent={Backdrop}
+  BackdropProps={{
+    timeout: 500, 
+  }}
+>
+  <Fade in={chat}>
+  <div className={classes.paper}>
+  <Chat/>
+  </div>
   </Fade>
 </Modal>
 
@@ -291,6 +370,7 @@ export default function Doctor() {
 >
   <Fade in={open}>
     <div className={classes.paper}>
+      <Container maxWidth="md">
       <Typography variant="h4">
         Get your Appointment
       </Typography>
@@ -370,11 +450,17 @@ export default function Doctor() {
                                 </select> </span>
      </div>
      <div>
-     <TextField style={{marginLeft:'5px',width:"70%"}}
+       <div style={{marginTop:'10px'}}>
+     <label style={{fontWeight:'bold',color:'blueviolet'}}>Time </label> 
+     <input style={{marginLeft:'20px',paddingTop:'20px'}}
+   type='time' onChange={(e)=>{setTime(e.target.value)}} style={{ marginLeft:'5px',width:"20%"}} ></input>
+   </div>
+     <TextField style={{marginLeft:'10px',width:"70%"}}
      label="Enter Description"
      onChange={(e)=>{setDescription(e.target.value)}}
      />
-   <input type='time' onChange={(e)=>{setTime(e.target.value)}} style={{ marginLeft:'5px',width:"20%"}} ></input>
+ 
+  
      </div>
      
       <center style={{marginTop:'20px'}}>
@@ -383,6 +469,7 @@ export default function Doctor() {
         onClick={handleClose}
         >Cancel</Button>
         </center>
+        </Container>
     </div>
   </Fade>
 </Modal>
@@ -397,7 +484,7 @@ export default function Doctor() {
           </Typography>
         </Toolbar>
       </AppBar>
-      <main>
+      <main style={{color:'#336bd4'}}>
         {/* Hero unit */}
         <div className={classes.heroContent}>
           <Container maxWidth="md">
@@ -405,46 +492,43 @@ export default function Doctor() {
             <Typography variant="h6">Notifications</Typography> 
             <Button onClick={handleNotif}>
             <Badge badgeContent={1} color="secondary">
-            <NotificationsNoneIcon style={{fontSize:'50px'}}/>
+            <NotificationsNoneIcon style={{fontSize:'50px',color:'#336bd4'}}/>
             </Badge>
             </Button>
+            
           </div>
             <Typography variant="h4" style={{marginBottom:'20px'}}>Your appointments</Typography>
             <Grid >
-          {a.map((Appoint) => (( (Appoint.status==="accepted")||(Appoint.status==="rejected"))?(
-              <Grid item key={Appoint}>
-            <ul style={{listStyle:'none',display:'inline-flex',border:'1px solid black',width:'100%',flexWrap:"wrap"}}>
-       
-       <li style={{width:'15%'}}>
-         <div> <Typography variant="h5">Appointment ID</Typography>
-          <Typography variant="h6" color="textSecondary" >{Appoint._id}</Typography>
-         </div>
-         </li >
-         <li style={{width:'25%',marginLeft:'10px'}}>
-         <div>   <Typography variant="h5">Doctor Email</Typography>
-          <Typography variant="h6" color="textSecondary" >{Appoint.doctoremail}</Typography>
-         </div>
+            <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label="customized table">
+        <TableHead>
+          <TableRow>
+            <StyledTableCell>ID</StyledTableCell>
+            <StyledTableCell align="right">Doctor Email</StyledTableCell>
+            <StyledTableCell align="right">Time&nbsp;</StyledTableCell>
+            <StyledTableCell align="right">Date&nbsp;</StyledTableCell>
+            <StyledTableCell align="right">Status&nbsp;</StyledTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {a.map((row) => (( (row.status==="accepted")||(row.status==="rejected"))?(
+            <StyledTableRow key={row.name}>
+              <StyledTableCell component="th" scope="row">
+                {row._id}
+              </StyledTableCell>
+              <StyledTableCell align="right">{row.doctoremail}</StyledTableCell>
+              <StyledTableCell align="right">{row.time}</StyledTableCell>
+              <StyledTableCell align="right">{row.date}</StyledTableCell>
+              <StyledTableCell align="right">{row.status}</StyledTableCell>
+            </StyledTableRow>
+          ):null
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
          
-         </li>
-         <li style={{width:'20%',marginLeft:'10px'}}>
-         <div>   <Typography variant="h5">Time</Typography>
-          <Typography variant="h6" color="textSecondary" >{Appoint.time}</Typography>
-         </div>
-         </li>
-         <li style={{width:'35%'}}>
-         <div>    <Typography variant="h5">Date</Typography>
-          <Typography variant="h6" color="textSecondary" >{Appoint.date}</Typography>
-         </div>
-         </li>
-         <li style={{width:'35%'}}>
-         <div>    <Typography variant="h5">Status</Typography>
-          <Typography variant="h6" color="textSecondary" >{Appoint.status}</Typography>
-         </div>
-         </li>
-       </ul>
-       </Grid>):null
-            ))}
               </Grid>
+              <br/>
             <Typography variant="h5" align="center" color="textSecondary" paragraph>
               Something short and leading about the collection below—its contents, the creator, etc.
               Make it short and sweet, but not too short so folks don&apos;t simply skip over it
@@ -462,6 +546,9 @@ export default function Doctor() {
                   <Button variant="outlined" color="primary">
                     Secondary action
                   </Button>
+                  <Button onClick={()=>setChat(true)}> 
+                      Chat now
+                    </Button>
                 </Grid>
               </Grid>
             </div>
@@ -475,21 +562,19 @@ export default function Doctor() {
                 <Card className={classes.card}>
                   <CardMedia
                     className={classes.cardMedia}
-                    
+                    image= {img}
                     title="Image title"
                   />
                   <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
+                    <Typography gutterBottom variant="h5" component="h2" style={{color:'#336bd4'}}>
                       Doctor
                     </Typography>
-                    <Typography>
-                     FirstName: {card.firstname}
+                    <Typography variant="h6"  color="textSecondary">
+                    {card.firstname}      {card.lastname}
                     </Typography>
-                    <Typography>
-                     LastName: {card.lastname}
-                    </Typography>
-                    <Typography>
-                     Email: {card.email}
+                
+                    <Typography variant="h6"  color="textSecondary">
+        {card.email}
                     </Typography>
                   </CardContent>
                   <CardActions>
@@ -500,6 +585,7 @@ export default function Doctor() {
                     <Button  size="small" color="primary" onClick={()=>handleOpen(card._id,card.email)}>
                      Consult Now
                     </Button>
+                   
                   </CardActions>
                 </Card>
               </Grid>
