@@ -26,7 +26,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { Avatar } from '@material-ui/core';
-
+import * as doctorService from '../../Axios-Actions/doctorService';
 
 function Copyright() {
   return (
@@ -146,6 +146,15 @@ const StyledTableCell = withStyles((theme) => ({
 export default function DocDashboard() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
+  const [cards, setCard] = React.useState([]);
+  const [d , setD] = React.useState([]);
+
+  React.useEffect(() => {
+    doctorService.GetAppointment()
+    .then((result) => {setCard(result.data)});
+    doctorService.GetDoctor()
+    .then((result) => {setD(result.data)});   
+},[]);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -201,7 +210,7 @@ export default function DocDashboard() {
         </Typography>
 
         <Typography variant="h6" color="textSecondary">
-            Azeem Sultan
+            {d.firstname} {d.lastname}
         </Typography>
         </center>
         <br/>
@@ -241,29 +250,31 @@ export default function DocDashboard() {
                <Typography variant="h6">Appointments</Typography>
 
           <br/>
+
             <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="customized table">
+   <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>ID</StyledTableCell>
-            <StyledTableCell align="right">Doctor Email</StyledTableCell>
+            <StyledTableCell>Appointment ID</StyledTableCell>
+            <StyledTableCell align="right">Customer Email</StyledTableCell>
             <StyledTableCell align="right">Time&nbsp;</StyledTableCell>
             <StyledTableCell align="right">Date&nbsp;</StyledTableCell>
             <StyledTableCell align="right">Status&nbsp;</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-         
-            <StyledTableRow >
+          {cards.map((row) => (( (row.status==="accepted")||(row.status==="rejected"))?(
+            <StyledTableRow key={row.name}>
               <StyledTableCell component="th" scope="row">
-            123
+                {row._id}
               </StyledTableCell>
-              <StyledTableCell align="right">abc</StyledTableCell>
-              <StyledTableCell align="right">abc</StyledTableCell>
-              <StyledTableCell align="right">abc</StyledTableCell>
-              <StyledTableCell align="right">abc</StyledTableCell>
+              <StyledTableCell align="right">{row.customeremail}</StyledTableCell>
+              <StyledTableCell align="right">{row.time}</StyledTableCell>
+              <StyledTableCell align="right">{row.date}</StyledTableCell>
+              <StyledTableCell align="right">{row.status}</StyledTableCell>
             </StyledTableRow>
-    
+          ):null
+          ))}
         </TableBody>
       </Table>
     </TableContainer>

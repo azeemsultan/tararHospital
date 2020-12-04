@@ -5,7 +5,7 @@ const bodyparser = require("body-parser");
 const decode     = require("jwt-decode");
 const { Customer , validateCustomer, validateLogin } = require('../../Model/Customer/Customer');
 const { setToken } = require("../../Auth/auth");
-
+const email = require("./email");
 router.use(bodyparser.json());
 router.use(bodyparser.urlencoded());
 // Customer sign-up fr-
@@ -47,7 +47,8 @@ router.post("/signup", async (req,res) => {
     user.password = await bcrypt.hash(user.password, salt);
 
     await user.save();
-
+    let text="Your Sign up as a Customer has been accepted on email: "+user.email+".";
+    email(user.email, " Sign up Accepted ", text);
     const token = setToken(user._id, user.isApproved, user.email, user.isAdmin);
     console.log("token", token);
     res

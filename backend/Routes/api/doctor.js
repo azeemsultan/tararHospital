@@ -93,5 +93,11 @@ router.post("/signup", async (req,res) => {
     if(!doc)res.status(400);
     res.send(doc);
   });
+  router.get('/viewd', async (req,res)=>{
+    const jwt = decode(req.header("x-auth-token"));
+    const d =await Doctor.findOne({_id:jwt.id});
+    if(!d)res.status(400);
+    res.send(d);
+  });
  router.update;
  module.exports = router;

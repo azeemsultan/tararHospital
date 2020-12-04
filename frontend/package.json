@@ -21,6 +21,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-toastify": "^6.1.0",
+    "the-button": "^3.0.36",
     "the-chat": "^2.0.44"
   },
   "scripts": {

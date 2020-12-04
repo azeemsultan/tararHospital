@@ -16,6 +16,9 @@ export async function GetAppointment() {
 export async function GetAllAppointment() {
     return await http.get(apiEndpoint + "/appointment/viewall");
 } 
+export async function GetDoctor() {
+    return await http.get(apiEndpoint + "/doctor/viewd");
+} 
 
 export async function SetAccept(id){
 
