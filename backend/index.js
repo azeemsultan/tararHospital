@@ -6,6 +6,7 @@ const customer    = require("./Routes/api/customer");
 const doctor    = require("./Routes/api/doctor");
 const appointment   = require("./Routes/api/appointment");
 const admin     = require("./Routes/api/admin");
+const payment     = require("./Routes/api/payment");
 
 
 const app = express();
@@ -14,6 +15,7 @@ app.use("/api/customer", customer);
 app.use("/api/doctor", doctor);
 app.use("/api/appointment", appointment);
 app.use("/api/admin",admin);
+app.use("/api/payment",payment);
 
 
 connectDB();
