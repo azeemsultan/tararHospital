@@ -90,7 +90,7 @@ export default function Login() {
       localStorage.setItem("token", result.data);
       console.log("Successfully logged in!");
       setTimeout(function () {
-        window.location = "/";
+        window.location = "/doctordashboard";
       }, 2000);
       
     })

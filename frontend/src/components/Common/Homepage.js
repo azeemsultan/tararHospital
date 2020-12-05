@@ -1,4 +1,4 @@
-import { Avatar, Backdrop, Button, Divider, Fade, Grid, IconButton, Input, InputBase, Paper, TextField, Typography } from '@material-ui/core';
+import { Avatar, Backdrop, Button, Container, Divider, Fade, Grid, IconButton, Input, InputBase, Paper, TextField, Typography } from '@material-ui/core';
 import 'date-fns'
 import DateFnsUtils from '@date-io/date-fns';
 import React from 'react';
@@ -121,19 +121,19 @@ const Homepage = () => {
                         <div style={{marginLeft:'40px'}}>
                             
                             <Typography variant="h6" style={{textAlign:'center',marginTop:'5px'}} >
-                                Doctors
+                                Consult
                             </Typography>
                             <Typography variant="subtitle2" >
-                                Book an Appointment
+                                Consult with Doctors
                             </Typography>
                             </div>
                             <div style={{marginLeft:'40px'}}>
                             
                             <Typography variant="h6" style={{textAlign:'center',marginTop:'5px'}} >
-                                Doctors
+                                Contact us
                             </Typography>
                             <Typography variant="subtitle2" >
-                                Book an Appointment
+                                Contact with us
                             </Typography>
                             </div>
              
@@ -148,19 +148,19 @@ const Homepage = () => {
         </Grid>
 
         <Grid container>
-            <Grid item md={12} style={{backgroundImage: `url(${img})`,height:'500px'}}>
+            <Container maxWidth="xxl" style={{backgroundImage: `url(${img})`,height:'550px'}}>
               <Grid container>
               <Grid item md={1}></Grid>
-              <Grid item md={5}>
+              <Grid item md={5} xs={12}>
                 <div className="img" style={{marginTop:'1px',height:'auto',width:'100%'}}>
-                <div style={{textAlign:'center',marginLeft:'20%',marginRight:'20%',paddingTop:'5%',color:'#336bd4',marginTop:'10%'}}>
+                <div style={{textAlign:'center',marginLeft:'20%',marginRight:'20%',color:'#336bd4',marginTop:'40px'}}>
                     <Typography variant="h2" >
-                        Lorem ipsum dolorsit cons
+                        Lorem ipsum dolorsit 
                     </Typography>
                     <Typography variant="subtitle1" style={{color:'black'}}>
-                        Adips is lorem fics omunga lorem cons gago ka putanginamo putang tanga ka gago bobo ako mid ako throw walang tala gang
+                        Adips is lorem fics omunga lorem cons gago ka putanginamo putang tanga ka gago bobo ako mid
                     </Typography>
-                    <div style={{display:'inline-flex',marginTop:'20px'}}>
+                    <div style={{display:'inline-flex',marginTop:'10px'}}>
                     <Button variant="outlined"
                     style={{border:'2px solid #336bd4',borderRadius:'16px'}}
                     >Start Consulting</Button>
@@ -170,27 +170,27 @@ const Homepage = () => {
 </div>
                 </div>
                 
-                </div>
+                </div> 
                 </Grid>
                 </Grid>
-            </Grid>
+            </Container>
        
         </Grid>
-        <Grid container style={{backgroundImage: `url(${img2})`,height:'700px'}}>
+        <Grid container style={{backgroundImage: `url(${img2})`,height:'700px',marginTop:'10px'}}>
             <Grid item md={12}>
                 <div style={{marginTop:'30px'}}>
 
               
-                <InputBase style={{border:'1px solid #336bd4',borderRadius:'16px',textAlign:'center',width:'15%'}}
-        placeholder="      Lahore"
+                <InputBase style={{border:'1px solid #336bd4',borderRadius:'16px',textAlign:'center',maxWidth:'200px'}}
+        placeholder="    Lahore"
         inputProps={{ 'aria-label': 'search doctors by location' }}
       />
         <IconButton type="submit" aria-label="search">
         <LocationOnIcon style={{color:'#336bd4'}}/>
       </IconButton> 
       
-      <InputBase style={{border:'1px solid #336bd4',borderRadius:'16px',textAlign:'center',width:'40%'}}
-        placeholder="       Search Doctors By Location"
+      <InputBase style={{border:'1px solid #336bd4',borderRadius:'16px',textAlign:'center',width:'55%'}}
+        placeholder="  Search Doctors By Location"
         inputProps={{ 'aria-label': 'search doctors by location' }}
       />
       <IconButton type="submit" aria-label="search">
@@ -199,12 +199,12 @@ const Homepage = () => {
                 </div>
                 <div style={{marginTop:'50px'}}>
                     <Typography variant="h4">
-                        Lorem ipsum dolor sit amet,consec-
+                       Our Doctors
                     </Typography>
                 </div>
                 <div style={{marginTop:'10px'}}>
                     <Typography variant="subtitle1">
-                        Lorem ipsum dolor sit amet, consecutetur Adipscing elit,
+                       Specialists
                     </Typography>
                 </div>
 
@@ -217,13 +217,13 @@ const Homepage = () => {
 
 </Avatar>
 <Typography variant="subtitle1">
-                        Lorem ipsum dolor sit amet, 
+                        Dr Ozair
                     </Typography>
                  
                     <Typography variant="subtitle1" style={{color:'#336bd4'}}
                      onClick={handleOpen}
                      >
-                        Consult Now
+                        Gastroenterologist 
                     </Typography>
 
                         </div>
@@ -234,12 +234,12 @@ const Homepage = () => {
 
 </Avatar>
 <Typography variant="subtitle1">
-                        Lorem ipsum dolor sit amet,
+                        Dr Arslan
                     </Typography>
                     <Typography variant="subtitle1" style={{color:'#336bd4'}}
                      onClick={handleOpen}
                      >
-                        Consult Now
+                        Dermatologist
                     </Typography>
 
                         </div>
@@ -251,12 +251,12 @@ const Homepage = () => {
 
 </Avatar>
 <Typography variant="subtitle1">
-                        Lorem ipsum dolor sit amet, 
+                        Dr Ubaid
                     </Typography>
                     <Typography variant="subtitle1" style={{color:'#336bd4'}}
                      onClick={handleOpen}
                      >
-                        Consult Now
+                       Cardiologist
                     </Typography>
 
                         </div>

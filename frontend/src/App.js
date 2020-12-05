@@ -9,6 +9,7 @@ import Locate from './components/Common/Location';
 import AcceptApp from './components/Doctors.js/acceptAppointment';
 import Doctor from './components/Doctors.js/doctor';
 import DocDashboard from './components/Doctors.js/DoctorDashboard';
+import Checkout from './components/Doctors.js/Payment';
 import Login from './components/Login/Login';
 import SignUp from './components/Login/Signup';
 import SignUpDoctor from './components/Login/SignupDoctor';
@@ -20,6 +21,8 @@ function App() {
         <BrowserRouter>
             
             <Route path="/login" component={Login}/> 
+                 
+            <Route path="/payment" component={Checkout}/> 
             <Route path="/doctordashboard" component={DocDashboard}/> 
             <Route path="/dashboard" component={Dashboard}/> 
             <Route path="/location" component={Chat}/> 
