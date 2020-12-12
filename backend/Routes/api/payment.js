@@ -3,7 +3,6 @@ const router     = express.Router();
 const bodyparser = require("body-parser");
 const decode     = require("jwt-decode");
 const { setToken } = require("../../Auth/auth");
-const email = require("./email");
 
 router.use(bodyparser.json());
 router.use(bodyparser.urlencoded());
