@@ -8,10 +8,11 @@ import {useStripe, useElements, CardElement} from '@stripe/react-stripe-js';
 import {makeStyles} from '@material-ui/core/styles';
 import CardInput from './CardInput';
 import * as paymentService from '../../Axios-Actions/paymentService';
+import { Container } from '@material-ui/core';
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 500,
+    maxWidth: 600,
     margin: '35vh auto',
   },
   content: {
@@ -78,6 +79,7 @@ function Pay() {
   };
 
   return (
+    <Container maxWidth="md">
     <Card className={classes.root}>
       <CardContent className={classes.content}>
         <TextField
@@ -103,6 +105,7 @@ function Pay() {
         </div>
       </CardContent>
     </Card>
+    </Container>
   );
 }
 

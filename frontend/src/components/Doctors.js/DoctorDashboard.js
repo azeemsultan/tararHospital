@@ -27,6 +27,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { Avatar } from '@material-ui/core';
 import * as doctorService from '../../Axios-Actions/doctorService';
+import img from '../../assets/img/doc.png'
 
 function Copyright() {
   return (
@@ -202,7 +203,9 @@ export default function DocDashboard() {
         <Divider />
         <br/>
         <center>
-        <Avatar style={{width:'150px',height:'150px'}}/>
+        <Avatar style={{width:'150px',height:'150px'}}>
+          <img src={img} style={{height:'150px',width:'150px'}} />
+        </Avatar>
         <br/>
         
         <Typography variant="h6">

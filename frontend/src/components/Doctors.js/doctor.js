@@ -24,6 +24,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import { loadStripe } from "@stripe/stripe-js";
 import Paper from '@material-ui/core/Paper';
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
@@ -32,6 +33,8 @@ import {
   KeyboardTimePicker,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
+import Pay from './Pay';
+import { Elements } from '@stripe/react-stripe-js';
 
 
 
@@ -125,7 +128,7 @@ const rows = [
 
 
 let di,de;
-
+const stripePromise = loadStripe("pk_test_51Hv0nsJTgZiOu1hOrVInzI7eg6QFewzhqEKqlNQrDT0oUaADAQNrM1ng0qz7vojRTZpNY0LA61X9WnO2NB2OZnIH00fsWZQT2C");
 export default function Doctor() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -294,9 +297,14 @@ export default function Doctor() {
   }}
 >
   <Fade in={chat}>
-  <div className={classes.paper}>
-  <Chat/>
-  </div>
+  <Container maxWidth="md">
+  <Elements stripe={stripePromise}> 
+
+  <Pay/>
+ 
+  </Elements>
+  <Button>X</Button>
+  </Container>
   </Fade>
 </Modal>
 
@@ -539,15 +547,13 @@ export default function Doctor() {
                 <Grid item>
                   <Button variant="contained" style={{backgroundColor:'#336bd4',color:'white'}}
 >
-                    Main call to action
+                    Rating
                   </Button>
                 </Grid>
                 <Grid item>
-                  <Button variant="outlined" color="primary">
-                    Secondary action
-                  </Button>
-                  <Button onClick={()=>setChat(true)}> 
-                      Chat now
+                
+                  <Button variant="outlined" color="primary" onClick={()=>setChat(true)}> 
+                      Payment
                     </Button>
                 </Grid>
               </Grid>
