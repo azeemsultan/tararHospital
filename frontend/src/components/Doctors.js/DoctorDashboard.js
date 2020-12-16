@@ -182,7 +182,7 @@ export default function DocDashboard() {
             Dashboard
           </Typography>
           <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
+            <Badge badgeContent={1} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
@@ -235,11 +235,21 @@ export default function DocDashboard() {
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             {/* Chart */}
-            <Grid item xs={12} md={12} lg={12}>
+            <Grid item xs={12} md={6} lg={6}>
               <Paper>
                   <center>
                       <br/>
                       <Typography variant="h6">Appoint Requests</Typography>
+                  </center>
+              <AcceptApp/>
+              <br/>
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={6} lg={6}>
+              <Paper>
+                  <center>
+                      <br/>
+                      <Typography variant="h6">Consultation Requests</Typography>
                   </center>
               <AcceptApp/>
               <br/>
@@ -258,11 +268,11 @@ export default function DocDashboard() {
    <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Appointment ID</StyledTableCell>
-            <StyledTableCell align="right">Customer Email</StyledTableCell>
-            <StyledTableCell align="right">Time&nbsp;</StyledTableCell>
-            <StyledTableCell align="right">Date&nbsp;</StyledTableCell>
-            <StyledTableCell align="right">Status&nbsp;</StyledTableCell>
+            <StyledTableCell style={{backgroundColor:'#336bd4'}}>Appointment ID</StyledTableCell>
+            <StyledTableCell style={{backgroundColor:'#336bd4'}} align="right">Customer Email</StyledTableCell>
+            <StyledTableCell style={{backgroundColor:'#336bd4'}} align="right">Time&nbsp;</StyledTableCell>
+            <StyledTableCell  style={{backgroundColor:'#336bd4'}}align="right">Date&nbsp;</StyledTableCell>
+            <StyledTableCell style={{backgroundColor:'#336bd4'}} align="right">Status&nbsp;</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -281,6 +291,38 @@ export default function DocDashboard() {
         </TableBody>
       </Table>
     </TableContainer>
+<br/>
+    <Typography variant="h6">Consultations</Typography>
+
+<br/>
+
+  <TableContainer component={Paper} >
+<Table className={classes.table} aria-label="customized table"  >
+<TableHead >
+<TableRow >
+  <StyledTableCell  >Appointment ID</StyledTableCell>
+  <StyledTableCell align="right">Customer Email</StyledTableCell>
+  <StyledTableCell align="right">Time&nbsp;</StyledTableCell>
+  <StyledTableCell align="right">Date&nbsp;</StyledTableCell>
+  <StyledTableCell align="right">Status&nbsp;</StyledTableCell>
+</TableRow>
+</TableHead>
+<TableBody>
+{cards.map((row) => (( (row.status==="accepted")||(row.status==="rejected"))?(
+  <StyledTableRow key={row.name}>
+    <StyledTableCell component="th" scope="row">
+      {row._id}
+    </StyledTableCell>
+    <StyledTableCell align="right">{row.customeremail}</StyledTableCell>
+    <StyledTableCell align="right">{row.time}</StyledTableCell>
+    <StyledTableCell align="right">{row.date}</StyledTableCell>
+    <StyledTableCell align="right">{row.status}</StyledTableCell>
+  </StyledTableRow>
+):null
+))}
+</TableBody>
+</Table>
+</TableContainer>
               </Paper>
             </Grid>
           </Grid>

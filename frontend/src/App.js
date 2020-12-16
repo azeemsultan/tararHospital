@@ -17,6 +17,8 @@ import Pay from "./components/Doctors.js/Pay.js";
 import map from "./components/Common/GMap";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+
+import MyMap from './components/Common/GoogleMap';
 const stripePromise = loadStripe("pk_test_51Hv0nsJTgZiOu1hOrVInzI7eg6QFewzhqEKqlNQrDT0oUaADAQNrM1ng0qz7vojRTZpNY0LA61X9WnO2NB2OZnIH00fsWZQT2C");
 
 
@@ -30,6 +32,7 @@ function App() {
             <Route path="/pay" component={Pay}/> 
             </Elements>
             <Route path="/login" component={Login}/> 
+            <Route path="/googlemap" component={MyMap}/> 
             <Route path="/doctordashboard" component={DocDashboard}/> 
             <Route path="/dashboard" component={Dashboard}/> 
             <Route path="/location" component={Chat}/> 

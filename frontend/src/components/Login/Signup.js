@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import * as authService from '../../Axios-Actions/authService'
-
+import img from '../../assets/Assets/bg-img.png';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -26,6 +26,13 @@ function Copyright() {
     </Typography>
   );
 }
+var sectionStyle = {
+  width: "100%",
+  height: "550px",
+  backgroundImage: `url(${img})`,
+  backgroundSize: 'cover'
+};
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -91,9 +98,11 @@ const register = () =>{
 }
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="md" style={{backgroundImage:`url(${img})`}}>
+      
       <CssBaseline />
       <div className={classes.paper}>
+        
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
@@ -153,10 +162,11 @@ const register = () =>{
               />
             </Grid>
             <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
-              />
+            <a href='/signupDoctor' style={{textDecoration:'none',color:'blueviolet'}}>
+              <Typography>
+                Sign up as a doctor?
+              </Typography>
+            </a>
             </Grid>
           </Grid>
           <Button
@@ -171,7 +181,7 @@ const register = () =>{
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/login" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>

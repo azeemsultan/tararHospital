@@ -1,4 +1,4 @@
-import React from "react";
+/*import React from "react";
 import { Map, TileLayer , Marker , Popup, withLeaflet,useLeaflet } from "react-leaflet";
 import { OpenStreetMapProvider, GeoSearchControl } from 'leaflet-geosearch'
 import L from "leaflet";
@@ -7,7 +7,9 @@ import "leaflet/dist/leaflet.css";
 import "./search.css"
 import "lrm-google";
 import "./routing.css";
+
 import useGeoLocation from "./useGeoLocation";
+import { Button, Grid } from "@material-ui/core";
 const markerstart = new L.Icon({
     iconUrl: require("./marker/red.png"),
     iconSize: [40, 40],
@@ -22,6 +24,8 @@ const markerstart = new L.Icon({
   });
 export default function GMap(){
 const [center,setCenter] = React.useState({lat:31.5204,lng: 74.3587});
+const [doctor, setDoctor] = React.useState([]);
+const [selected, setSelected] = React.useState(null);
 const ZOOM_LEVEL= 9;
 const mapRef= React.useRef();
 
@@ -55,12 +59,20 @@ const Search = (props) => {
 
 
   return null // don't want anything to show up from this comp
+  
 }
 
 return (
-
+    <Grid container>
+       <Grid item md={2}>
+         <Button color="primary" variant="outlined"
+         onClick={()=><Marker icon={markerend} position={[location.coordinates.lat,location.coordinates.lng]}
+         ></Marker>}
+         > NEARBY </Button>
+       </Grid>
+      <Grid item md={10}>
     <Map
-    style={{height:"100vw",width:"100vw"}}
+    style={{height:"40vw",width:"60vw"}}
     center={center}
     zoom={ZOOM_LEVEL}
     ref={mapRef}
@@ -82,12 +94,16 @@ return (
                   <p>Your Current Location</p>
                   <p>Latitude:{location.coordinates.lat}</p>
                   <p>Longitude:{location.coordinates.lng}</p>
-                  </Popup></Marker>
+                  </Popup>
+                
+                  </Marker>
               )}
                     <Search provider={new OpenStreetMapProvider()} />
+                  
     </Map>
-
+    </Grid>
+    </Grid>
 
 );
 
-}
+} */

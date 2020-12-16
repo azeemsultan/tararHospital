@@ -127,7 +127,9 @@ const rows = [
 ];
 
 
+
 let di,de;
+let f,l
 const stripePromise = loadStripe("pk_test_51Hv0nsJTgZiOu1hOrVInzI7eg6QFewzhqEKqlNQrDT0oUaADAQNrM1ng0qz7vojRTZpNY0LA61X9WnO2NB2OZnIH00fsWZQT2C");
 export default function Doctor() {
   const classes = useStyles();
@@ -142,6 +144,8 @@ export default function Doctor() {
   const [cards, setCard] = React.useState([]);
   const [chat, setChat] = React.useState(false);
   const [a,setA]=React.useState([]);
+  const [consult,setConsult] = React.useState(false);
+
   useEffect(() => {
     doctorService.DoctorView()
     .then((result) => {setCard(result.data)});
@@ -149,7 +153,20 @@ export default function Doctor() {
     .then((result) => {setA(result.data)});
 },[]);
 
-  const handleView = () => {
+
+
+const handleConsult = () => {
+  setConsult(true);
+};
+const handleCloseConsult = () => {
+  setConsult(false);
+};
+
+
+
+  const handleView = (fn,ln) => {
+    f=fn;
+    l=ln;
     setView(true);
   };
 
@@ -173,6 +190,7 @@ export default function Doctor() {
   const handleClose = () => {
     setOpen(false);
   };
+  
   const handleApp = () =>{
 
     let t=''+time+'';
@@ -276,6 +294,7 @@ export default function Doctor() {
                   </center>
                 </Card>
                 </Grid>):null
+               
             ))}
          
         
@@ -323,8 +342,9 @@ export default function Doctor() {
 >
   <Fade in={view}>
     <div className={classes.paper}>
+
       <Typography variant="h4" style={{textAlign:'center',marginBottom:'10px'}}>
-        Doctor Name
+       {f} {l}
       </Typography>
 
      <div style={{display:'inline-flex',marginTop:'10px'}}>
@@ -334,22 +354,23 @@ export default function Doctor() {
      </div>
      <div>
      <Typography variant="h6" style={{marginLeft:'30px'}}>
-       Description: I am Cardiologist and Pro
+       Speciality: Cardiologist 
      </Typography> <br/>
      <div>
      <Typography variant="subtitle1" style={{marginLeft:'30px'}}>
-       Description: I am Cardiologist and Pro
+       Fee: 1500 Rupees
      </Typography>
      </div> <br/>
      <div>
      <Typography variant="subtitle1" style={{marginLeft:'30px'}}>
-       5 Stars (420 reviews)
+       5 Stars ({Math.floor((Math.random() * 10) + 1)})
      </Typography>
-     </div>
      </div>
   
      </div>
-   
+
+     </div>
+  
      
       <center style={{marginTop:'20px'}}>
      
@@ -361,33 +382,35 @@ export default function Doctor() {
   </Fade>
 </Modal>
 </div>
+<div>
 
-       <div>
 
 <Modal 
   aria-labelledby="transition-modal-title"
   aria-describedby="transition-modal-description"
   className={classes.modal}
-  open={open}
-  onClose={handleClose}
+  open={consult}
+  onClose={handleCloseConsult}
   closeAfterTransition
   BackdropComponent={Backdrop}
   BackdropProps={{
     timeout: 500, 
   }}
 >
-  <Fade in={open}>
+  <Fade in={consult}>
     <div className={classes.paper}>
       <Container maxWidth="md">
+        <div style={{backgroundColor:'#336bd4',color:'white'}}>
       <Typography variant="h4">
-        Get your Appointment
+        Online Consulting Request
       </Typography>
+      </div>
      <div>
-     <Typography variant="h6" style={{marginTop:'20px'}}>
+     <Typography variant="h6" style={{marginTop:'20px',backgroundColor:'#336bd4',color:'white'}}>
         Select your date
       </Typography>
       
-      <label style={{fontWeight:'bold',color:'blueviolet'}}>Date </label> <span>   
+      <label style={{fontWeight:'bold',color:'#336bd4'}}>Date </label> <span>   
         <select id="date"onChange={(e)=>{setDate(e.target.value)}} style={{marginTop:'10px',width:'150px',height:'30px',marginLeft:'20px',border:'0px solid #fff'}}>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -424,7 +447,7 @@ export default function Doctor() {
                                 </select> </span>
       
       
-      <label style={{fontWeight:'bold',color:'blueviolet'}}>Month </label> <span>   
+      <label style={{fontWeight:'bold',color:'#336bd4'}}>Month </label> <span>   
         <select id="month"onChange={(e)=>{setMonth(e.target.value)}} style={{marginTop:'10px',width:'150px',height:'30px',marginLeft:'20px',border:'0px solid #fff'}}>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -440,7 +463,7 @@ export default function Doctor() {
                                 <option value="12">12</option>
                                 
                                 </select> </span>
-        <label style={{fontWeight:'bold',color:'blueviolet'}}>Year </label> <span>   
+        <label style={{fontWeight:'bold',color:'#336bd4'}}>Year </label> <span>   
         <select id="Year"onChange={(e)=>{setYear(e.target.value)}} style={{marginTop:'10px',width:'150px',height:'30px',marginLeft:'20px',border:'0px solid #fff'}}>
                                 <option value="2020">2020</option>
                                 <option value="2021">2021</option>
@@ -459,7 +482,7 @@ export default function Doctor() {
      </div>
      <div>
        <div style={{marginTop:'10px'}}>
-     <label style={{fontWeight:'bold',color:'blueviolet'}}>Time </label> 
+     <label style={{fontWeight:'bold',color:'#336bd4'}}>Time </label> 
      <input style={{marginLeft:'20px',paddingTop:'20px'}}
    type='time' onChange={(e)=>{setTime(e.target.value)}} style={{ marginLeft:'5px',width:"20%"}} ></input>
    </div>
@@ -472,8 +495,137 @@ export default function Doctor() {
      </div>
      
       <center style={{marginTop:'20px'}}>
-        <Button variant="outlined" onClick={handleApp}>Submit</Button>
-        <Button variant="outlined" style={{marginLeft:'10px'}}
+        <Button variant="outlined" color="primary" onClick={handleApp}>Submit</Button>
+        <Button variant="outlined" color="secondary" style={{marginLeft:'10px'}}
+        onClick={handleCloseConsult}
+        >Cancel</Button>
+        </center>
+        </Container>
+    </div>
+  </Fade>
+</Modal>
+
+
+
+
+
+
+
+</div>
+       <div>
+
+<Modal 
+  aria-labelledby="transition-modal-title"
+  aria-describedby="transition-modal-description"
+  className={classes.modal}
+  open={open}
+  onClose={handleClose}
+  closeAfterTransition
+  BackdropComponent={Backdrop}
+  BackdropProps={{
+    timeout: 500, 
+  }}
+>
+  <Fade in={open}>
+    <div className={classes.paper}>
+      <Container maxWidth="md">
+        <div style={{backgroundColor:'#336bd4',color:'white'}}>
+      <Typography variant="h4">
+        Get your Appointment
+      </Typography>
+      </div>
+     <div>
+     <Typography variant="h6" style={{marginTop:'20px',backgroundColor:'#336bd4',color:'white'}}>
+        Select your date
+      </Typography>
+      
+      <label style={{fontWeight:'bold',color:'#336bd4'}}>Date </label> <span>   
+        <select id="date"onChange={(e)=>{setDate(e.target.value)}} style={{marginTop:'10px',width:'150px',height:'30px',marginLeft:'20px',border:'0px solid #fff'}}>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
+                                <option value="31">31</option>
+                                
+                                </select> </span>
+      
+      
+      <label style={{fontWeight:'bold',color:'#336bd4'}}>Month </label> <span>   
+        <select id="month"onChange={(e)=>{setMonth(e.target.value)}} style={{marginTop:'10px',width:'150px',height:'30px',marginLeft:'20px',border:'0px solid #fff'}}>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                
+                                </select> </span>
+        <label style={{fontWeight:'bold',color:'#336bd4'}}>Year </label> <span>   
+        <select id="Year"onChange={(e)=>{setYear(e.target.value)}} style={{marginTop:'10px',width:'150px',height:'30px',marginLeft:'20px',border:'0px solid #fff'}}>
+                                <option value="2020">2020</option>
+                                <option value="2021">2021</option>
+                                <option value="2022">2022</option>
+                                <option value="2023">2023</option>
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                                <option value="2026">2026</option>
+                                <option value="2027">2027</option>
+                                <option value="2028">2028</option>
+                                <option value="2029">2029</option>
+                                <option value="2030">2030</option>
+                                <option value="2031">2031</option>
+                        
+                                </select> </span>
+     </div>
+     <div>
+       <div style={{marginTop:'10px'}}>
+     <label style={{fontWeight:'bold',color:'#336bd4'}}>Time </label> 
+     <input style={{marginLeft:'20px',paddingTop:'20px'}}
+   type='time' onChange={(e)=>{setTime(e.target.value)}} style={{ marginLeft:'5px',width:"20%"}} ></input>
+   </div>
+     <TextField style={{marginLeft:'10px',width:"70%"}}
+     label="Enter Description"
+     onChange={(e)=>{setDescription(e.target.value)}}
+     />
+ 
+  
+     </div>
+     
+      <center style={{marginTop:'20px'}}>
+        <Button variant="outlined" color="primary" onClick={handleApp}>Submit</Button>
+        <Button variant="outlined" color="secondary" style={{marginLeft:'10px'}}
         onClick={handleClose}
         >Cancel</Button>
         </center>
@@ -585,13 +737,15 @@ export default function Doctor() {
                   </CardContent>
                   <CardActions>
                     <Button size="small" color="primary"
-                    onClick={handleView}>
+                    onClick= {()=>handleView(card.firstname,card.lastname)}>
                       View
                     </Button>
                     <Button  size="small" color="primary" onClick={()=>handleOpen(card._id,card.email)}>
-                     Consult Now
+                     Appointment
                     </Button>
-                   
+                    <Button size="small" color="primary" onClick={handleConsult}>
+                      Consult
+                    </Button>
                   </CardActions>
                 </Card>
               </Grid>

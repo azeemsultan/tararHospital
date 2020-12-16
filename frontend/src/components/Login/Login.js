@@ -15,7 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import {FormControl,FormLabel,RadioGroup} from '@material-ui/core';
 import * as authService from '../../Axios-Actions/authService'
-
+import img from '../../assets/img/docs.jpg'
 
 function Copyright() {
   return (
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   image: {
-  
+    backgroundImage: `url(${img})`,
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
@@ -161,7 +161,7 @@ export default function Login() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

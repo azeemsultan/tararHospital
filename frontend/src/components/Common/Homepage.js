@@ -49,6 +49,14 @@ const Homepage = () => {
     setSelectedDate(date);
   };
 
+  var sectionStyle = {
+    width: "100%",
+    height: "550px",
+    backgroundImage: `url(${img})`,
+    backgroundSize: 'cover'
+  };
+  
+
     return ( 
     <div>
        <div>
@@ -110,60 +118,71 @@ const Homepage = () => {
                 <div style={{height:'70px',display:'inline-flex',marginTop:'10px'}}>
                 
                         <div>
-                            
+                            <a href="/doctors" style={{color:'#336bd4'}}>
                         <Typography variant="h6" style={{textAlign:'center',marginTop:'5px'}} >
                             Doctors
                         </Typography>
                         <Typography variant="subtitle2" >
                             Book an Appointment
                         </Typography>
+                        </a>
                         </div>
                         <div style={{marginLeft:'40px'}}>
-                            
+                        <a href="/doctors" style={{color:'#336bd4'}}>
                             <Typography variant="h6" style={{textAlign:'center',marginTop:'5px'}} >
                                 Consult
                             </Typography>
                             <Typography variant="subtitle2" >
                                 Consult with Doctors
                             </Typography>
+                            </a>
                             </div>
                             <div style={{marginLeft:'40px'}}>
-                            
+                            <a href="/" style={{color:'#336bd4'}}>
                             <Typography variant="h6" style={{textAlign:'center',marginTop:'5px'}} >
                                 Contact us
                             </Typography>
                             <Typography variant="subtitle2" >
                                 Contact with us
                             </Typography>
+                            
+                          </a>
                             </div>
              
                 </div>
             </Grid>
             <Grid item md={3} xs={12}>
-                <button style={{color:'white',backgroundColor:'#336bd4',marginTop:'25px',borderRadius:'18px',height:'35px',border:'1px solid #336bd4',marginBottom:'10px',width:'130px'}}>
-                  Login/Signup  
+                <button style={{color:'white',backgroundColor:'#336bd4',marginTop:'25px',borderRadius:'18px'
+                ,height:'35px',border:'1px solid #336bd4',marginBottom:'10px',width:'130px'}}>
+                <center style={{display:'inline-flex',textAlign:'center',textDecoration:'none'}}>
+                  <a href="/login" style={{color:'white'}}> <Typography>Login</Typography></a>/<a href="/signup" style={{color:'white'}}>
+                    <Typography>Signup</Typography></a> </center> 
                 </button>
                 </Grid>
        
         </Grid>
 
         <Grid container>
-            <Container maxWidth="xxl" style={{backgroundImage: `url(${img})`,height:'550px'}}>
+
+            <Container maxWidth="xxl" style={{height:'550px'}}>
+            <section style={ sectionStyle }>
+
               <Grid container>
               <Grid item md={1}></Grid>
               <Grid item md={5} xs={12}>
-                <div className="img" style={{marginTop:'1px',height:'auto',width:'100%'}}>
-                <div style={{textAlign:'center',marginLeft:'20%',marginRight:'20%',color:'#336bd4',marginTop:'40px'}}>
-                    <Typography variant="h2" >
+                <div className="img" style={{height:'auto',width:'100%'}}>
+                <div style={{textAlign:'center',marginLeft:'20%',marginRight:'20%',color:'#336bd4',marginTop:'10px'}}>
+                    <Typography variant="h3" >
                         Lorem ipsum dolorsit 
                     </Typography>
                     <Typography variant="subtitle1" style={{color:'black'}}>
                         Adips is lorem fics omunga lorem cons gago ka putanginamo putang tanga ka gago bobo ako mid
                     </Typography>
+                    <br/>
                     <div style={{display:'inline-flex',marginTop:'10px'}}>
                     <Button variant="outlined"
-                    style={{border:'2px solid #336bd4',borderRadius:'16px'}}
-                    >Start Consulting</Button>
+                    style={{border:'2px solid #336bd4',borderRadius:'13%'}}
+                    ><Typography variant="subtitle1">Start Consulting</Typography></Button>
                    <Typography variant="subtitle1"
                    style={{marginLeft:'20px',color:'#336bd4',marginTop:'3px'}}
                    >Find Doctors now</Typography>
@@ -173,10 +192,11 @@ const Homepage = () => {
                 </div> 
                 </Grid>
                 </Grid>
+                </section>
             </Container>
        
         </Grid>
-        <Grid container style={{backgroundImage: `url(${img2})`,height:'700px',marginTop:'10px'}}>
+        <Grid container style={{backgroundImage: `url(${img2})`,height:'450px',marginTop:'10px'}}>
             <Grid item md={12}>
                 <div style={{marginTop:'30px'}}>
 
@@ -207,6 +227,7 @@ const Homepage = () => {
                        Specialists
                     </Typography>
                 </div>
+                
 
                 <div style={{marginTop:'50px'}}>
                     <center style={{display:'inline-flex'}}>
@@ -271,10 +292,15 @@ const Homepage = () => {
                 </a>
             </Grid>
         </Grid>
+        <br/>
         <Grid container style={{marginTop:'40px'}}>
             <Grid item md={12}>
+              <br/>
+              <Typography variant="h6">
+                Recommendations
+              </Typography>
                 <div style={{marginTop:'40px'}}>
-                    <center style={{display:'inline-flex'}}>
+                    <center style={{display:'inline-flex',flexWrap:'wrap'}}>
                         <div>
                     <Card style={{maxWidth:'340px',marginLeft:'10%'}}>
       <CardActionArea>
@@ -287,11 +313,10 @@ const Homepage = () => {
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            Lizard
+           Great platform
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-            across all continents except Antarctica
+            Very efficient and works really well on phone and web, I think this is the most easiest way of appointments in Pakistan
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -317,11 +342,10 @@ const Homepage = () => {
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            Lizard
+           Helpful App
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-            across all continents except Antarctica
+            A very helpful app for booking appointments and searching the required doctor, made my life easiers
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -347,11 +371,10 @@ const Homepage = () => {
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            Lizard
+            Best App
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-            across all continents except Antarctica
+            Literally the best website to book the appointment online for Doctors. The service is great
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -370,7 +393,7 @@ const Homepage = () => {
             </Grid>
         </Grid>
         <Grid container>
-            <Grid item md={12} style={{backgroundColor:'#336bd4',height:'150px',marginTop:'40px',color:'white'}}>
+            <Grid item md={12} xs={12} style={{backgroundColor:'#336bd4',height:'150px',marginTop:'40px',color:'white'}}>
                 Footer
                 Logo
                 pictures
