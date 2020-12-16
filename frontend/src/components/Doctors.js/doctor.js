@@ -17,6 +17,7 @@ import Link from '@material-ui/core/Link';
 import { Backdrop, Badge, Divider, Fade, Modal, TextField } from '@material-ui/core';
 import img from '../../assets/img/doc.png';
 import * as doctorService from '../../Axios-Actions/doctorService';
+import * as consultService from '../../Axios-Actions/consultService';
 import Chat from '../Common/Location';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -118,18 +119,8 @@ function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
-
-
 let di,de;
-let f,l
+let f,l;
 const stripePromise = loadStripe("pk_test_51Hv0nsJTgZiOu1hOrVInzI7eg6QFewzhqEKqlNQrDT0oUaADAQNrM1ng0qz7vojRTZpNY0LA61X9WnO2NB2OZnIH00fsWZQT2C");
 export default function Doctor() {
   const classes = useStyles();
@@ -144,6 +135,7 @@ export default function Doctor() {
   const [cards, setCard] = React.useState([]);
   const [chat, setChat] = React.useState(false);
   const [a,setA]=React.useState([]);
+  const [c,setC]=React.useState([]);
   const [consult,setConsult] = React.useState(false);
 
   useEffect(() => {
@@ -151,11 +143,15 @@ export default function Doctor() {
     .then((result) => {setCard(result.data)});
     doctorService.GetAllAppointment()
     .then((result) => {setA(result.data)});
+    consultService.GetAllConsult()
+    .then((result) => {setC(result.data)});
 },[]);
 
 
 
-const handleConsult = () => {
+const handleConsult = (doci,doce) => {
+  di=doci;
+  de=doce;
   setConsult(true);
 };
 const handleCloseConsult = () => {
@@ -209,6 +205,24 @@ const handleCloseConsult = () => {
 
 
   };
+  const handleCon = () =>{
+
+    let t=''+time+'';
+    let da= ''+date+'/'+month+'/'+year+'';
+    consultService.PostConsult(da,t,description,di,de)
+    .then(() => {
+      console.log("Successfully Sent Consult!");
+      setTimeout(function () {
+        window.location = "/";
+      }, 2000);
+      
+    })
+    .catch((err) => {
+      console.log(err)
+    });
+
+
+  };
   const settoA=(id)=>{
     doctorService.CusAccept(id)
     .then(() => {
@@ -226,6 +240,32 @@ const handleCloseConsult = () => {
     doctorService.CusReject(id)
     .then(() => {
       console.log("Successfully Rejected by Customer Appointment!");
+      setTimeout(function () {
+        window.location = "/";
+      }, 2000);
+      
+    })
+    .catch((err) => {
+      console.log(err)
+    });
+  };
+  const settoAC=(id)=>{
+    consultService.CusAccept(id)
+    .then(() => {
+      console.log("Successfully Accepted by Customer Consult!");
+      setTimeout(function () {
+        window.location = "/";
+      }, 2000);
+      
+    })
+    .catch((err) => {
+      console.log(err)
+    });
+  };
+  const settoRC=(id)=>{
+    consultService.CusReject(id)
+    .then(() => {
+      console.log("Successfully Rejected by Customer Consult!");
       setTimeout(function () {
         window.location = "/";
       }, 2000);
@@ -287,6 +327,54 @@ const handleCloseConsult = () => {
                     >Accept</Button>
             
          <Button onClick={(e)=>settoR(Appoint._id)}
+         style={{backgroundColor:'#ed4e4e',marginLeft:'5px',color:'white'}}
+         >Reject</Button>
+         </div>
+                  </CardActions>
+                  </center>
+                </Card>
+                </Grid>):null
+               
+            ))}
+         
+        
+              </Grid>
+     </Container>
+     <Container maxWidth="md">
+     <Grid >
+     {c.map((Appoint) => (( (Appoint.status==="edited"))?(
+              <Grid item key={Appoint}>
+     <Card className={classes.card} style={{maxWidth:'300px'}}>
+                 <center>
+                  <CardContent className={classes.cardContent}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      Doctor Scheduled
+                    </Typography>
+                    <Typography variant="h6" color="textSecondary" >
+                    {Appoint.firstname}      {Appoint.lastname}
+                    </Typography>
+                
+                    <Typography variant="h6" color="textSecondary" >
+        {Appoint.doctoremail}
+                    </Typography>
+                    <Typography variant="h6" color="textSecondary" >
+        {Appoint.date}
+                    </Typography>
+                    <Typography variant="h6" color="textSecondary" >
+        {Appoint.time}
+                    </Typography>
+                    <Typography variant="h6" color="textSecondary" >
+        {Appoint.status}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Divider/>
+                <div style={{marginLeft:'15%'}}>
+                    <Button onClick={(e)=>settoAC(Appoint._id)}
+                    style={{backgroundColor:'#61e885',color:'white'}}
+                    >Accept</Button>
+            
+         <Button onClick={(e)=>settoRC(Appoint._id)}
          style={{backgroundColor:'#ed4e4e',marginLeft:'5px',color:'white'}}
          >Reject</Button>
          </div>
@@ -495,7 +583,7 @@ const handleCloseConsult = () => {
      </div>
      
       <center style={{marginTop:'20px'}}>
-        <Button variant="outlined" color="primary" onClick={handleApp}>Submit</Button>
+        <Button variant="outlined" color="primary" onClick={handleCon}>Submit</Button>
         <Button variant="outlined" color="secondary" style={{marginLeft:'10px'}}
         onClick={handleCloseConsult}
         >Cancel</Button>
@@ -743,7 +831,7 @@ const handleCloseConsult = () => {
                     <Button  size="small" color="primary" onClick={()=>handleOpen(card._id,card.email)}>
                      Appointment
                     </Button>
-                    <Button size="small" color="primary" onClick={handleConsult}>
+                    <Button size="small" color="primary" onClick={()=>handleConsult(card._id,card.email)}>
                       Consult
                     </Button>
                   </CardActions>

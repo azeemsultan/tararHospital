@@ -12,7 +12,7 @@ import img from '../../assets/img/ubaid.jpg'
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import * as doctorService from '../../Axios-Actions/doctorService';
+import * as consultService from '../../Axios-Actions/consultService';
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: 'flex',
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 let e;
 
-const AcceptApp=()=> {
+const AcceptCon=()=> {
 
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
@@ -39,7 +39,7 @@ const AcceptApp=()=> {
     const [month, setMonth] = React.useState('');
     const [year, setYear] = React.useState('');
   useEffect(() => {
-    doctorService.GetAppointment()
+    consultService.GetConsult()
     .then((result) => {setCard(result.data)});
 },[]);
     const handleOpen = (id) => {
@@ -53,9 +53,9 @@ const AcceptApp=()=> {
       setOpen(false);
     };
    const accept=(id)=>{
-    doctorService.SetAccept(id)
+    consultService.SetAccept(id)
     .then(() => {
-      console.log("Successfully Accepted Appointment!");
+      console.log("Successfully Accepted Consult!");
       setTimeout(function () {
         window.location = "/doctordashboard";
       }, 2000);
@@ -66,9 +66,9 @@ const AcceptApp=()=> {
     });
     };
     const reject=(id)=>{
-      doctorService.SetReject(id)
+      consultService.SetReject(id)
       .then(() => {
-        console.log("Successfully Rejected Appointment!");
+        console.log("Successfully Rejected Consult!");
         setTimeout(function () {
           window.location = "/doctordashboard";
         }, 2000);
@@ -79,9 +79,9 @@ const AcceptApp=()=> {
       });
       };
       const edit=(d,t)=>{
-        doctorService.SetEdit(e,d,t)
+        consultService.SetEdit(e,d,t)
         .then(() => {
-          console.log("Successfully Edited Appointment!");
+          console.log("Successfully Edited Consult!");
           setTimeout(function () {
             window.location = "/doctordashboard";
           }, 2000);
@@ -262,4 +262,4 @@ const AcceptApp=()=> {
     </div> );
 }
  
-export default AcceptApp;
+export default AcceptCon;

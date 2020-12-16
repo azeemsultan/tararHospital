@@ -19,6 +19,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import AcceptApp from './acceptAppointment';
+import AcceptCon from './acceptConsult';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -27,6 +28,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { Avatar } from '@material-ui/core';
 import * as doctorService from '../../Axios-Actions/doctorService';
+import * as consultService from '../../Axios-Actions/consultService';
 import img from '../../assets/img/doc.png'
 
 function Copyright() {
@@ -148,11 +150,14 @@ export default function DocDashboard() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [cards, setCard] = React.useState([]);
+  const [cardsc, setCardc] = React.useState([]);
   const [d , setD] = React.useState([]);
 
   React.useEffect(() => {
     doctorService.GetAppointment()
     .then((result) => {setCard(result.data)});
+    consultService.GetConsult()
+    .then((result) => {setCardc(result.data)});
     doctorService.GetDoctor()
     .then((result) => {setD(result.data)});   
 },[]);
@@ -251,7 +256,7 @@ export default function DocDashboard() {
                       <br/>
                       <Typography variant="h6">Consultation Requests</Typography>
                   </center>
-              <AcceptApp/>
+              <AcceptCon/>
               <br/>
               </Paper>
             </Grid>
@@ -308,7 +313,7 @@ export default function DocDashboard() {
 </TableRow>
 </TableHead>
 <TableBody>
-{cards.map((row) => (( (row.status==="accepted")||(row.status==="rejected"))?(
+{cardsc.map((row) => (( (row.status==="accepted")||(row.status==="rejected"))?(
   <StyledTableRow key={row.name}>
     <StyledTableCell component="th" scope="row">
       {row._id}

@@ -1,6 +1,6 @@
 import React from "react";
 
-import {
+/*import {
     GoogleMap,
     useLoadScript,
     Marker,
@@ -44,4 +44,4 @@ export default function MyMap(){
        </GoogleMap>
     </div>
     )
-}
+}*/
