@@ -8,11 +8,12 @@ import CardContent from '@material-ui/core/CardContent';
 import { AppBar, Grid, TextField, Toolbar, Typography } from '@material-ui/core';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
-import img from '../../assets/img/ubaid.jpg'
+
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import * as consultService from '../../Axios-Actions/consultService';
+import img from './consult.jpg'
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: 'flex',
@@ -204,13 +205,11 @@ const AcceptCon=()=> {
     </div>
            
       <Grid container>
-          <Grid item md={2}>
+         
 
-          </Grid>
-
-          <Grid item md={8} style={{marginTop:'30px'}}>
+          <Grid item md={12} lg={12} style={{marginTop:'30px'}}>
           {cards.map((card) => ( (card.status==="pending")?(
-              <Grid item key={card} xs={12} sm={6} md={4}>
+              <Grid item key={card} xs={12} sm={6} md={5} style={{display:'inline-flex',flexWrap:'wrap',marginLeft:'10px'}}>
           <Card style={{maxWidth:'350px'}}>
       <CardActionArea>
         <CardMedia
@@ -221,7 +220,7 @@ const AcceptCon=()=> {
           title="Contemplative Reptile"
         />
         <CardContent>
-          <Typography gutterBottom variant="h6" component="h6">
+          <Typography gutterBottom variant="subtitle1" component="h6">
           {card.customeremail}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
@@ -237,7 +236,7 @@ const AcceptCon=()=> {
       </CardActionArea>
       <CardActions>
       
-        <Button onClick={(e)=>accept(card._id)} size="small" color="primary" style={{marginLeft:'10%'}}>
+        <Button onClick={(e)=>accept(card._id)} size="small" color="primary" style={{marginLeft:'10px'}}>
          Accept
         </Button>
         <Button onClick={(e)=>reject(card._id)} size="small" color="primary" style={{marginLeft:'10px'}}>
@@ -255,9 +254,7 @@ const AcceptCon=()=> {
             ))}
               </Grid>
 
-              <Grid item md={2}>
-              
-              </Grid>
+           
       </Grid>
     </div> );
 }

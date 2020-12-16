@@ -246,7 +246,11 @@ export default function DocDashboard() {
                       <br/>
                       <Typography variant="h6">Appoint Requests</Typography>
                   </center>
+                  <div>
+                    <center>
               <AcceptApp/>
+              </center>
+              </div>
               <br/>
               </Paper>
             </Grid>
@@ -256,7 +260,11 @@ export default function DocDashboard() {
                       <br/>
                       <Typography variant="h6">Consultation Requests</Typography>
                   </center>
+                  <div>
+                    <center>
               <AcceptCon/>
+              </center>
+              </div>
               <br/>
               </Paper>
             </Grid>
