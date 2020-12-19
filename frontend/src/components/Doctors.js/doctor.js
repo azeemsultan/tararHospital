@@ -42,7 +42,7 @@ import { Elements } from '@stripe/react-stripe-js';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
+      {'Copyright ©️ '}
       <Link color="inherit" href="https://material-ui.com/">
         Your Website
       </Link>{' '}
@@ -714,7 +714,7 @@ const handleCloseConsult = () => {
       <center style={{marginTop:'20px'}}>
         <Button variant="outlined" color="primary" onClick={handleApp}>Submit</Button>
         <Button variant="outlined" color="secondary" style={{marginLeft:'10px'}}
-        onClick={handleClose}
+        onClick={()=>handleClose}
         >Cancel</Button>
         </center>
         </Container>
@@ -764,6 +764,39 @@ const handleCloseConsult = () => {
               <StyledTableCell component="th" scope="row">
                 {row._id}
               </StyledTableCell>
+              <StyledTableCell align="right">{row.doctoremail}</StyledTableCell>
+              <StyledTableCell align="right">{row.time}</StyledTableCell>
+              <StyledTableCell align="right">{row.date}</StyledTableCell>
+              <StyledTableCell align="right">{row.status}</StyledTableCell>
+            </StyledTableRow>
+          ):null
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+         
+              </Grid>
+              <Typography variant="h4" style={{marginBottom:'20px'}}>Your Consultions</Typography>
+              <Grid >
+            <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label="customized table">
+        <TableHead>
+          <TableRow>
+            <StyledTableCell>ID</StyledTableCell>
+            <StyledTableCell align="right">Link&nbsp;</StyledTableCell>
+            <StyledTableCell align="right">Doctor Email</StyledTableCell>
+            <StyledTableCell align="right">Time&nbsp;</StyledTableCell>
+            <StyledTableCell align="right">Date&nbsp;</StyledTableCell>
+            <StyledTableCell align="right">Status&nbsp;</StyledTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {c.map((row) => (( (row.status==="accepted")||(row.status==="rejected"))?(
+            <StyledTableRow key={row.name}>
+              <StyledTableCell component="th" scope="row">
+                {row._id}
+              </StyledTableCell>
+              <StyledTableCell align="right"><Link href={'https://meet.google.com/amv-mcxt-wso'}>Click here</Link></StyledTableCell>
               <StyledTableCell align="right">{row.doctoremail}</StyledTableCell>
               <StyledTableCell align="right">{row.time}</StyledTableCell>
               <StyledTableCell align="right">{row.date}</StyledTableCell>

@@ -26,7 +26,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { Avatar } from '@material-ui/core';
+import { Avatar, Button, TextField } from '@material-ui/core';
 import * as doctorService from '../../Axios-Actions/doctorService';
 import * as consultService from '../../Axios-Actions/consultService';
 import img from '../../assets/img/doc.png'
@@ -147,7 +147,11 @@ const StyledTableCell = withStyles((theme) => ({
   }))(TableRow);
 
 export default function DocDashboard() {
+
   const classes = useStyles();
+  const [dashboard,setDashboard]=React.useState(true);
+  const [setting,setSetting]=React.useState(false);
+
   const [open, setOpen] = React.useState(true);
   const [cards, setCard] = React.useState([]);
   const [cardsc, setCardc] = React.useState([]);
@@ -223,23 +227,28 @@ export default function DocDashboard() {
         </center>
         <br/>
         <Divider style={{marginBottom:'20px'}}/>
-        <List>Payments</List>
-        <Divider />
         <List>
-            Location
+            <Button onClick={()=>setDashboard(true)}>Dashboard</Button>
         </List>
+        <List><Button onClick={()=>{setDashboard(false)&&setSetting(true)}}>Payment</Button></List>
+      
+        <Divider />
+     
         <Divider/>
-        <List>Settings</List>
+        <List><Button onClick={()=>setSetting(false)}>Settings</Button></List>
         <Divider />
-        <List>
-            Etc
-        </List>
+     
       </Drawer>
+
+
+
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
+          { dashboard?
           <Grid container spacing={3}>
-            {/* Chart */}
+          
+           
             <Grid item xs={12} md={6} lg={6}>
               <Paper>
                   <center>
@@ -253,7 +262,7 @@ export default function DocDashboard() {
               </div>
               <br/>
               </Paper>
-            </Grid>
+            </Grid> 
             <Grid item xs={12} md={6} lg={6}>
               <Paper>
                   <center>
@@ -267,10 +276,9 @@ export default function DocDashboard() {
               </div>
               <br/>
               </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-        
-            {/* Recent Orders */}
+            </Grid> 
+           
+
             <Grid item xs={12}>
               <Paper className={classes.paper}>
                <Typography variant="h6">Appointments</Typography>
@@ -307,7 +315,9 @@ export default function DocDashboard() {
 <br/>
     <Typography variant="h6">Consultations</Typography>
 
-<br/>
+   <a href="https://meet.google.com/amv-mcxt-wso"><Button variant="outlined" color="primary">Your Meeting Link</Button>
+   </a>
+    <br/>
 
   <TableContainer component={Paper} >
 <Table className={classes.table} aria-label="customized table"  >
@@ -338,7 +348,110 @@ export default function DocDashboard() {
 </TableContainer>
               </Paper>
             </Grid>
+            
           </Grid>
+:
+<Grid container>
+  <Grid item md={12}>
+    {setting ?
+    <h1>Payments</h1>
+    :
+    <Grid container>
+      <Grid item md={1}>
+        </Grid>
+        <Grid item md={6}>
+        <TableContainer component={Paper} style={{height:'400px'}}>
+      <Table className={classes.table} aria-label="customized table">
+        <TableHead>
+          <TableRow>
+            <StyledTableCell align="right">Your Fee (PKR)</StyledTableCell>
+            <StyledTableCell align="right">Speciality</StyledTableCell>
+            <StyledTableCell align="right">Location</StyledTableCell>
+            <StyledTableCell align="right">Qualification</StyledTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          
+            <StyledTableRow >
+            
+              <StyledTableCell align="right">1500</StyledTableCell>
+              <StyledTableCell align="right">Cardiologist</StyledTableCell>
+              <StyledTableCell align="right">Wapda town</StyledTableCell>
+              <StyledTableCell align="right">PHD</StyledTableCell>
+            </StyledTableRow>
+     
+        </TableBody>
+      </Table>
+    </TableContainer>
+      </Grid>
+      <Grid item md={1}>
+        </Grid>
+      <Grid item md={4}>
+    <Paper>
+      <div>
+        <center>
+          <Typography variant="h6">
+            Update your Details
+          </Typography>
+        </center>
+      <TextField
+      label="Enter your Fee"
+    />
+<br/>
+<TextField
+      label="Enter your Education"
+    />
+    <br/>
+    <TextField
+      label="Enter your Speciality"
+    />
+    <br/>
+    <TextField
+      label="Enter your Location"
+    />
+    <br/>
+    <br/>
+    <br/>
+     <Button variant="outlined">Update</Button>
+    <br/>
+    <br/>
+    <Divider/>
+
+    <br/>
+    <center>
+      <Typography variant="h6">
+        Update your Id info
+        </Typography>
+      </center>
+    
+      <TextField
+      label="Update your Name"
+    />
+<br/>
+<TextField
+      label="Update your Password"
+    />
+    <br/>
+    <TextField
+      label="Update your Phone"
+    />
+    <br/>
+    <br/>
+    <Button variant="outlined">Update</Button>
+   <br/>
+   <br/>
+  
+
+      </div>
+    </Paper>
+    </Grid>
+    
+  
+      </Grid>
+}
+  </Grid>
+</Grid>
+}
           <Box pt={4}>
             <Copyright />
           </Box>

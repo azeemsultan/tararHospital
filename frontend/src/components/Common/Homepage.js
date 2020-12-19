@@ -152,11 +152,14 @@ const Homepage = () => {
                 </div>
             </Grid>
             <Grid item md={3} xs={12}>
+              
                 <button style={{color:'white',backgroundColor:'#336bd4',marginTop:'25px',borderRadius:'18px'
                 ,height:'35px',border:'1px solid #336bd4',marginBottom:'10px',width:'130px'}}>
                 <center style={{display:'inline-flex',textAlign:'center',textDecoration:'none'}}>
                   <a href="/login" style={{color:'white'}}> <Typography>Login</Typography></a>/<a href="/signup" style={{color:'white'}}>
-                    <Typography>Signup</Typography></a> </center> 
+                    <Typography>Signup</Typography></a>
+                  
+                     </center> 
                 </button>
                 </Grid>
        

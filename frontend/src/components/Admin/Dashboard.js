@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import Box from '@material-ui/core/Box';
@@ -17,10 +17,17 @@ import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems,doctor,customer } from './listItems';
 import Deposits from './Deposits';
 import Orders from './Orders';
+import { Button } from '@material-ui/core';
 
 function Copyright() {
   return (
@@ -34,6 +41,24 @@ function Copyright() {
     </Typography>
   );
 }
+
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    },
+  },
+}))(TableRow);
 
 const drawerWidth = 240;
 
@@ -118,7 +143,20 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
   const classes = useStyles();
+  const [cust,setCust] = React.useState(false);
+  const [docs,setDocs] = React.useState(false);
   const [open, setOpen] = React.useState(true);
+
+function viewCustomer()
+{
+     setCust(true)
+     setDocs(false)
+}
+function viewDoctor()
+{
+  setDocs(true)
+  setCust(false)
+}
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -163,10 +201,27 @@ export default function Dashboard() {
             <ChevronLeftIcon />
           </IconButton>
         </div>
+     
         <Divider />
-        <List>{mainListItems}</List>
+        <Button onClick={viewCustomer}> 
+        <br/>
+        <br/>
+         View Customers
+        </Button>
+        <br/>
+        <br/>
         <Divider />
-        <List>{secondaryListItems}</List>
+        <br/>
+        <br/>
+        <Button onClick={viewDoctor}> 
+         View Doctors
+        </Button>
+        <br/>
+        <br/>
+        <Divider />
+      
+      
+      
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
@@ -175,7 +230,59 @@ export default function Dashboard() {
             {/* Chart */}
             <Grid item xs={12} md={8} lg={9}>
               <Paper className={fixedHeightPaper}>
-        
+           { cust?
+       <TableContainer component={Paper} style={{height:'400px'}}>
+      <Table className={classes.table} aria-label="customized table">
+        <TableHead>
+          <TableRow>
+            <StyledTableCell align="right">Patient name</StyledTableCell>
+            <StyledTableCell align="right">ID</StyledTableCell>
+            <StyledTableCell align="right">Phone</StyledTableCell>
+            <StyledTableCell align="right">ETC</StyledTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          
+            <StyledTableRow >
+            
+              <StyledTableCell align="right">Sheeda</StyledTableCell>
+              <StyledTableCell align="right">Sheeda@gmail.com </StyledTableCell>
+              <StyledTableCell align="right">Phone</StyledTableCell>
+              <StyledTableCell align="right">PD</StyledTableCell>
+            </StyledTableRow>
+     
+        </TableBody>
+      </Table>
+    </TableContainer>
+    : <div></div>
+}
+{ docs?
+    <TableContainer component={Paper} style={{height:'400px'}}>
+      <Table className={classes.table} aria-label="customized table">
+        <TableHead>
+          <TableRow>
+            <StyledTableCell align="right">Doctor name</StyledTableCell>
+            <StyledTableCell align="right">ID</StyledTableCell>
+            <StyledTableCell align="right">Phone</StyledTableCell>
+            <StyledTableCell align="right">ETC</StyledTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          
+            <StyledTableRow >
+            
+              <StyledTableCell align="right">Sheeda</StyledTableCell>
+              <StyledTableCell align="right">Sheeda@gmail.com </StyledTableCell>
+              <StyledTableCell align="right">Phone</StyledTableCell>
+              <StyledTableCell align="right">PD</StyledTableCell>
+            </StyledTableRow>
+     
+        </TableBody>
+      </Table>
+    </TableContainer>
+    : <div></div>
+}
+    
               </Paper>
             </Grid>
             {/* Recent Deposits */}
