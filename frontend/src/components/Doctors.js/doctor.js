@@ -24,6 +24,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
+import ReactStars from "react-rating-stars-component";
 import TableRow from '@material-ui/core/TableRow';
 import { loadStripe } from "@stripe/stripe-js";
 import Paper from '@material-ui/core/Paper';
@@ -120,11 +121,13 @@ function createData(name, calories, fat, carbs, protein) {
 }
 
 let di,de;
-let f,l;
+let f,l,fe,sp;
 const stripePromise = loadStripe("pk_test_51Hv0nsJTgZiOu1hOrVInzI7eg6QFewzhqEKqlNQrDT0oUaADAQNrM1ng0qz7vojRTZpNY0LA61X9WnO2NB2OZnIH00fsWZQT2C");
 export default function Doctor() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  
+  const [rate, setRate] = React.useState(false);
   const [openNotif, setOpenNotif] = React.useState(false);
   const [view, setView] = React.useState(false);
   const [time, setTime] = React.useState('');
@@ -160,9 +163,11 @@ const handleCloseConsult = () => {
 
 
 
-  const handleView = (fn,ln) => {
+  const handleView = (fn,ln,fee,spec) => {
     f=fn;
     l=ln;
+    fe=fee;
+    sp=spec;
     setView(true);
   };
 
@@ -171,6 +176,12 @@ const handleCloseConsult = () => {
   };
   const handleNotif = () => {
     setOpenNotif(true);
+  };
+  const handleRate = () => {
+    setRate(true);
+  };
+  const handleCloseRate = () => {
+    setRate(false);
   };
 
   const handleCloseNotif = () => {
@@ -275,6 +286,12 @@ const handleCloseConsult = () => {
       console.log(err)
     });
   };
+
+  const ratingChanged = (newRating) => {
+    console.log(newRating);
+  };
+ 
+  
   return (
     <div>
              <div>
@@ -415,6 +432,63 @@ const handleCloseConsult = () => {
   </Fade>
 </Modal>
 
+<Modal 
+  className={classes.modal}
+  open={rate}
+  onClose={!rate}
+  closeAfterTransition
+  BackdropComponent={Backdrop}
+  BackdropProps={{
+    timeout: 500, 
+  }}
+>
+  <Fade in={rate}>
+  <Container maxWidth="sm">
+
+
+<Paper>
+<Grid container>
+  
+<Grid item md={7}>
+  <img src={img}/>
+  </Grid>
+  <br/>
+  <Grid item md={5}>
+    <br/>
+  <Typography variant="h6">
+    Doctor Name
+    <Divider/>
+  </Typography>
+  <Typography variant="subtitle1">
+    Cardiologist
+  </Typography>
+ 
+  <ReactStars
+    count={5}
+    onChange={ratingChanged}
+    size={24}
+    activeColor="#ffd700"
+  />
+  <Divider/>
+
+  <TextField
+  label="Leave a review"
+  />
+  <br/>
+  <br/>
+  <Button variant="outlined">Rate</Button>
+  <Button variant="outlined" style={{marginLeft:'5px'}}
+   onClick={()=>handleCloseRate()}>Close</Button>
+  </Grid>
+  </Grid>
+</Paper>
+ 
+ 
+  <Button>X</Button>
+  </Container>
+  </Fade>
+</Modal>
+
 
 <Modal 
   aria-labelledby="transition-modal-title"
@@ -440,17 +514,18 @@ const handleCloseConsult = () => {
        <img src={img}/>
 
      </div>
+ 
      <div>
      <Typography variant="h6" style={{marginLeft:'30px'}}>
-       Speciality: Cardiologist 
-     </Typography> <br/>
+       Speciality: {sp}
+     </Typography> <Divider/> <br/>
      <div>
-     <Typography variant="subtitle1" style={{marginLeft:'30px'}}>
-       Fee: 1500 Rupees
+     <Typography variant="h6" style={{marginLeft:'30px'}}>
+       Fee: {fe}
      </Typography>
-     </div> <br/>
+     </div> <Divider/> <br/>
      <div>
-     <Typography variant="subtitle1" style={{marginLeft:'30px'}}>
+     <Typography variant="h6" style={{marginLeft:'30px'}}>
        5 Stars ({Math.floor((Math.random() * 10) + 1)})
      </Typography>
      </div>
@@ -585,7 +660,7 @@ const handleCloseConsult = () => {
       <center style={{marginTop:'20px'}}>
         <Button variant="outlined" color="primary" onClick={handleCon}>Submit</Button>
         <Button variant="outlined" color="secondary" style={{marginLeft:'10px'}}
-        onClick={handleCloseConsult}
+        onClick={()=>setConsult(false)}
         >Cancel</Button>
         </center>
         </Container>
@@ -751,11 +826,11 @@ const handleCloseConsult = () => {
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>ID</StyledTableCell>
-            <StyledTableCell align="right">Doctor Email</StyledTableCell>
-            <StyledTableCell align="right">Time&nbsp;</StyledTableCell>
-            <StyledTableCell align="right">Date&nbsp;</StyledTableCell>
-            <StyledTableCell align="right">Status&nbsp;</StyledTableCell>
+            <StyledTableCell  style={{backgroundColor:'#336bd4'}}>ID</StyledTableCell>
+            <StyledTableCell  style={{backgroundColor:'#336bd4'}} align="left">Doctor Email</StyledTableCell>
+            <StyledTableCell  style={{backgroundColor:'#336bd4'}} align="left">Time&nbsp;</StyledTableCell>
+            <StyledTableCell  style={{backgroundColor:'#336bd4'}} align="left">Date&nbsp;</StyledTableCell>
+            <StyledTableCell  style={{backgroundColor:'#336bd4'}} align="left">Status&nbsp;</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -764,10 +839,10 @@ const handleCloseConsult = () => {
               <StyledTableCell component="th" scope="row">
                 {row._id}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.doctoremail}</StyledTableCell>
-              <StyledTableCell align="right">{row.time}</StyledTableCell>
-              <StyledTableCell align="right">{row.date}</StyledTableCell>
-              <StyledTableCell align="right">{row.status}</StyledTableCell>
+              <StyledTableCell align="left">{row.doctoremail}</StyledTableCell>
+              <StyledTableCell align="left">{row.time}</StyledTableCell>
+              <StyledTableCell align="left">{row.date}</StyledTableCell>
+              <StyledTableCell align="left">{row.status}</StyledTableCell>
             </StyledTableRow>
           ):null
           ))}
@@ -783,11 +858,11 @@ const handleCloseConsult = () => {
         <TableHead>
           <TableRow>
             <StyledTableCell>ID</StyledTableCell>
-            <StyledTableCell align="right">Link&nbsp;</StyledTableCell>
-            <StyledTableCell align="right">Doctor Email</StyledTableCell>
-            <StyledTableCell align="right">Time&nbsp;</StyledTableCell>
-            <StyledTableCell align="right">Date&nbsp;</StyledTableCell>
-            <StyledTableCell align="right">Status&nbsp;</StyledTableCell>
+            <StyledTableCell align="left">Link&nbsp;</StyledTableCell>
+            <StyledTableCell align="left">Doctor Email</StyledTableCell>
+            <StyledTableCell align="left">Time&nbsp;</StyledTableCell>
+            <StyledTableCell align="left">Date&nbsp;</StyledTableCell>
+            <StyledTableCell align="left">Status&nbsp;</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -796,11 +871,11 @@ const handleCloseConsult = () => {
               <StyledTableCell component="th" scope="row">
                 {row._id}
               </StyledTableCell>
-              <StyledTableCell align="right"><Link href={'https://meet.google.com/amv-mcxt-wso'}>Click here</Link></StyledTableCell>
-              <StyledTableCell align="right">{row.doctoremail}</StyledTableCell>
-              <StyledTableCell align="right">{row.time}</StyledTableCell>
-              <StyledTableCell align="right">{row.date}</StyledTableCell>
-              <StyledTableCell align="right">{row.status}</StyledTableCell>
+              <StyledTableCell align="left"><Link href={'https://meet.google.com/amv-mcxt-wso'}>Click here</Link></StyledTableCell>
+              <StyledTableCell align="left">{row.doctoremail}</StyledTableCell>
+              <StyledTableCell align="left">{row.time}</StyledTableCell>
+              <StyledTableCell align="left">{row.date}</StyledTableCell>
+              <StyledTableCell align="left">{row.status}</StyledTableCell>
             </StyledTableRow>
           ):null
           ))}
@@ -818,7 +893,7 @@ const handleCloseConsult = () => {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
-                  <Button variant="contained" style={{backgroundColor:'#336bd4',color:'white'}}
+                  <Button onClick={()=>handleRate()} variant="contained" style={{backgroundColor:'#336bd4',color:'white'}}
 >
                     Rating
                   </Button>
@@ -849,7 +924,7 @@ const handleCloseConsult = () => {
                       Doctor
                     </Typography>
                     <Typography variant="h6"  color="textSecondary">
-                    {card.firstname}      {card.lastname}
+                    {card.firstname}      {card.lastname} 
                     </Typography>
                 
                     <Typography variant="h6"  color="textSecondary">
@@ -858,7 +933,7 @@ const handleCloseConsult = () => {
                   </CardContent>
                   <CardActions>
                     <Button size="small" color="primary"
-                    onClick= {()=>handleView(card.firstname,card.lastname)}>
+                    onClick= {()=>handleView(card.firstname,card.lastname,card.fee,card.speciality)}>
                       View
                     </Button>
                     <Button  size="small" color="primary" onClick={()=>handleOpen(card._id,card.email)}>

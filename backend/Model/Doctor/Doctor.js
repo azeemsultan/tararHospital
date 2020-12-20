@@ -31,7 +31,13 @@ const doctor = mongoose.model("Doctor", mongoose.Schema({
     },
     status:{
         type: String
-    }
+    },
+    fee:{type: String},
+    education:{type: String},
+    speciality:{type: String},
+    location:{type: String},
+    imageURL:{type: String},
+    imageCLOUDID:{type: String}
 }))
 
 function validateDoctor(customer) {

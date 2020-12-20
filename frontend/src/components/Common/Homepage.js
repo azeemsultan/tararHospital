@@ -36,6 +36,16 @@ const Homepage = () => {
 
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [contact, setContact] = React.useState(false);
+
+  const handleContact = () => {
+   setContact(true);
+  };
+
+  const handleCloseContact = () => {
+    setContact(false);
+  };
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -59,7 +69,9 @@ const Homepage = () => {
 
     return ( 
     <div>
+      
        <div>
+
 
       <Modal
         aria-labelledby="transition-modal-title"
@@ -73,6 +85,8 @@ const Homepage = () => {
           timeout: 500, 
         }}
       >
+   
+
         <Fade in={open}>
           <div className={classes.paper}>
             <Typography variant="h4">
@@ -102,6 +116,50 @@ const Homepage = () => {
           </div>
         </Fade>
       </Modal>
+    </div>
+    <div>
+    <Modal 
+  className={classes.modal}
+  open={contact}
+  onClose={handleCloseContact}
+  closeAfterTransition
+  BackdropComponent={Backdrop}
+  BackdropProps={{
+    timeout: 500, 
+  }}
+>
+  <Fade in={contact}>
+  <Container maxWidth="sm">
+<Paper>
+<Grid container>
+  
+<Grid item md={2}></Grid>
+<Grid item md={8}>
+   <Typography variant="h6">
+     Contact us
+   </Typography>
+   <Divider/>
+   <br/>
+<Typography variant="subtitle1">
+Mail: OzairTarar@Gmail.com
+</Typography>
+<Typography variant="subtitle1">
+Phone: 03212121425
+</Typography>
+<Typography variant="subtitle1">
+Fax: 112-241-111
+</Typography>
+  <Button variant="outlined" onClick={()=>handleCloseContact()} style={{marginLeft:'5px'}}
+
+   >Close</Button>
+     </Grid>
+<Grid item md={2}></Grid>
+  </Grid>
+</Paper>
+
+  </Container>
+  </Fade>
+</Modal>
     </div>
         <Grid container style={{border:'1px solid #d1d0cd'}}>
             <Grid item md={3} xs={12}>
@@ -138,12 +196,12 @@ const Homepage = () => {
                             </a>
                             </div>
                             <div style={{marginLeft:'40px'}}>
-                            <a href="/" style={{color:'#336bd4'}}>
+                            <a href="/" style={{color:'#336bd4'}} onClick={()=>handleContact()} >
                             <Typography variant="h6" style={{textAlign:'center',marginTop:'5px'}} >
-                                Contact us
+                              Contact us
                             </Typography>
                             <Typography variant="subtitle2" >
-                                Contact with us
+                            Contact with us 
                             </Typography>
                             
                           </a>

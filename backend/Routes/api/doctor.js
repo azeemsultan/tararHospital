@@ -5,9 +5,9 @@ const bodyparser = require("body-parser");
 const decode     = require("jwt-decode");
 const { Doctor , validateDoctor, validateLogin } = require('../../Model/Doctor/Doctor');
 const { setToken } = require("../../Auth/auth");
-
-router.use(bodyparser.json());
-router.use(bodyparser.urlencoded());
+const cloudinary= require('./cloudinary');
+router.use(bodyparser.json({limit: '50mb', extended: true}));
+router.use(bodyparser.urlencoded({limit: '50mb', extended: true}));
 // Doctor sign-up fr-
 router.post("/signup", async (req,res) => {
 
@@ -98,6 +98,64 @@ router.post("/signup", async (req,res) => {
     const d =await Doctor.findOne({_id:jwt.id});
     if(!d)res.status(400);
     res.send(d);
+  });
+  router.post('/updatedetails', async (req,res)=>{
+    const jwt = decode(req.header("x-auth-token"));
+    const d =await Doctor.findOne({_id:jwt.id});
+    if(!d)res.status(400);
+
+    await Doctor.update(
+      {_id:jwt.id},
+      {
+        $set: {
+          fee:req.body.fee,
+          speciality:req.body.speciality,
+          location:req.body.location,
+          education:req.body.education
+        },
+      },
+      { new: true }
+    );
+    res.send(d);
+  });
+  router.post('/updateinfo', async (req,res)=>{
+    const jwt = decode(req.header("x-auth-token"));
+    const d =await Doctor.findOne({_id:jwt.id});
+    if(!d)res.status(400);
+
+    await Doctor.update(
+      {_id:jwt.id},
+      {
+        $set: {
+          firstname:req.body.firstname,
+          lastname:req.body.lastname,
+          email:req.body.email,
+          password:req.body.password
+        },
+      },
+      { new: true }
+    );
+    res.send(d);
+  });
+  router.post('/upload',async(req,res)=>{
+    try{
+    const jwt = decode(req.header("x-auth-token"));
+    const result= await cloudinary.uploader.upload(req.body.imagestring);
+
+    await Doctor.update(
+      {_id:jwt.id},
+      {
+        $set: {
+          imageURL:result.secure_url,
+          imageCLOUDID:result.public_id
+        },
+      },
+      { new: true }
+    );
+    }catch(err){
+      console.log(err);
+    }
+    res.send(200);
   });
  router.update;
  module.exports = router;
