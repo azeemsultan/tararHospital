@@ -157,6 +157,21 @@ export default function DocDashboard() {
   const [cardsc, setCardc] = React.useState([]);
   const [d , setD] = React.useState([]);
 
+
+
+  const [fee,setFee]=React.useState(false);
+  const [location,setLocation]=React.useState(false);
+  const [education,setEducation] = React.useState(false);
+  const [speciality,setSpeciality] = React.useState(false);
+  const [firstname,setFirstname]=React.useState(false);
+  const [lastname,setLastname]=React.useState(false);
+  const [email,setEmail] = React.useState(false);
+  const [password,setPassword] = React.useState(false);
+
+
+  const [preview,setPreview] = React.useState(false);
+
+
   React.useEffect(() => {
     doctorService.GetAppointment()
     .then((result) => {setCard(result.data)});
@@ -171,8 +186,65 @@ export default function DocDashboard() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const updated = () => {
+    doctorService.updatedetails(fee,location,speciality,education)    .then(() => {
+      console.log("Successfully Updated Details!");
+      setTimeout(function () {
+        window.location = "/doctordashboard";
+      }, 2000);
+      
+    })
+    .catch((err) => {
+      console.log(err)
+    });
+  }
+  const updatei = () => {
+    doctorService.updateinfo(firstname,lastname,email,password)    .then(() => {
+      console.log("Successfully updated information!");
+      setTimeout(function () {
+        window.location = "/doctordashboard";
+      }, 2000);
+      
+    })
+    .catch((err) => {
+      console.log(err)
+    });
+  }
 
+  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const ch=(e)=>{
+
+    const file=e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend =()=>{
+    setPreview(reader.result);
+    }
+  }
+ const up=(e)=>{
+
+    e.preventDefault();
+    if(!preview)return;
+    console.log(preview);
+    try{
+
+   doctorService.saveimage(preview)     
+    .then((result) => {
+    console.log("Successfull uploaded doctor image");
+      setTimeout(function () {
+        window.location = "/doctordashboard";
+      }, 2000);
+    })
+    .catch((err) => {
+      this.setState({ invalid: true });
+      console.log("image upload error");
+    });
+    }catch(err){
+
+      console.log("error in front end"+err);
+    }
+
+  }
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -212,9 +284,13 @@ export default function DocDashboard() {
         <Divider />
         <br/>
         <center>
-        <Avatar style={{width:'150px',height:'150px'}}>
-          <img src={img} style={{height:'150px',width:'150px'}} />
-        </Avatar>
+        <Avatar src={d.imageURL} style={{width:'150px',height:'150px',marginTop:'30px'}}>
+                           
+       </Avatar>
+       <form onSubmit={(e)=>up(e)}>
+        <input type='file' name='image' onChange={(e)=>ch(e)}></input>
+        <button type='submit'>upload</button>
+        </form>
         <br/>
         
         <Typography variant="h6">
@@ -374,10 +450,10 @@ export default function DocDashboard() {
           
             <StyledTableRow >
             
-              <StyledTableCell align="right">1500</StyledTableCell>
-              <StyledTableCell align="right">Cardiologist</StyledTableCell>
-              <StyledTableCell align="right">Wapda town</StyledTableCell>
-              <StyledTableCell align="right">PHD</StyledTableCell>
+              <StyledTableCell align="right">{d.fee}</StyledTableCell>
+              <StyledTableCell align="right">{d.speciality}</StyledTableCell>
+              <StyledTableCell align="right">{d.location}</StyledTableCell>
+              <StyledTableCell align="right">{d.education}</StyledTableCell>
             </StyledTableRow>
      
         </TableBody>
@@ -394,25 +470,29 @@ export default function DocDashboard() {
             Update your Details
           </Typography>
         </center>
-      <TextField
+      <TextField onChange={(e)=>{setFee(e.target.value)}
+              }
       label="Enter your Fee"
     />
-<br/>
-<TextField
+<br/> 
+<TextField onChange={(e)=>{setEducation(e.target.value)}
+              }
       label="Enter your Education"
     />
     <br/>
-    <TextField
+    <TextField onChange={(e)=>{setSpeciality(e.target.value)}
+              }
       label="Enter your Speciality"
     />
     <br/>
-    <TextField
+    <TextField onChange={(e)=>{setLocation(e.target.value)}
+              }
       label="Enter your Location"
     />
     <br/>
     <br/>
     <br/>
-     <Button variant="outlined">Update</Button>
+     <Button variant="outlined" onClick={()=>updated()}>Update</Button>
     <br/>
     <br/>
     <Divider/>
@@ -424,20 +504,29 @@ export default function DocDashboard() {
         </Typography>
       </center>
     
-      <TextField
-      label="Update your Name"
+      <TextField onChange={(e)=>{setFirstname(e.target.value)}
+              }
+      label="Update your First Name"
     />
 <br/>
-<TextField
+<TextField onChange={(e)=>{setLastname(e.target.value)}
+              }
+      label="Update your Last Name"
+    />
+<br/>
+<TextField onChange={(e)=>{setEmail(e.target.value)}
+              }
+      label="Update your Email"
+    />
+    <br/>
+    <TextField onChange={(e)=>{setPassword(e.target.value)}
+              }
       label="Update your Password"
     />
     <br/>
-    <TextField
-      label="Update your Phone"
-    />
+
     <br/>
-    <br/>
-    <Button variant="outlined">Update</Button>
+    <Button variant="outlined" onClick={()=>updatei()}>Update</Button>
    <br/>
    <br/>
   

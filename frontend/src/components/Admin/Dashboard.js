@@ -27,6 +27,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems,doctor,customer } from './listItems';
 import Deposits from './Deposits';
 import Orders from './Orders';
+import * as doctorService from '../../Axios-Actions/doctorService';
 import { Button } from '@material-ui/core';
 
 function Copyright() {
@@ -146,14 +147,18 @@ export default function Dashboard() {
   const [cust,setCust] = React.useState(false);
   const [docs,setDocs] = React.useState(false);
   const [open, setOpen] = React.useState(true);
+  const [cards, setCard] = React.useState([]);
 
-function viewCustomer()
-{
+const viewCustomer=()=>
+{    doctorService.CustomerView()
+  .then((result) => {setCard(result.data)});
      setCust(true)
      setDocs(false)
 }
-function viewDoctor()
+const viewDoctor=()=>
 {
+  doctorService.DoctorView()
+  .then((result) => {setCard(result.data)});
   setDocs(true)
   setCust(false)
 }
@@ -203,7 +208,7 @@ function viewDoctor()
         </div>
      
         <Divider />
-        <Button onClick={viewCustomer}> 
+        <Button onClick={()=>viewCustomer()}> 
         <br/>
         <br/>
          View Customers
@@ -213,7 +218,7 @@ function viewDoctor()
         <Divider />
         <br/>
         <br/>
-        <Button onClick={viewDoctor}> 
+        <Button onClick={()=>viewDoctor()}> 
          View Doctors
         </Button>
         <br/>
@@ -229,61 +234,70 @@ function viewDoctor()
           <Grid container spacing={3}>
             {/* Chart */}
             <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-           { cust?
+              {cust ?
+              <Paper className={classes.paper}>
+
        <TableContainer component={Paper} style={{height:'400px'}}>
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell align="right">Patient name</StyledTableCell>
             <StyledTableCell align="right">ID</StyledTableCell>
-            <StyledTableCell align="right">Phone</StyledTableCell>
-            <StyledTableCell align="right">ETC</StyledTableCell>
+            <StyledTableCell align="right">Email</StyledTableCell>
+
           </TableRow>
         </TableHead>
+        { cards.map((card,key) => ( 
         <TableBody>
           
             <StyledTableRow >
             
-              <StyledTableCell align="right">Sheeda</StyledTableCell>
-              <StyledTableCell align="right">Sheeda@gmail.com </StyledTableCell>
-              <StyledTableCell align="right">Phone</StyledTableCell>
-              <StyledTableCell align="right">PD</StyledTableCell>
+              <StyledTableCell align="right">{card.firstname} {card.lastname}</StyledTableCell>
+              <StyledTableCell align="right">{card._id}</StyledTableCell>
+              <StyledTableCell align="right">{card.email}</StyledTableCell>
+
             </StyledTableRow>
      
         </TableBody>
+        ))
+}
       </Table>
     </TableContainer>
-    : <div></div>
-}
+</Paper>
+:<div></div>}
 { docs?
+
+<Paper className={fixedHeightPaper}>
     <TableContainer component={Paper} style={{height:'400px'}}>
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell align="right">Doctor name</StyledTableCell>
             <StyledTableCell align="right">ID</StyledTableCell>
-            <StyledTableCell align="right">Phone</StyledTableCell>
-            <StyledTableCell align="right">ETC</StyledTableCell>
+            <StyledTableCell align="right">Email</StyledTableCell>
+            <StyledTableCell align="right">PMDC</StyledTableCell>
           </TableRow>
         </TableHead>
+        { cards.map((card,key) => (
         <TableBody>
           
             <StyledTableRow >
             
-              <StyledTableCell align="right">Sheeda</StyledTableCell>
-              <StyledTableCell align="right">Sheeda@gmail.com </StyledTableCell>
-              <StyledTableCell align="right">Phone</StyledTableCell>
-              <StyledTableCell align="right">PD</StyledTableCell>
+              <StyledTableCell align="right">{card.firstname} {card.lastname}</StyledTableCell>
+              <StyledTableCell align="right">{card._id}</StyledTableCell>
+              <StyledTableCell align="right">{card.email}</StyledTableCell>
+              <StyledTableCell align="right">{card.pmdc}</StyledTableCell>
             </StyledTableRow>
      
         </TableBody>
+        ))
+      }
       </Table>
     </TableContainer>
-    : <div></div>
-}
+
     
               </Paper>
+:<div></div>}
             </Grid>
             {/* Recent Deposits */}
             <Grid item xs={12} md={4} lg={3}>

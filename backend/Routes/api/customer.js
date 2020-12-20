@@ -88,5 +88,10 @@ router.post("/signup", async (req,res) => {
       }
     } else res.status(400).send("No Registered Customer exists");
   });
+  router.get('/view',async ( req , res )=>{
+    const cus = await Customer.find();
+    if(!cus)res.status(400);
+    res.send(cus);
+  });
  router.update;
  module.exports = router;

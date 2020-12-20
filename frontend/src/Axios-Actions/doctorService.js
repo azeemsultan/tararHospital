@@ -5,8 +5,17 @@ const apiEndpoint = "http://localhost:3333/api";
 export async function DoctorView() {
     return await http.get(apiEndpoint + "/doctor/view");
 } 
+export async function CustomerView() {
+    return await http.get(apiEndpoint + "/customer/view");
+} 
 export async function PostAppointment(date,time,description,doctor,doctoremail) {
     return await http.post(apiEndpoint + "/appointment/post",{date,time,description,doctor,doctoremail});
+} 
+export async function updatedetails(fee,location,speciality,education) {
+    return await http.post(apiEndpoint + "/doctor/updatedetails",{fee,location,speciality,education});
+} 
+export async function updateinfo(firstname,lastname,email,password) {
+    return await http.post(apiEndpoint + "/doctor/updateinfo",{firstname,lastname,email,password});
 } 
 
 export async function GetAppointment() {
@@ -19,6 +28,10 @@ export async function GetAllAppointment() {
 export async function GetDoctor() {
     return await http.get(apiEndpoint + "/doctor/viewd");
 } 
+export async function saveimage(imagestring){
+    return await http.post(apiEndpoint+"/doctor/upload",{imagestring});
+}
+
 
 export async function SetAccept(id){
 

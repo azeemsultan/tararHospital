@@ -120,7 +120,7 @@ function createData(name, calories, fat, carbs, protein) {
 }
 
 let di,de;
-let f,l;
+let f,l,fe,sp;
 const stripePromise = loadStripe("pk_test_51Hv0nsJTgZiOu1hOrVInzI7eg6QFewzhqEKqlNQrDT0oUaADAQNrM1ng0qz7vojRTZpNY0LA61X9WnO2NB2OZnIH00fsWZQT2C");
 export default function Doctor() {
   const classes = useStyles();
@@ -160,9 +160,11 @@ const handleCloseConsult = () => {
 
 
 
-  const handleView = (fn,ln) => {
+  const handleView = (fn,ln,fee,spec) => {
     f=fn;
     l=ln;
+    fe=fee;
+    sp=spec;
     setView(true);
   };
 
@@ -442,11 +444,11 @@ const handleCloseConsult = () => {
      </div>
      <div>
      <Typography variant="h6" style={{marginLeft:'30px'}}>
-       Speciality: Cardiologist 
+       Speciality: {sp}
      </Typography> <br/>
      <div>
      <Typography variant="subtitle1" style={{marginLeft:'30px'}}>
-       Fee: 1500 Rupees
+       Fee: {fe}
      </Typography>
      </div> <br/>
      <div>
@@ -858,7 +860,7 @@ const handleCloseConsult = () => {
                   </CardContent>
                   <CardActions>
                     <Button size="small" color="primary"
-                    onClick= {()=>handleView(card.firstname,card.lastname)}>
+                    onClick= {()=>handleView(card.firstname,card.lastname,card.fee,card.speciality)}>
                       View
                     </Button>
                     <Button  size="small" color="primary" onClick={()=>handleOpen(card._id,card.email)}>
