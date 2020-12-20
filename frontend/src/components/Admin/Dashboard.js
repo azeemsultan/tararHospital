@@ -203,9 +203,10 @@ function viewDoctor()
         </div>
      
         <Divider />
+        <br/>
+        <br/>
         <Button onClick={viewCustomer}> 
-        <br/>
-        <br/>
+       
          View Customers
         </Button>
         <br/>
