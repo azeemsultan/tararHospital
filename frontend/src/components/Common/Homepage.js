@@ -18,6 +18,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { Carousel } from 'react-responsive-carousel';
 import logo from '../../assets/img/Logo.png'
 import { makeStyles } from '@material-ui/core/styles';
+import * as rateService from "../../Axios-Actions/rateService";
 
 import Modal from '@material-ui/core/Modal';
 
@@ -43,7 +44,12 @@ const Homepage = () => {
   const [contact, setContact] = React.useState(false);
   const [close,setClose] = React.useState(false);
 
-
+  const [r, setR] = React.useState([]);
+  React.useEffect(() => {
+    rateService.findallrate()
+    .then((result) => {setR(result.data)});
+    
+},[]);
   const handleContact = () => {
    setContact(true);
   };
@@ -379,8 +385,8 @@ Fax: 112-241-111
           <Slide index={0}> <center style={{display:'inline-flex',flexWrap:'wrap'}}>
                     <div>
 
-                
-<Card style={{maxWidth:'340px',marginLeft:'10%'}}>
+                    {r.map((row) => (
+<Card key={row.id} style={{maxWidth:'340px',marginLeft:'10%'}}>
 <CardActionArea>
 <CardMedia
 component="img"
@@ -390,11 +396,14 @@ image={img}
 title="Contemplative Reptile"
 />
 <CardContent>
-<Typography gutterBottom variant="h5" component="h2">
-Great platform
+<Typography gutterBottom variant="h6" component="h2">
+Doctor Email:{row.doctoremail}
 </Typography>
-<Typography variant="body2" color="textSecondary" component="p">
-Very efficient and works really well on phone and web, I think this is the most easiest way of appointments in Pakistan
+<Typography variant="body2" color="textSecondary" >
+Stars:{row.star}
+</Typography>
+<Typography variant="body2" color="textSecondary" >
+Reviews:{row.review}
 </Typography>
 </CardContent>
 </CardActionArea>
@@ -407,64 +416,7 @@ Learn More
 </Button>
 </CardActions>
 </Card>
-</div>
-<div>
-<Card style={{maxWidth:'340px',marginLeft:'10%'}}>
-<CardActionArea>
-<CardMedia
-component="img"
-alt="Contemplative Reptile"
-height="140"
-image={img}
-title="Contemplative Reptile"
-/>
-<CardContent>
-<Typography gutterBottom variant="h5" component="h2">
-Helpful App
-</Typography>
-<Typography variant="body2" color="textSecondary" component="p">
-A very helpful app for booking appointments and searching the required doctor, made my life easiers
-</Typography>
-</CardContent>
-</CardActionArea>
-<CardActions>
-<Button size="small" color="primary">
-Share
-</Button>
-<Button size="small" color="primary">
-Learn More
-</Button>
-</CardActions>
-</Card>
-</div>
-<div>
-<Card style={{maxWidth:'340px',marginLeft:'10%'}}>
-<CardActionArea>
-<CardMedia
-component="img"
-alt="Contemplative Reptile"
-height="140"
-image={img}
-title="Contemplative Reptile"
-/>
-<CardContent>
-<Typography gutterBottom variant="h5" component="h2">
-Best App
-</Typography>
-<Typography variant="body2" color="textSecondary" component="p">
-Literally the best website to book the appointment online for Doctors. The service is great
-</Typography>
-</CardContent>
-</CardActionArea>
-<CardActions>
-<Button size="small" color="primary">
-Share
-</Button>
-<Button size="small" color="primary">
-Learn More
-</Button>
-</CardActions>
-</Card>
+          ))}
 </div>
 
 </center></Slide>

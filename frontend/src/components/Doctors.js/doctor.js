@@ -18,6 +18,7 @@ import { Backdrop, Badge, Divider, Fade, Modal, TextField } from '@material-ui/c
 import img from '../../assets/img/doc.png';
 import * as doctorService from '../../Axios-Actions/doctorService';
 import * as consultService from '../../Axios-Actions/consultService';
+import * as rateService from '../../Axios-Actions/rateService';
 import Chat from '../Common/Location';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -141,7 +142,10 @@ export default function Doctor() {
   const [c,setC]=React.useState([]);
   const [consult,setConsult] = React.useState(false);
   const [x, setX] = useState(false);
+  const [r, setR] = useState([]);
 
+  const [star,setStar] =useState('');
+  const [review,setReview] =useState('');
   var ch;
 const handleCloseX=() =>{
      setX(true)
@@ -197,6 +201,14 @@ const handleCloseChat= ()=>{
     setOpenNotif(true);
   };
   const handleRate = () => {
+ 
+    consultService.rate() 
+    .then((result) => {
+      setR(result.data)
+    })
+    .catch((err) => {
+      console.log(err)
+    });
     setRate(true);
   };
   const handleCloseRate = () => {
@@ -231,7 +243,7 @@ const handleCloseChat= ()=>{
     .then(() => {
       console.log("Successfully Sent Appointment!");
       setTimeout(function () {
-        window.location = "/";
+        window.location = "/doctors";
       }, 2000);
       
     })
@@ -249,7 +261,7 @@ const handleCloseChat= ()=>{
     .then(() => {
       console.log("Successfully Sent Consult!");
       setTimeout(function () {
-        window.location = "/";
+        window.location = "/doctors";
       }, 2000);
       
     })
@@ -264,7 +276,7 @@ const handleCloseChat= ()=>{
     .then(() => {
       console.log("Successfully Accepted by Customer Appointment!");
       setTimeout(function () {
-        window.location = "/";
+        window.location = "/doctors";
       }, 2000);
       
     })
@@ -277,7 +289,7 @@ const handleCloseChat= ()=>{
     .then(() => {
       console.log("Successfully Rejected by Customer Appointment!");
       setTimeout(function () {
-        window.location = "/";
+        window.location = "/doctors";
       }, 2000);
       
     })
@@ -290,7 +302,7 @@ const handleCloseChat= ()=>{
     .then(() => {
       console.log("Successfully Accepted by Customer Consult!");
       setTimeout(function () {
-        window.location = "/";
+        window.location = "/doctors";
       }, 2000);
       
     })
@@ -303,7 +315,7 @@ const handleCloseChat= ()=>{
     .then(() => {
       console.log("Successfully Rejected by Customer Consult!");
       setTimeout(function () {
-        window.location = "/";
+        window.location = "/doctors";
       }, 2000);
       
     })
@@ -314,8 +326,21 @@ const handleCloseChat= ()=>{
 
   const ratingChanged = (newRating) => {
     console.log(newRating);
+    setStar(newRating);
   };
- 
+ const ratethem =()=>{
+
+  rateService.buildnew(star,review,r._id,r.email)
+  .then(() => {
+    setTimeout(function () {
+      window.location = "/doctors";
+    }, 2000);
+    
+  })
+  .catch((err) => {
+    console.log(err)
+  });
+ }
   
   return (
     <div>
@@ -481,11 +506,14 @@ const handleCloseChat= ()=>{
   <Grid item md={5}>
     <br/>
   <Typography variant="h6">
-    Doctor Name
+    Doctor Name: {r.firstname} {r.lastname}
     <Divider/>
   </Typography>
   <Typography variant="subtitle1">
-    Cardiologist
+    Speciality: {r.speciality}
+  </Typography>
+  <Typography variant="subtitle1">
+    Education: {r.education}
   </Typography>
  
   <ReactStars
@@ -496,12 +524,13 @@ const handleCloseChat= ()=>{
   />
   <Divider/>
 
-  <TextField
+  <TextField 
+   onChange={(e)=>{setReview(e.target.value)}}
   label="Leave a review"
   />
   <br/>
   <br/>
-  <Button variant="outlined">Rate</Button>
+  <Button variant="outlined" onClick={()=>ratethem()}>Rate</Button>
   <Button variant="outlined" style={{marginLeft:'5px'}}
    onClick={()=>handleCloseRate()}>Close</Button>
   </Grid>
