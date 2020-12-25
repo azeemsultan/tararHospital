@@ -506,8 +506,8 @@ const handleCloseChat= ()=>{
   <br/>
   <Grid item md={5}>
     <br/>
-  <Typography variant="h6">
-    Doctor Name: {r.firstname} {r.lastname}
+  <Typography variant="h6" style={{color:'#336bd4'}}>
+    {r.firstname} {r.lastname}
     <Divider/>
   </Typography>
   <Typography variant="subtitle1">
@@ -534,6 +534,8 @@ const handleCloseChat= ()=>{
   <Button variant="outlined" onClick={()=>ratethem()}>Rate</Button>
   <Button variant="outlined" style={{marginLeft:'5px'}}
    onClick={()=>handleCloseRate()}>Close</Button>
+   <br/>
+   <br/>
   </Grid>
   </Grid>
 </Paper>
@@ -560,10 +562,10 @@ const handleCloseChat= ()=>{
   <Fade in={view}>
     <div className={classes.paper}>
 
-      <Typography variant="h4" style={{textAlign:'center',marginBottom:'10px'}}>
+      <Typography variant="h4" style={{textAlign:'center',marginBottom:'10px',color:'#336bd4'}}>
        {f} {l}
       </Typography>
-
+    <Divider/>
      <div style={{display:'inline-flex',marginTop:'10px'}}>
      <div>
        <img src={img}/>
@@ -683,6 +685,7 @@ const handleCloseChat= ()=>{
                                 </select> </span>
         <label style={{fontWeight:'bold',color:'#336bd4'}}>Year </label> <span>   
         <select id="Year"onChange={(e)=>{setYear(e.target.value)}} style={{marginTop:'10px',width:'150px',height:'30px',marginLeft:'20px',border:'0px solid #fff'}}>
+        <option value="2020">0000</option>
                                 <option value="2020">2020</option>
                                 <option value="2021">2021</option>
                                 <option value="2022">2022</option>
@@ -812,6 +815,7 @@ const handleCloseChat= ()=>{
                                 </select> </span>
         <label style={{fontWeight:'bold',color:'#336bd4'}}>Year </label> <span>   
         <select id="Year"onChange={(e)=>{setYear(e.target.value)}} style={{marginTop:'10px',width:'150px',height:'30px',marginLeft:'20px',border:'0px solid #fff'}}>
+        <option value="2020">0000</option>
                                 <option value="2020">2020</option>
                                 <option value="2021">2021</option>
                                 <option value="2022">2022</option>
@@ -875,7 +879,7 @@ const handleCloseChat= ()=>{
             </Button>
             
           </div>
-            <Typography variant="h4" style={{marginBottom:'20px'}}>Your appointments</Typography>
+            <Typography variant="h4" style={{marginBottom:'20px'}}>Your Appointments</Typography>
             <Grid >
             <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="customized table">

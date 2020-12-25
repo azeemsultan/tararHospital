@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import img from '../../assets/img/doc.png';
 import Grid from '@material-ui/core/Grid';
-import { Button, TextField } from '@material-ui/core';
+import { Button, Container, TextField } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -54,6 +54,7 @@ export default function Searchdoctor() {
   }
   return (
     <React.Fragment>
+      <Container maxWidth="sm">
     <Typography variant="h6" style={{marginTop:'20px',backgroundColor:'#336bd4',color:'white'}}>Search Doctor by Email</Typography>
     <TextField
     onChange={(e)=>{setSe(e.target.value)}}
@@ -72,6 +73,7 @@ export default function Searchdoctor() {
               variant="contained"
               color="primary"
             onClick={(e)=>{searchbyemail(se)}}>Search</Button>
+  {/*
              <Typography variant="h6" style={{marginTop:'20px',backgroundColor:'#336bd4',color:'white'}}>Search Doctor by PMDC </Typography>
     <TextField
     onChange={(e)=>{setP(e.target.value)}}
@@ -90,10 +92,12 @@ export default function Searchdoctor() {
               variant="contained"
               color="primary"
             onClick={(e)=>{searchbypmdc(p)}}>Search</Button>
+  */}
             <Typography variant="h6" style={{marginTop:'20px',backgroundColor:'#336bd4',color:'black'}}>Results</Typography>
             <Grid>
     {cards.map((card,key) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
+              <Grid item key={card} xs={12} sm={6} md={6}>
+                <br/>
                 <Card className={classes.card}>
                   <CardMedia
                     className={classes.cardMedia}
@@ -120,6 +124,8 @@ export default function Searchdoctor() {
               </Grid>
             ))}
             </Grid>
+            </Container> 
     </React.Fragment>
+    
   );
 }

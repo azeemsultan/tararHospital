@@ -96,9 +96,11 @@ const Pay=(props)=> {
       <Button onClick={()=>props.xSetter(false)}
       style={{left:'90%'}}>X</Button>
       <CardContent className={classes.content}>
-        <Typography>Doctor Name: {c.firstname} {c.lastname}</Typography>
-        <Typography>Doctor Email: {c.email} </Typography>
-        <Typography>Charges: {c.fee}</Typography>
+        <div style={{display:'inline-flex',flexWrap:'wrap'}}>
+        <Typography variant="h6" style={{color:'#336bd4'}}>Dr Name: {c.firstname} {c.lastname}</Typography>
+        <Typography variant="h6" style={{color:'#336bd4',marginLeft:'10%'}}>Dr Email: {c.email} </Typography>
+        <Typography variant="h6" style={{color:'#336bd4',marginLeft:'10%'}}>Fee: {c.fee}</Typography>
+        </div>
         <TextField
           label='Email'
           id='outlined-email-input'

@@ -20,6 +20,7 @@ import logo from '../../assets/img/Logo.png'
 import { makeStyles } from '@material-ui/core/styles';
 import Searchdoctor from "../../components/Doctors.js/Searchdoctor"
 import * as rateService from "../../Axios-Actions/rateService";
+import google from '../../assets/Assets/gp-icon.png'
 
 import Modal from '@material-ui/core/Modal';
 
@@ -350,10 +351,14 @@ Fax: 112-241-111
                 </Typography>
                 </a>
             </Grid>
+            
         </Grid>
-        <br/>
-        <Grid container style={{marginTop:'40px'}}>
+    
+        <Grid container style={{marginTop:'10px'}}>
             <Grid item md={12}>
+            <div>
+        <Searchdoctor/>
+        </div>
               <br/>
               <Typography variant="h6">
                 Recommendations
@@ -365,14 +370,15 @@ Fax: 112-241-111
         isPlaying={true}
         naturalSlideWidth={100}
         naturalSlideHeight={25}
-        totalSlides={3}
+        totalSlides={2}
       >
         <Slider>
-          <Slide index={0}> <center style={{display:'inline-flex',flexWrap:'wrap'}}>
-                    <div>
+          
+          <Slide index={0}> <center>
+                    <div style={{display:'inline-flex',flexWrap:'wrap'}}>
 
                     {r.map((row) => (
-<Card key={row.id} style={{maxWidth:'340px',marginLeft:'10%'}}>
+<Card key={row.id} style={{maxWidth:'300px',marginLeft:'30px'}}>
 <CardActionArea>
 <CardMedia
 component="img"
@@ -383,7 +389,7 @@ title="Contemplative Reptile"
 />
 <CardContent>
 <Typography gutterBottom variant="h6" component="h2">
-Doctor Email:{row.doctoremail}
+{row.doctoremail}
 </Typography>
 <Typography variant="body2" color="textSecondary" >
 Stars:{row.star}
@@ -406,7 +412,13 @@ Learn More
 </div>
 
 </center></Slide>
-          <Slide index={1}><Card style={{maxWidth:'340px',marginLeft:'10%'}}>
+
+
+          <Slide index={1}>
+            
+          <center style={{display:'inline-flex',flexWrap:'wrap'}}>
+          <div>
+            <Card style={{maxWidth:'340px',marginLeft:'10%'}}>
 <CardActionArea>
 <CardMedia
 component="img"
@@ -432,8 +444,69 @@ Share
 Learn More
 </Button>
 </CardActions>
-</Card></Slide>
-          <Slide index={2}>I am the third Slide.</Slide>
+</Card>
+</div>
+<div>
+<Card style={{maxWidth:'340px',marginLeft:'10%'}}>
+<CardActionArea>
+<CardMedia
+component="img"
+alt="Contemplative Reptile"
+height="140"
+image={img}
+title="Contemplative Reptile"
+/>
+<CardContent>
+<Typography gutterBottom variant="h5" component="h2">
+Best App
+</Typography>
+<Typography variant="body2" color="textSecondary" component="p">
+Literally the best website to book the appointment online for Doctors. The service is great
+</Typography>
+</CardContent>
+</CardActionArea>
+<CardActions>
+<Button size="small" color="primary">
+Share
+</Button>
+<Button size="small" color="primary">
+Learn More
+</Button>
+</CardActions>
+</Card>
+</div>
+<div>
+<Card style={{maxWidth:'340px',marginLeft:'10%'}}>
+<CardActionArea>
+<CardMedia
+component="img"
+alt="Contemplative Reptile"
+height="140"
+image={img}
+title="Contemplative Reptile"
+/>
+<CardContent>
+<Typography gutterBottom variant="h5" component="h2">
+Best App
+</Typography>
+<Typography variant="body2" color="textSecondary" component="p">
+Literally the best website to book the appointment online for Doctors. The service is great
+</Typography>
+</CardContent>
+</CardActionArea>
+<CardActions>
+<Button size="small" color="primary">
+Share
+</Button>
+<Button size="small" color="primary">
+Learn More
+</Button>
+</CardActions>
+</Card>
+</div>
+</center>
+</Slide>
+        
         </Slider>
         <ButtonBack>Back</ButtonBack>
         <ButtonNext>Next</ButtonNext>
@@ -442,14 +515,48 @@ Learn More
             </Grid>
         
         </Grid>
-        <Container className={classes.paper} style={{height:"70vw", width:"70vw"}}>
-        <Searchdoctor/>
-        </Container>
+     
         <Grid container>
             <Grid item md={12} xs={12} style={{backgroundColor:'#336bd4',height:'150px',marginTop:'40px',color:'white'}}>
-                Footer
-                Logo
-                pictures
+              <Grid container>
+                <Grid item md={4}>
+                 <center>
+                   <br/>
+                   <Typography variant="h6">
+                     About us
+                   </Typography>
+                   <Typography variant="subtitle1">
+                     Situated at lahore
+                   </Typography>
+                   <Typography variant="subtitle1">
+                     Lorem ipsum dolorsit
+                   </Typography>
+                 </center>
+                </Grid>
+                <Grid item md={4}>
+                <center>
+                  <br/>
+                   <Typography variant="h6">
+                    Contact us
+                   </Typography>
+                   <Typography variant="subtitle1">
+                     Mail: OzairTarar@Gmail.com
+                   </Typography>
+                   <Typography variant="subtitle1">
+                     Phone: +92303030303
+                   </Typography>
+                 </center>
+                  </Grid>
+                  <Grid item md={4} sm={12}>
+                  <center>
+                  <br/>
+                   <Typography variant="h6">
+                    Coming Soon
+                   </Typography>
+                   <img src={google} style={{height:'50px',width:'150px',marginTop:'10px'}}/>
+                 </center>
+                  </Grid>
+                  </Grid>
                 
             </Grid>
         </Grid>

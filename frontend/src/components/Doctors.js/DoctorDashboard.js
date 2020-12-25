@@ -470,7 +470,7 @@ export default function DocDashboard() {
       <div>
         <center>
           <br/>
-          <Typography variant="h6">
+          <Typography variant="h6" style={{color:'#336bd4'}}>
             Update your Details
           </Typography>
         </center>
@@ -503,7 +503,7 @@ export default function DocDashboard() {
 
     <br/>
     <center>
-      <Typography variant="h6">
+      <Typography variant="h6" style={{color:'#336bd4'}}>
         Update your Id info
         </Typography>
       </center>
