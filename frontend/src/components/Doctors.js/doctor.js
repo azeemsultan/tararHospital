@@ -7,6 +7,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
 import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -826,9 +827,9 @@ const handleCloseChat= ()=>{
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar style={{backgroundColor:'#336bd4'}}>
-          <CameraIcon className={classes.icon} />
+          <LocalHospitalIcon className={classes.icon} />
           <Typography variant="h6" color="inherit" noWrap>
-           Doctor Online
+           Doctro
           </Typography>
         </Toolbar>
       </AppBar>
@@ -876,6 +877,7 @@ const handleCloseChat= ()=>{
     </TableContainer>
          
               </Grid>
+              <br/>
               <Typography variant="h4" style={{marginBottom:'20px'}}>Your Consultions</Typography>
               <Grid >
             <TableContainer component={Paper}>
