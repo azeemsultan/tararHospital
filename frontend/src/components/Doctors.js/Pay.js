@@ -30,7 +30,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Pay=(x,setX)=> {
+const Pay=(props)=> {
   const classes = useStyles();
   // State
   const [email, setEmail] = useState('');
@@ -75,11 +75,13 @@ const Pay=(x,setX)=> {
       }
     }
   };
-  console.log('haha')
-console.log(x)
+
+
   return (
     <Container maxWidth="md">
     <Card className={classes.root}>
+      <Button onClick={()=>props.xSetter(false)}
+      style={{left:'90%'}}>X</Button>
       <CardContent className={classes.content}>
 
         <TextField

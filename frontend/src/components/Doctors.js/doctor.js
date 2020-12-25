@@ -142,7 +142,14 @@ export default function Doctor() {
   const [consult,setConsult] = React.useState(false);
   const [x, setX] = useState(false);
 
+  var ch;
+const handleCloseX=() =>{
+     setX(true)
+}
 
+const handleX=()=>{
+  setX(false)
+}
 
   useEffect(() => {
     doctorService.DoctorView()
@@ -164,8 +171,17 @@ const handleCloseConsult = () => {
   setConsult(false);
 };
 
+const handleChat= ()=>{
+ 
+  setChat(true)
+  
+}
 
-
+const handleCloseChat= ()=>{
+  if(x==true){
+  setChat(false)
+  }
+}
   const handleView = (fn,ln,fee,spec) => {
     f=fn;
     l=ln;
@@ -200,6 +216,12 @@ const handleCloseConsult = () => {
   const handleClose = () => {
     setOpen(false);
   };
+  const change = () =>{
+    if(x==true)
+    {
+      setChat(false)
+    }
+  }
   
   const handleApp = () =>{
 
@@ -416,7 +438,7 @@ const handleCloseConsult = () => {
 <Modal 
   className={classes.modal}
   open={chat}
-  onClose={x}
+  onClose={!chat}
   closeAfterTransition
   BackdropComponent={Backdrop}
   BackdropProps={{
@@ -427,8 +449,8 @@ const handleCloseConsult = () => {
   <Container maxWidth="md">
   <Elements stripe={stripePromise}> 
 
-  <Pay xSetter={setX} />
- 
+  <Pay xSetter={setChat} xS={x} chat={chat}/>
+
   </Elements>
 
   </Container>
@@ -903,7 +925,7 @@ const handleCloseConsult = () => {
                 </Grid>
                 <Grid item>
                 
-                  <Button variant="outlined" color="primary" onClick={()=>setChat(true)}> 
+                  <Button variant="outlined" color="primary" onClick={()=>setChat(true) }> 
                       Payment
                     </Button>
                 </Grid>
