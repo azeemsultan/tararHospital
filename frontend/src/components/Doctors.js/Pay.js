@@ -30,14 +30,13 @@ const useStyles = makeStyles({
   },
 });
 
-function Pay() {
+const Pay=(x,setX)=> {
   const classes = useStyles();
   // State
   const [email, setEmail] = useState('');
 
   const stripe = useStripe();
   const elements = useElements();
-
   const handleSubmit = async (event) => {
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
@@ -76,11 +75,13 @@ function Pay() {
       }
     }
   };
-
+  console.log('haha')
+console.log(x)
   return (
     <Container maxWidth="md">
     <Card className={classes.root}>
       <CardContent className={classes.content}>
+
         <TextField
           label='Email'
           id='outlined-email-input'
@@ -102,6 +103,7 @@ function Pay() {
             Subscription
           </Button>
         </div>
+
       </CardContent>
     </Card>
     </Container>

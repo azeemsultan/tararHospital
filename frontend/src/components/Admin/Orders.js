@@ -179,9 +179,37 @@ console.log("ID="+id);
           
 
       <div className={classes.seeMore}>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          See more 
-        </Link>
+        <br/>
+      <center>
+      <Typography variant="h6">Reviews</Typography>
+    </center>
+    <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label="customized table">
+        <TableHead>
+          <TableRow>
+            
+            <StyledTableCell align="left">Email</StyledTableCell>
+            <StyledTableCell align="left">Name</StyledTableCell>
+            <StyledTableCell align="left">Doctor</StyledTableCell>
+            <StyledTableCell align="left">Review</StyledTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {doc1.map((row) => (
+            <StyledTableRow key={row.name} >
+        
+              <StyledTableCell align="left">{row.email}</StyledTableCell>
+              <StyledTableCell align="left">{row.firstname}{row.lastname} </StyledTableCell>
+              <StyledTableCell align="left">{row.pmdc}</StyledTableCell>
+              <StyledTableCell align="left">
+              <Button color="primary" variant="outlined" onClick={(e)=>acceptdoc(e,row._id)} >Accept</Button>  <Button variant="outlined" color="secondary"onClick={(e)=>rejectdoc(e,row._id)}>Reject</Button>
+              </StyledTableCell>
+            </StyledTableRow>
+         
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
       </div>
     </React.Fragment>
   );

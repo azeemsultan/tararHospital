@@ -295,7 +295,7 @@ const viewDoctor=()=>
       </Table>
     </TableContainer>
 
-    
+
               </Paper>
 :<div></div>}
             </Grid>

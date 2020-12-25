@@ -1,4 +1,4 @@
-import React ,{ useEffect } from 'react';
+import React ,{ useEffect, useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import CameraIcon from '@material-ui/icons/PhotoCamera';
@@ -140,6 +140,9 @@ export default function Doctor() {
   const [a,setA]=React.useState([]);
   const [c,setC]=React.useState([]);
   const [consult,setConsult] = React.useState(false);
+  const [x, setX] = useState(false);
+
+
 
   useEffect(() => {
     doctorService.DoctorView()
@@ -413,7 +416,7 @@ const handleCloseConsult = () => {
 <Modal 
   className={classes.modal}
   open={chat}
-  onClose={handleViewClose}
+  onClose={x}
   closeAfterTransition
   BackdropComponent={Backdrop}
   BackdropProps={{
@@ -424,10 +427,10 @@ const handleCloseConsult = () => {
   <Container maxWidth="md">
   <Elements stripe={stripePromise}> 
 
-  <Pay/>
+  <Pay xSetter={setX} />
  
   </Elements>
-  <Button>X</Button>
+
   </Container>
   </Fade>
 </Modal>
@@ -916,7 +919,7 @@ const handleCloseConsult = () => {
                 <Card className={classes.card}>
                   <CardMedia
                     className={classes.cardMedia}
-                    image= {img}
+                    image= {card.imageURL||img}
                     title="Image title"
                   />
                   <CardContent className={classes.cardContent}>

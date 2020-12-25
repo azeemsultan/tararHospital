@@ -2,6 +2,8 @@ import { Avatar, Backdrop, Button, Container, Divider, Fade, Grid, IconButton, I
 import 'date-fns'
 import DateFnsUtils from '@date-io/date-fns';
 import React from 'react';
+import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
+import 'pure-react-carousel/dist/react-carousel.es.css';
 import SearchIcon from '@material-ui/icons/Search';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Card from '@material-ui/core/Card';
@@ -13,8 +15,10 @@ import img from '../../assets/img/homepage.png'
 import img2 from '../../assets/img/homeline.png'
 import doc from '../../assets/img/doc.png'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import { Carousel } from 'react-responsive-carousel';
 import logo from '../../assets/img/Logo.png'
 import { makeStyles } from '@material-ui/core/styles';
+
 import Modal from '@material-ui/core/Modal';
 
 const useStyles = makeStyles((theme) => ({
@@ -37,6 +41,8 @@ const Homepage = () => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [contact, setContact] = React.useState(false);
+  const [close,setClose] = React.useState(false);
+
 
   const handleContact = () => {
    setContact(true);
@@ -361,95 +367,139 @@ Fax: 112-241-111
                 Recommendations
               </Typography>
                 <div style={{marginTop:'40px'}}>
-                    <center style={{display:'inline-flex',flexWrap:'wrap'}}>
-                        <div>
-                    <Card style={{maxWidth:'340px',marginLeft:'10%'}}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          alt="Contemplative Reptile"
-          height="140"
-          image={img}
-          title="Contemplative Reptile"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-           Great platform
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Very efficient and works really well on phone and web, I think this is the most easiest way of appointments in Pakistan
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
-      </CardActions>
-    </Card>
-    </div>
-    <div>
-                    <Card style={{maxWidth:'340px',marginLeft:'10%'}}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          alt="Contemplative Reptile"
-          height="140"
-          image={img}
-          title="Contemplative Reptile"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-           Helpful App
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            A very helpful app for booking appointments and searching the required doctor, made my life easiers
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
-      </CardActions>
-    </Card>
-    </div>
-    <div>
-                    <Card style={{maxWidth:'340px',marginLeft:'10%'}}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          alt="Contemplative Reptile"
-          height="140"
-          image={img}
-          title="Contemplative Reptile"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            Best App
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Literally the best website to book the appointment online for Doctors. The service is great
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
-      </CardActions>
-    </Card>
-    </div>
-                    </center>
+                
+           
+                    <CarouselProvider
+        isPlaying={true}
+        naturalSlideWidth={100}
+        naturalSlideHeight={25}
+        totalSlides={3}
+      >
+        <Slider>
+          <Slide index={0}> <center style={{display:'inline-flex',flexWrap:'wrap'}}>
+                    <div>
+
+                
+<Card style={{maxWidth:'340px',marginLeft:'10%'}}>
+<CardActionArea>
+<CardMedia
+component="img"
+alt="Contemplative Reptile"
+height="140"
+image={img}
+title="Contemplative Reptile"
+/>
+<CardContent>
+<Typography gutterBottom variant="h5" component="h2">
+Great platform
+</Typography>
+<Typography variant="body2" color="textSecondary" component="p">
+Very efficient and works really well on phone and web, I think this is the most easiest way of appointments in Pakistan
+</Typography>
+</CardContent>
+</CardActionArea>
+<CardActions>
+<Button size="small" color="primary">
+Share
+</Button>
+<Button size="small" color="primary">
+Learn More
+</Button>
+</CardActions>
+</Card>
+</div>
+<div>
+<Card style={{maxWidth:'340px',marginLeft:'10%'}}>
+<CardActionArea>
+<CardMedia
+component="img"
+alt="Contemplative Reptile"
+height="140"
+image={img}
+title="Contemplative Reptile"
+/>
+<CardContent>
+<Typography gutterBottom variant="h5" component="h2">
+Helpful App
+</Typography>
+<Typography variant="body2" color="textSecondary" component="p">
+A very helpful app for booking appointments and searching the required doctor, made my life easiers
+</Typography>
+</CardContent>
+</CardActionArea>
+<CardActions>
+<Button size="small" color="primary">
+Share
+</Button>
+<Button size="small" color="primary">
+Learn More
+</Button>
+</CardActions>
+</Card>
+</div>
+<div>
+<Card style={{maxWidth:'340px',marginLeft:'10%'}}>
+<CardActionArea>
+<CardMedia
+component="img"
+alt="Contemplative Reptile"
+height="140"
+image={img}
+title="Contemplative Reptile"
+/>
+<CardContent>
+<Typography gutterBottom variant="h5" component="h2">
+Best App
+</Typography>
+<Typography variant="body2" color="textSecondary" component="p">
+Literally the best website to book the appointment online for Doctors. The service is great
+</Typography>
+</CardContent>
+</CardActionArea>
+<CardActions>
+<Button size="small" color="primary">
+Share
+</Button>
+<Button size="small" color="primary">
+Learn More
+</Button>
+</CardActions>
+</Card>
+</div>
+
+</center></Slide>
+          <Slide index={1}><Card style={{maxWidth:'340px',marginLeft:'10%'}}>
+<CardActionArea>
+<CardMedia
+component="img"
+alt="Contemplative Reptile"
+height="140"
+image={img}
+title="Contemplative Reptile"
+/>
+<CardContent>
+<Typography gutterBottom variant="h5" component="h2">
+Best App
+</Typography>
+<Typography variant="body2" color="textSecondary" component="p">
+Literally the best website to book the appointment online for Doctors. The service is great
+</Typography>
+</CardContent>
+</CardActionArea>
+<CardActions>
+<Button size="small" color="primary">
+Share
+</Button>
+<Button size="small" color="primary">
+Learn More
+</Button>
+</CardActions>
+</Card></Slide>
+          <Slide index={2}>I am the third Slide.</Slide>
+        </Slider>
+        <ButtonBack>Back</ButtonBack>
+        <ButtonNext>Next</ButtonNext>
+      </CarouselProvider>    
                 </div>
             </Grid>
         </Grid>
@@ -463,5 +513,6 @@ Fax: 112-241-111
         </Grid>
     </div> );
 }
- 
+
+
 export default Homepage;
