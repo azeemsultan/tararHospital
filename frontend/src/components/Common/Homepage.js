@@ -18,6 +18,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { Carousel } from 'react-responsive-carousel';
 import logo from '../../assets/img/Logo.png'
 import { makeStyles } from '@material-ui/core/styles';
+import Searchdoctor from "../../components/Doctors.js/Searchdoctor"
 import * as rateService from "../../Axios-Actions/rateService";
 
 import Modal from '@material-ui/core/Modal';
@@ -273,22 +274,7 @@ Fax: 112-241-111
             <Grid item md={12}>
                 <div style={{marginTop:'30px'}}>
 
-              
-                <InputBase style={{border:'1px solid #336bd4',borderRadius:'16px',textAlign:'center',maxWidth:'200px'}}
-        placeholder="    Lahore"
-        inputProps={{ 'aria-label': 'search doctors by location' }}
-      />
-        <IconButton type="submit" aria-label="search">
-        <LocationOnIcon style={{color:'#336bd4'}}/>
-      </IconButton> 
-      
-      <InputBase style={{border:'1px solid #336bd4',borderRadius:'16px',textAlign:'center',width:'55%'}}
-        placeholder="  Search Doctors By Location"
-        inputProps={{ 'aria-label': 'search doctors by location' }}
-      />
-      <IconButton type="submit" aria-label="search">
-        <SearchIcon style={{color:'#336bd4'}}/>
-      </IconButton> 
+
                 </div>
                 <div style={{marginTop:'50px'}}>
                     <Typography variant="h4">
@@ -454,7 +440,11 @@ Learn More
       </CarouselProvider>    
                 </div>
             </Grid>
+        
         </Grid>
+        <Container className={classes.paper} style={{height:"70vw", width:"70vw"}}>
+        <Searchdoctor/>
+        </Container>
         <Grid container>
             <Grid item md={12} xs={12} style={{backgroundColor:'#336bd4',height:'150px',marginTop:'40px',color:'white'}}>
                 Footer
@@ -463,6 +453,7 @@ Learn More
                 
             </Grid>
         </Grid>
+        
     </div> );
 }
 

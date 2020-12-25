@@ -110,6 +110,14 @@ router.post("/signup", async (req,res) => {
     r.deleteOne({_id:req.body.id});
     res.send(200);
   });
+  router.post('/searchbyemail', async (req,res)=>{
+    const r =await Doctor.find({email:req.body.email});
+    res.send(r);
+  });
+  router.post('/searchbypmdc', async (req,res)=>{
+    const r =await Doctor.find({pmdc:req.body.p});
+    res.send(r);
+  });
   router.post('/updatedetails', async (req,res)=>{
     const jwt = decode(req.header("x-auth-token"));
     const d =await Doctor.findOne({_id:jwt.id});
