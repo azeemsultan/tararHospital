@@ -67,6 +67,9 @@ const register = () =>{
 
   ).then((response)=>{
   console.log(response)
+  setTimeout(function(){
+    window.location = "/login";
+  },2000);
   })
 }
 

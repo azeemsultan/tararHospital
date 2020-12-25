@@ -316,7 +316,7 @@ export default function DocDashboard() {
         <Divider />
      
         <Divider/>
-        <List><Button onClick={()=>setSetting(false)}>Payments</Button></List>
+        <List><Button href={"/login"}>Log Out</Button></List>
         <Divider />
      
       </Drawer>
@@ -510,12 +510,12 @@ export default function DocDashboard() {
     
       <TextField onChange={(e)=>{setFirstname(e.target.value)}
               }
-      label="Update your First Name"
+      label="Update your FirstName"
     />
 <br/>
 <TextField onChange={(e)=>{setLastname(e.target.value)}
               }
-      label="Update your Last Name"
+      label="Update your LastName"
     />
 <br/>
 <TextField onChange={(e)=>{setEmail(e.target.value)}

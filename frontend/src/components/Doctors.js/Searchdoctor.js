@@ -56,17 +56,17 @@ export default function Searchdoctor() {
   return (
     <React.Fragment>
       <Container maxWidth="sm">
-    <Typography variant="h6" style={{marginTop:'20px',backgroundColor:'#336bd4',color:'white'}}>Search Doctor by Email</Typography>
+    <Typography variant="h6" style={{marginTop:'20px',backgroundColor:'#336bd4',color:'white'}}>Search Doctor by Speciality</Typography>
     <TextField
     onChange={(e)=>{setSe(e.target.value)}}
-    label="Enter Doctors email"
+    label="Enter Doctors Speciality"
     variant="outlined"
     margin="normal"
     required
     fullWidth
-    id="email"
-    name="email"
-    autoComplete="email"
+    id="speciality"
+    name="speciality"
+    autoComplete="speciality"
     autoFocus
     >
     </TextField>
@@ -74,18 +74,18 @@ export default function Searchdoctor() {
               variant="contained"
               color="primary"
             onClick={(e)=>{searchbyemail(se)}}>Search</Button>
-  {/*
-             <Typography variant="h6" style={{marginTop:'20px',backgroundColor:'#336bd4',color:'white'}}>Search Doctor by PMDC </Typography>
+ 
+             <Typography variant="h6" style={{marginTop:'20px',backgroundColor:'#336bd4',color:'white'}}>Search Doctor by Location </Typography>
     <TextField
     onChange={(e)=>{setP(e.target.value)}}
-    label="Enter Doctors PMDC"
+    label="Enter Doctors Location"
     variant="outlined"
     margin="normal"
     required
     fullWidth
-    id="pmdc"
-    name="pmdc"
-    autoComplete="pmdc"
+    id="location"
+    name="location"
+    autoComplete="location"
     autoFocus
     >
     </TextField>
@@ -93,7 +93,7 @@ export default function Searchdoctor() {
               variant="contained"
               color="primary"
             onClick={(e)=>{searchbypmdc(p)}}>Search</Button>
-  */}
+ 
             <Typography variant="h6" style={{marginTop:'20px',backgroundColor:'#336bd4',color:'black'}}>Results</Typography>
             <Grid>
     {cards.map((card,key) => (

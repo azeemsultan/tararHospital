@@ -72,7 +72,7 @@ router.post("/signup", async (req,res) => {
       const validatePassword = await bcrypt.compare(req.body.password,user.password);
       if (!validatePassword)
       {
-           res.status(400)
+        res.send("No Registered Customer exists");
       }    
       try{
       const token = setToken(user._id, user.email, user.isAdmin, user.isApproved);
@@ -86,7 +86,7 @@ router.post("/signup", async (req,res) => {
       catch(ex){
          console.log("Setting token Exception" , ex)
       }
-    } else res.status(400).send("No Registered Customer exists");
+    } else res.send("No Registered Customer exists");
   });
   router.get('/view',async ( req , res )=>{
     const cus = await Customer.find();

@@ -233,7 +233,15 @@ Fax: 112-241-111
                   
                      </center> 
                 </button>
-                </Grid>
+              
+              <button style={{color:'white',backgroundColor:'#336bd4',marginTop:'25px',borderRadius:'18px'
+              ,height:'35px',border:'1px solid #336bd4',marginBottom:'10px',width:'130px'}}>
+              <center style={{display:'inline-flex',textAlign:'center',textDecoration:'none'}}>
+                <a href="/login" style={{color:'white'}}> <Typography>Logout</Typography></a>
+                
+                   </center> 
+              </button>
+              </Grid>
        
         </Grid>
 

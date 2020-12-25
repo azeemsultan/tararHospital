@@ -74,7 +74,7 @@ router.post("/signup", async (req,res) => {
       const validatePassword = await bcrypt.compare(req.body.password,user.password);
       if (!validatePassword)
       {
-           res.status(400)
+           res.send("invalid password");
       }    
       try{
       const token = setToken(user._id, user.email, user.isAdmin, user.isApproved);
@@ -87,7 +87,7 @@ router.post("/signup", async (req,res) => {
       catch(ex){
          console.log("Setting token Exception" , ex)
       }
-    } else res.status(400).send("No Registered Doctor exists");
+    } else res.send("No Registered Doctor exists");
   });
 
   router.get('/view',async ( req , res )=>{
@@ -111,11 +111,11 @@ router.post("/signup", async (req,res) => {
     res.send(200);
   });
   router.post('/searchbyemail', async (req,res)=>{
-    const r =await Doctor.find({email:req.body.email});
+    const r =await Doctor.find({speciality:req.body.email});
     res.send(r);
   });
   router.post('/searchbypmdc', async (req,res)=>{
-    const r =await Doctor.find({pmdc:req.body.p});
+    const r =await Doctor.find({location:req.body.p});
     res.send(r);
   });
   router.post('/updatedetails', async (req,res)=>{
