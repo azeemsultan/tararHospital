@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Title from './Title';
 import { Button, Paper } from '@material-ui/core';
 import * as adminService from "../../Axios-Actions/adminService";
+import * as rateService from "../../Axios-Actions/rateService";
 // Generate Order Data
 function createData(id, date, name, shipTo, paymentMethod, amount) {
   return { id, date, name, shipTo, paymentMethod, amount };
@@ -28,9 +29,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Orders() {
   const [doc1, setDoc1] = React.useState([]);
+  const [r, setR] = React.useState([]);
   React.useEffect(() => {
     adminService.getpendingdoc()
     .then((result) => {setDoc1(result.data)});
+    rateService.findallrate()
+    .then((result) => {setR(result.data)});
+    
 },[]);
    const acceptdoc=(e,id)=>{
 console.log("ID="+id);
@@ -62,8 +67,22 @@ console.log("ID="+id);
       console.log(err)
     });
 
-
    }
+   const del=(id)=>{
+
+    rateService.deleterate(id)
+    .then(() => {
+      setTimeout(function () {
+        window.location = "/dashboard";
+      }, 2000);
+      
+    })
+    .catch((err) => {
+      console.log(err)
+    });
+
+    
+  }
    const useStyles = makeStyles((theme) => ({
     icon: {
       marginRight: theme.spacing(2),
@@ -188,21 +207,25 @@ console.log("ID="+id);
         <TableHead>
           <TableRow>
             
-            <StyledTableCell align="left">Email</StyledTableCell>
-            <StyledTableCell align="left">Name</StyledTableCell>
-            <StyledTableCell align="left">Doctor</StyledTableCell>
+            <StyledTableCell align="left">Customer ID</StyledTableCell>
+            <StyledTableCell align="left">Doctor Email</StyledTableCell>
+            <StyledTableCell align="left">Doctor ID</StyledTableCell>
+            <StyledTableCell align="left">Stars</StyledTableCell>
             <StyledTableCell align="left">Review</StyledTableCell>
+            <StyledTableCell align="left">Remove Review</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {doc1.map((row) => (
-            <StyledTableRow key={row.name} >
+          {r.map((row) => (
+            <StyledTableRow key={row.id} >
         
-              <StyledTableCell align="left">{row.email}</StyledTableCell>
-              <StyledTableCell align="left">{row.firstname}{row.lastname} </StyledTableCell>
-              <StyledTableCell align="left">{row.pmdc}</StyledTableCell>
+              <StyledTableCell align="left">{row.customer}</StyledTableCell>
+              <StyledTableCell align="left">{row.doctoremail}</StyledTableCell>
+              <StyledTableCell align="left">{row.doctor}</StyledTableCell>
+              <StyledTableCell align="left">{row.star}</StyledTableCell>
+              <StyledTableCell align="left">{row.review}</StyledTableCell>
               <StyledTableCell align="left">
-              <Button color="primary" variant="outlined" onClick={(e)=>acceptdoc(e,row._id)} >Accept</Button>  <Button variant="outlined" color="secondary"onClick={(e)=>rejectdoc(e,row._id)}>Reject</Button>
+              <Button color="primary" variant="outlined" onClick={(e)=>del(row._id)} >Delete</Button> 
               </StyledTableCell>
             </StyledTableRow>
          

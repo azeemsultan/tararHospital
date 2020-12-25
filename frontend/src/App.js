@@ -8,6 +8,7 @@ import Chat from './components/Common/Location';
 import Locate from './components/Common/Location';
 import AcceptApp from './components/Doctors.js/acceptAppointment';
 import Doctor from './components/Doctors.js/doctor';
+import search from './components/Doctors.js/Searchdoctor';
 import DocDashboard from './components/Doctors.js/DoctorDashboard';
 import Checkout from './components/Doctors.js/Payment';
 import Login from './components/Login/Login';
@@ -38,6 +39,7 @@ function App() {
             <Route path="/acceptappointment" component={AcceptApp}/> 
             <Route path="/signup" component={SignUp}/> 
             <Route path="/signupdoctor" component={SignUpDoctor}/> 
+            <Route path="/searchdoctor" component={search}/> 
             <Route path="/doctors" component={Doctor}/> 
             <Route path="/map" component={map}/> 
             <Route path="/" exact={true} component={Homepage}/> 

@@ -34,3 +34,13 @@ export async function CusReject(id){
 
     return await http.post(apiEndpoint + "/consult/cusreject",{id});
 }
+export async function Payment(){
+
+    return await http.post(apiEndpoint + "/consult/getpaymentinfo");
+}
+
+export async function rate(){
+
+    return await http.get(apiEndpoint + "/consult/sendratetable");
+}
+

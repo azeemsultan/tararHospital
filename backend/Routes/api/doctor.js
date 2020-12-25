@@ -5,7 +5,9 @@ const bodyparser = require("body-parser");
 const decode     = require("jwt-decode");
 const { Doctor , validateDoctor, validateLogin } = require('../../Model/Doctor/Doctor');
 const { setToken } = require("../../Auth/auth");
+const {Rating}= require('../../Model/Doctor/Rating');
 const cloudinary= require('./cloudinary');
+const { Consult } = require("../../Model/Customer/Consult");
 router.use(bodyparser.json({limit: '50mb', extended: true}));
 router.use(bodyparser.urlencoded({limit: '50mb', extended: true}));
 // Doctor sign-up fr-
@@ -99,6 +101,23 @@ router.post("/signup", async (req,res) => {
     if(!d)res.status(400);
     res.send(d);
   });
+  router.get('/allrate', async (req,res)=>{
+    const r =await Rating.find();
+    res.send(r);
+  });
+  router.post('/deleterate', async (req,res)=>{
+    const r =await Rating.findById({_id:req.body.id});
+    r.deleteOne({_id:req.body.id});
+    res.send(200);
+  });
+  router.post('/searchbyemail', async (req,res)=>{
+    const r =await Doctor.find({email:req.body.email});
+    res.send(r);
+  });
+  router.post('/searchbypmdc', async (req,res)=>{
+    const r =await Doctor.find({pmdc:req.body.p});
+    res.send(r);
+  });
   router.post('/updatedetails', async (req,res)=>{
     const jwt = decode(req.header("x-auth-token"));
     const d =await Doctor.findOne({_id:jwt.id});
@@ -155,6 +174,29 @@ router.post("/signup", async (req,res) => {
     }catch(err){
       console.log(err);
     }
+    res.send(200);
+  });
+  router.post('/newrate',async (req,res)=>{
+    const jwt = decode(req.header("x-auth-token"));
+
+    let r = new Rating({
+      doctor:req.body.did,
+      doctoremail:req.body.de,
+      customer:jwt.id,
+      star:req.body.star,
+      review:req.body.review
+    });
+  
+    await r.save();
+    await Consult.update(
+      {isRated:"no",customer:jwt.id,doctor:req.body.did},
+      {
+        $set: {
+         isRated:"yes"
+        },
+      },
+      { new: true }
+    );
     res.send(200);
   });
  router.update;

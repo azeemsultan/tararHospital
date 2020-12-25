@@ -35,6 +35,8 @@ const consult = mongoose.model("Consult",mongoose.Schema({
     type: String,
     ref: "Doctor",
     required:true        
+},isRated:{
+  type:String
 }
   })
 );

@@ -18,6 +18,8 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { Carousel } from 'react-responsive-carousel';
 import logo from '../../assets/img/Logo.png'
 import { makeStyles } from '@material-ui/core/styles';
+import Searchdoctor from "../../components/Doctors.js/Searchdoctor"
+import * as rateService from "../../Axios-Actions/rateService";
 
 import Modal from '@material-ui/core/Modal';
 
@@ -43,7 +45,12 @@ const Homepage = () => {
   const [contact, setContact] = React.useState(false);
   const [close,setClose] = React.useState(false);
 
-
+  const [r, setR] = React.useState([]);
+  React.useEffect(() => {
+    rateService.findallrate()
+    .then((result) => {setR(result.data)});
+    
+},[]);
   const handleContact = () => {
    setContact(true);
   };
@@ -267,22 +274,7 @@ Fax: 112-241-111
             <Grid item md={12}>
                 <div style={{marginTop:'30px'}}>
 
-              
-                <InputBase style={{border:'1px solid #336bd4',borderRadius:'16px',textAlign:'center',maxWidth:'200px'}}
-        placeholder="    Lahore"
-        inputProps={{ 'aria-label': 'search doctors by location' }}
-      />
-        <IconButton type="submit" aria-label="search">
-        <LocationOnIcon style={{color:'#336bd4'}}/>
-      </IconButton> 
-      
-      <InputBase style={{border:'1px solid #336bd4',borderRadius:'16px',textAlign:'center',width:'55%'}}
-        placeholder="  Search Doctors By Location"
-        inputProps={{ 'aria-label': 'search doctors by location' }}
-      />
-      <IconButton type="submit" aria-label="search">
-        <SearchIcon style={{color:'#336bd4'}}/>
-      </IconButton> 
+
                 </div>
                 <div style={{marginTop:'50px'}}>
                     <Typography variant="h4">
@@ -379,8 +371,8 @@ Fax: 112-241-111
           <Slide index={0}> <center style={{display:'inline-flex',flexWrap:'wrap'}}>
                     <div>
 
-                
-<Card style={{maxWidth:'340px',marginLeft:'10%'}}>
+                    {r.map((row) => (
+<Card key={row.id} style={{maxWidth:'340px',marginLeft:'10%'}}>
 <CardActionArea>
 <CardMedia
 component="img"
@@ -390,11 +382,14 @@ image={img}
 title="Contemplative Reptile"
 />
 <CardContent>
-<Typography gutterBottom variant="h5" component="h2">
-Great platform
+<Typography gutterBottom variant="h6" component="h2">
+Doctor Email:{row.doctoremail}
 </Typography>
-<Typography variant="body2" color="textSecondary" component="p">
-Very efficient and works really well on phone and web, I think this is the most easiest way of appointments in Pakistan
+<Typography variant="body2" color="textSecondary" >
+Stars:{row.star}
+</Typography>
+<Typography variant="body2" color="textSecondary" >
+Reviews:{row.review}
 </Typography>
 </CardContent>
 </CardActionArea>
@@ -407,64 +402,7 @@ Learn More
 </Button>
 </CardActions>
 </Card>
-</div>
-<div>
-<Card style={{maxWidth:'340px',marginLeft:'10%'}}>
-<CardActionArea>
-<CardMedia
-component="img"
-alt="Contemplative Reptile"
-height="140"
-image={img}
-title="Contemplative Reptile"
-/>
-<CardContent>
-<Typography gutterBottom variant="h5" component="h2">
-Helpful App
-</Typography>
-<Typography variant="body2" color="textSecondary" component="p">
-A very helpful app for booking appointments and searching the required doctor, made my life easiers
-</Typography>
-</CardContent>
-</CardActionArea>
-<CardActions>
-<Button size="small" color="primary">
-Share
-</Button>
-<Button size="small" color="primary">
-Learn More
-</Button>
-</CardActions>
-</Card>
-</div>
-<div>
-<Card style={{maxWidth:'340px',marginLeft:'10%'}}>
-<CardActionArea>
-<CardMedia
-component="img"
-alt="Contemplative Reptile"
-height="140"
-image={img}
-title="Contemplative Reptile"
-/>
-<CardContent>
-<Typography gutterBottom variant="h5" component="h2">
-Best App
-</Typography>
-<Typography variant="body2" color="textSecondary" component="p">
-Literally the best website to book the appointment online for Doctors. The service is great
-</Typography>
-</CardContent>
-</CardActionArea>
-<CardActions>
-<Button size="small" color="primary">
-Share
-</Button>
-<Button size="small" color="primary">
-Learn More
-</Button>
-</CardActions>
-</Card>
+          ))}
 </div>
 
 </center></Slide>
@@ -502,7 +440,11 @@ Learn More
       </CarouselProvider>    
                 </div>
             </Grid>
+        
         </Grid>
+        <Container className={classes.paper} style={{height:"70vw", width:"70vw"}}>
+        <Searchdoctor/>
+        </Container>
         <Grid container>
             <Grid item md={12} xs={12} style={{backgroundColor:'#336bd4',height:'150px',marginTop:'40px',color:'white'}}>
                 Footer
@@ -511,6 +453,7 @@ Learn More
                 
             </Grid>
         </Grid>
+        
     </div> );
 }
 

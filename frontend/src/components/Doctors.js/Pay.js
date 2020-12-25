@@ -7,8 +7,8 @@ import {useStripe, useElements, CardElement} from '@stripe/react-stripe-js';
 import {makeStyles} from '@material-ui/core/styles';
 import CardInput from './CardInput';
 import * as paymentService from '../../Axios-Actions/paymentService';
-import { Container } from '@material-ui/core';
-
+import { Container, Typography } from '@material-ui/core';
+import * as consultService from '../../Axios-Actions/consultService';
 const useStyles = makeStyles({
   root: {
     maxWidth: 600,
@@ -34,9 +34,19 @@ const Pay=(props)=> {
   const classes = useStyles();
   // State
   const [email, setEmail] = useState('');
+  const [c    , setC]     = useState([]);
 
   const stripe = useStripe();
   const elements = useElements();
+
+  React.useEffect(() => {
+    consultService.Payment()
+    .then((result) => {setC(result.data)}
+    ,console.log(c)
+    );
+},[]);
+
+
   const handleSubmit = async (event) => {
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
@@ -44,7 +54,7 @@ const Pay=(props)=> {
       return;
     }
 
-        const res=await paymentService.Payment(email);
+        const res=await paymentService.Payment(email,c.fee,c._id);
 
 
  //   const res = await axios.post('http://localhost:3000/pay', {email: email});
@@ -67,6 +77,9 @@ const Pay=(props)=> {
       // The payment has been processed!
       if (result.paymentIntent.status === 'succeeded') {
         console.log('Money is in the bank!');
+        setTimeout(function () {
+          window.location = "/doctors";
+        }, 2000);
         // Show a success message to your customer
         // There's a risk of the customer closing the window before callback
         // execution. Set up a webhook or plugin to listen for the
@@ -83,7 +96,9 @@ const Pay=(props)=> {
       <Button onClick={()=>props.xSetter(false)}
       style={{left:'90%'}}>X</Button>
       <CardContent className={classes.content}>
-
+        <Typography>Doctor Name: {c.firstname} {c.lastname}</Typography>
+        <Typography>Doctor Email: {c.email} </Typography>
+        <Typography>Charges: {c.fee}</Typography>
         <TextField
           label='Email'
           id='outlined-email-input'
