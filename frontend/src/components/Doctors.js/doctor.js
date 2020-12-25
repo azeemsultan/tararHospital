@@ -988,7 +988,7 @@ const handleCloseChat= ()=>{
                     </Typography>
                 
                     <Typography variant="h6"  color="textSecondary">
-        {card.email}
+        {card.speciality}
                     </Typography>
                   </CardContent>
                   <CardActions>

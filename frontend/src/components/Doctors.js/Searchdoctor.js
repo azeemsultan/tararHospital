@@ -46,6 +46,7 @@ export default function Searchdoctor() {
     .then((result) => {setCards(result.data)});
 
   }
+
   const searchbypmdc=(p)=>{
 
     searchService.searchbypmdc(p)
