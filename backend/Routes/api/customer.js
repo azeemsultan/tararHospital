@@ -86,12 +86,27 @@ router.post("/signup", async (req,res) => {
       catch(ex){
          console.log("Setting token Exception" , ex)
       }
-    } else res.send("No Registered Customer exists");
+    } else res.send(404);
   });
   router.get('/view',async ( req , res )=>{
     const cus = await Customer.find();
     if(!cus)res.status(400);
     res.send(cus);
+  });
+  router.post("/del", async (req,res)=>{
+    const task = await Customer.findOne({email:req.body.csearchemail});
+    if(task){
+      task.deleteOne({_id:task._id});
+      res.send(200);
+  }
+  else{
+
+      console.log("Customer not found"+req.body.csearchemail);
+      return res.status(400).send("customer not exists!");
+
+  }
+
+
   });
  router.update;
  module.exports = router;

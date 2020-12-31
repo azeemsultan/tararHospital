@@ -5,7 +5,10 @@ const apiEndpoint = "http://localhost:3333/api";
 const tokenKey = "token";
 
 http.setJwt(getJwt());
+export async function AdminLogin(email, password) {
 
+  return await http.post(apiEndpoint + "/admin/login", { email, password });
+}
 export async function CustomerLogin(email, password) {
   return await http.post(apiEndpoint + "/customer/login", { email, password });
 } 

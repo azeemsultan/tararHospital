@@ -28,6 +28,7 @@ import { mainListItems, secondaryListItems,doctor,customer } from './listItems';
 import Deposits from './Deposits';
 import Orders from './Orders';
 import * as doctorService from '../../Axios-Actions/doctorService';
+import * as adminService from '../../Axios-Actions/adminService';
 import { Button } from '@material-ui/core';
 
 function Copyright() {
@@ -148,7 +149,12 @@ export default function Dashboard() {
   const [docs,setDocs] = React.useState(false);
   const [open, setOpen] = React.useState(true);
   const [cards, setCard] = React.useState([]);
-
+  const delp=(email)=>{
+    adminService.del(email);
+      }
+      const deld=(email)=>{
+        adminService.delcc(email);
+          }
 const viewCustomer=()=>
 {    doctorService.CustomerView()
   .then((result) => {setCard(result.data)});
@@ -244,6 +250,7 @@ const viewDoctor=()=>
             <StyledTableCell align="right">Patient name</StyledTableCell>
             <StyledTableCell align="right">ID</StyledTableCell>
             <StyledTableCell align="right">Email</StyledTableCell>
+            <StyledTableCell align="right">Delete Account</StyledTableCell>
 
           </TableRow>
         </TableHead>
@@ -255,6 +262,8 @@ const viewDoctor=()=>
               <StyledTableCell align="right">{card.firstname} {card.lastname}</StyledTableCell>
               <StyledTableCell align="right">{card._id}</StyledTableCell>
               <StyledTableCell align="right">{card.email}</StyledTableCell>
+              <StyledTableCell align="left"  onClick={()=>{delp(card.email)}}><Button>Delete</Button></StyledTableCell>
+                       
 
             </StyledTableRow>
      
@@ -276,6 +285,7 @@ const viewDoctor=()=>
             <StyledTableCell align="right">ID</StyledTableCell>
             <StyledTableCell align="right">Email</StyledTableCell>
             <StyledTableCell align="right">PMDC</StyledTableCell>
+            <StyledTableCell align="right">Delete Account</StyledTableCell>
           </TableRow>
         </TableHead>
         { cards.map((card,key) => (
@@ -287,6 +297,8 @@ const viewDoctor=()=>
               <StyledTableCell align="right">{card._id}</StyledTableCell>
               <StyledTableCell align="right">{card.email}</StyledTableCell>
               <StyledTableCell align="right">{card.pmdc}</StyledTableCell>
+              <StyledTableCell align="left"  onClick={()=>{deld(card.email)}}><Button>Delete</Button></StyledTableCell>
+                       
             </StyledTableRow>
      
         </TableBody>
