@@ -6,6 +6,9 @@ var transporter = nodemailer.createTransport({
     user: "tararhospitalsystem@gmail.com",
     pass:"tarar12345"
   },
+  tls: {
+    rejectUnauthorized: false
+}
 });
 
 module.exports = function sendEmail(to, subject, text) {
