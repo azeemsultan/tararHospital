@@ -299,7 +299,7 @@ export default function DocDashboard() {
         <br/>
         
         <Typography variant="h6">
-            Cardiologist
+            {d.speciality}
         </Typography>
 
         <Typography variant="h6" color="textSecondary">

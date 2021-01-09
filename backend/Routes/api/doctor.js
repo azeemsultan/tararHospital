@@ -63,11 +63,6 @@ router.post("/signup", async (req,res) => {
 
  });
  router.post("/login", async (req, res) => {
-    const { error } = validateLogin(req.body);
-  
-    if (error) {
-      return res.status(400).send(error.details[0].message);
-    }
   
     let user = await Doctor.findOne({ email: req.body.email });
     if (user) {
@@ -87,7 +82,7 @@ router.post("/signup", async (req,res) => {
       catch(ex){
          console.log("Setting token Exception" , ex)
       }
-    } else res.send("No Registered Doctor exists");
+    } else res.send(404);
   });
 
   router.get('/view',async ( req , res )=>{
@@ -198,6 +193,21 @@ router.post("/signup", async (req,res) => {
       { new: true }
     );
     res.send(200);
+  });
+  router.post("/del", async (req,res)=>{
+    const task = await Doctor.findOne({email:req.body.dsearchemail});
+    if(task){
+      task.deleteOne({_id:task._id});
+      res.send(200);
+  }
+  else{
+
+      console.log("Customer not found"+req.body.dsearchemail);
+      return res.status(400).send("dcotor not exists!");
+
+  }
+
+
   });
  router.update;
  module.exports = router;

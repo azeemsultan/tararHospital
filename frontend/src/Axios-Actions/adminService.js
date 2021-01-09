@@ -16,4 +16,11 @@ export async function getdoc() {
 } 
 export async function getcus() {
     return await http.get(apiEndpoint + "/admin/getcus");
-} 
+} export async function del(csearchemail){
+
+    return await http.post(apiEndpoint+"/customer/del",{csearchemail});
+}
+export async function delcc(dsearchemail){
+
+    return await http.post(apiEndpoint+"/doctor/del",{dsearchemail});
+}

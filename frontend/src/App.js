@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 import './App.css';
+import AdminLogin from './components/Login/AdminLogin';
 import Dashboard from './components/Admin/Dashboard';
 import Homepage from './components/Common/Homepage';
 import Chat from './components/Common/Location';
@@ -33,6 +34,7 @@ function App() {
             <Route path="/pay" component={Pay}/> 
             </Elements>
             <Route path="/login" component={Login}/> 
+            <Route path="/adminlogin" component={AdminLogin}/> 
             <Route path="/doctordashboard" component={DocDashboard}/> 
             <Route path="/dashboard" component={Dashboard}/> 
             <Route path="/location" component={Chat}/> 

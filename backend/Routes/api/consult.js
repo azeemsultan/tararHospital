@@ -17,7 +17,7 @@ router.post('/post', async ( req , res ) =>{
     
     let cus= await Customer.findOne({_id:jwt.id});
    console.log(cus);
-    let consult = await Consult.findOne({ customer: jwt.id,doctor:req.body.doctor});
+    let consult = await Consult.findOne({ customer: jwt.id,doctor:req.body.doctor,status:"pending"});
     if (consult) {
       console.log("Consult already exists");
       return res.status(400).send("Consult already exists!");
