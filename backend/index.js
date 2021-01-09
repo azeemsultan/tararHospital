@@ -21,6 +21,10 @@ app.use("/api/admin",admin);
 app.use("/api/payment",payment);
 app.use("/api/geolocation",geolocation);
 
+if(process.env.NODE_ENV === 'production')
+{
+    app.use(express.static('/frontend/build'));
+}
 
 connectDB();
 const port = process.env.PORT || 3333;

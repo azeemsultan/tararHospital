@@ -4,7 +4,7 @@ const config = {
 	autoIndex: false,
 	useNewUrlParser: true,
 };
-const uri = 'mongodb://localhost/Hospital'
+const uri = process.env.MONGODB_URI || 'mongodb://localhost/Hospital'
 const connectDB = async () => {
 	try {
 
