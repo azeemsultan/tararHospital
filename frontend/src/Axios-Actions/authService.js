@@ -1,7 +1,7 @@
 import jwtDecode from "jwt-decode";
 import http from "./httpService";
 
-const apiEndpoint = "http://octro.herokuapp.com";
+const apiEndpoint = "";
 const tokenKey = "token";
 
 http.setJwt(getJwt());
