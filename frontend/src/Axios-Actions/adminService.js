@@ -1,5 +1,5 @@
 import http from "./httpService";
-const apiEndpoint = "/api";
+const apiEndpoint = "http://localhost:3333/api";
 
 export async function getpendingdoc() {
     return await http.get(apiEndpoint + "/admin/getdoc");
