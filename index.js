@@ -11,6 +11,8 @@ const payment     = require("./Routes/api/payment");
 const geolocation     = require("./Routes/api/geolocation");
 
 
+process.env.NODE_ENV = 'production';
+process.env.PORT = 54321
 
 const app = express();
 app.use(cors());
@@ -33,5 +35,5 @@ app.use(express.static('frontend/build'));
 
 }
 connectDB();
-const port =process.env.PORT || 3333;
+const port = 3333;
 app.listen(port,()=> console.log(`Activating project on port ${port}...`));

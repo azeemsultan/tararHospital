@@ -8,13 +8,13 @@ const tokenKey = "token";
 http.setJwt(getJwt());
 export async function AdminLogin(email, password) {
 
-  return await http.post(apiEndpoint + "/admin/login", { email, password });
+  return await http.post("/admin/login", { email, password });
 }
 export async function CustomerLogin(email, password) {
-  return await http.post(apiEndpoint + "/customer/login", { email, password });
+  return await http.post("/customer/login", { email, password });
 } 
 export async function DoctorLogin(email, password) {
-    return await http.post(apiEndpoint + "/doctor/login", { email, password });
+    return await http.post( "/doctor/login", { email, password });
   } 
 
 export async function CustomerSignUp(
@@ -37,7 +37,7 @@ export async function DoctorSignUp(
     email,
     password
   ) {
-    return await http.post(apiEndpoint + "/doctor/signup", {
+    return await http.post("/doctor/signup", {
       firstname,
       lastname,
       pmdc,

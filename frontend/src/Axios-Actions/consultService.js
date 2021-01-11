@@ -1,5 +1,5 @@
 import http from "./httpService";
-const apiEndpoint = "http://localhost:3333/api";
+const apiEndpoint = "/";
 
 export async function PostConsult(date,time,description,doctor,doctoremail) {
     return await http.post(apiEndpoint + "/consult/post",{date,time,description,doctor,doctoremail});

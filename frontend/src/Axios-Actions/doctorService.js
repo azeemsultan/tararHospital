@@ -1,6 +1,6 @@
 import http from "./httpService";
 
-const apiEndpoint = "http://localhost:3333/api";
+const apiEndpoint = "/";
 
 export async function DoctorView() {
     return await http.get(apiEndpoint + "/doctor/view");
