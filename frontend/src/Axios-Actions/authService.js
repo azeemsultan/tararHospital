@@ -23,7 +23,7 @@ export async function CustomerSignUp(
   email,
   password
 ) {
-  return await http.post(apiEndpoint + "/customer/signup", {
+  return await http.post("/customer/signup", {
     firstname,
     lastname,
     email,
