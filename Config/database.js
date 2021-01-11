@@ -1,9 +1,6 @@
 const mongoose = require("mongoose")
 const keys = require('./key')
-const config = {
-	autoIndex: false,
-	useNewUrlParser: true,
-};
+
 
 
 
