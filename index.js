@@ -10,6 +10,7 @@ const admin     = require("./Routes/api/admin");
 const payment     = require("./Routes/api/payment");
 const geolocation     = require("./Routes/api/geolocation");
 
+
 process.env.NODE_ENV = 'production';
 
 const app = express();
@@ -25,13 +26,13 @@ app.use("/api/geolocation",geolocation);
 
 if(process.env.NODE_ENV === 'production')
 {
-app.use(express.static(path.join(__dirname + "/frontend/build")));
-}
+app.use(express.static('frontend/build'));
+
     app.get('*',(req,res)=>{
-        res.sendFile(path.join(__dirname + "/frontend/build/index.html"))
+        res.sendFile(path.resolve(__dirname, 'frontend','build','index.html'));
     })
 
-
+}
 connectDB();
-const port = process.env.PORT || 3333;
+const port = 3333;
 app.listen(port,()=> console.log(`Activating project on port ${port}...`));
