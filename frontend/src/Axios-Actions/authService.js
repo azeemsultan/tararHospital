@@ -1,7 +1,8 @@
 import jwtDecode from "jwt-decode";
 import http from "./httpService";
 
-const apiEndpoint = "/";
+
+const apiEndpoint = "http://localhost:3333/api";
 const tokenKey = "token";
 
 http.setJwt(getJwt());
