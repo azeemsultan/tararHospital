@@ -35,5 +35,5 @@ app.use(express.static('frontend/build'));
 
 }
 connectDB();
-const port = 3333;
+const port = process.env.PORT || 3333;
 app.listen(port,()=> console.log(`Activating project on port ${port}...`));
