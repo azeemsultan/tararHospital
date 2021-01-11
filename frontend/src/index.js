@@ -6,6 +6,14 @@ import * as serviceWorker from './serviceWorker';
 import './assets/css/bootstrap.min.css'
 import './assets/css/agency.min.css'
 import './assets/css/agency.css'
+
+const proxy = require('http-proxy-middleware')
+
+module.exports = function(app) {
+    // add other server routes to path array
+    app.use(proxy(['/api' ], { target: 'http://localhost:3333' }));
+}
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

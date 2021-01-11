@@ -9,9 +9,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "server": "nodemon index.js",
+    "server": "node index.js",
+    "client": "npm run start --prefix frontend",
     "dev": "concurrently -n 'server,client' -c 'green,red' \"nodemon server.js\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend && node index.js"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend "
   },
   "author": "",
   "license": "ISC",
